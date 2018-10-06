@@ -37,7 +37,6 @@ namespace People_Browser
             myConnectionString += sDataSource;
 
             m_Bll = new Bll();
-            m_Bll.BllError += m_Bll_BllError;
             m_Bll.BllMessage += m_Bll_BllMessage;
             m_Bll.SetConnectionString(myConnectionString);
 
@@ -50,16 +49,14 @@ namespace People_Browser
 
         void m_Bll_BllMessage(object sender, EventArgs e)
         {
-            string sErrorMessage = (string)sender;
+            Types.AuditMessage amAuditMessage = (Types.AuditMessage)e;
 
-            Debug.WriteLine(sErrorMessage);
-        }
-
-        void m_Bll_BllError(object sender, EventArgs e)
-        {
-            string sMessage = (string)sender;
-
-            Debug.WriteLine(sMessage);
+            Debug.WriteLine("[" + 
+                            DateTime.Now.ToString() + "]:{" + 
+                            amAuditMessage.Module + "}:[" + 
+                            amAuditMessage.Method + "]:<" + 
+                            amAuditMessage.Severity + "> " + 
+                            amAuditMessage.Message);
         }
 
         //private bool OpenConnection()

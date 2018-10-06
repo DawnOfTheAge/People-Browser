@@ -95,5 +95,43 @@ namespace People.Browser.Common
                 Relation = dfrRelation;
             }
         }
+
+        public class AuditMessage : EventArgs
+        {
+            public string Message
+            {
+                get;
+                set;
+            }
+
+            public string Module
+            {
+                get;
+                set;
+            }
+
+            public string Method
+            {
+                get;
+                set;
+            }
+
+            public Enums.AuditSeverity Severity
+            {
+                get;
+                set;
+            }
+
+            public AuditMessage(string sMessage,
+                                string sModule,
+                                string sMethod,
+                                Enums.AuditSeverity asAuditSeverity)
+            {
+                Message = sMessage;
+                Module = sModule;
+                Method = sMethod;
+                Severity = asAuditSeverity;
+            }
+        }
     }
 }

@@ -13,11 +13,20 @@ namespace People.Browser.Dal
 {
     public class Dal
     {
-        public event EventHandler DalError;
+        #region Events
+
         public event EventHandler DalMessage;
 
+        #endregion
+
+        #region Data Members
+
         private OleDbConnection m_OleDbConnection;
- 
+
+        private readonly string m_ModuleName = "DAL"; 
+
+        #endregion
+
         public Dal()
         {
         }
@@ -29,19 +38,23 @@ namespace People.Browser.Dal
 
         private bool OpenConnection(string sConnectionString)
         {
+            string sMethod = MethodBase.GetCurrentMethod().Name;
+
             try
             {
                 m_OleDbConnection = new OleDbConnection();
                 m_OleDbConnection.ConnectionString = sConnectionString;
                 m_OleDbConnection.Open();
 
-                OnDalMessage("Connection Opened With Connection String[" + sConnectionString + "]");
+                Audit("Connection Opened With Connection String[" + sConnectionString + "]",
+                      sMethod,
+                      Enums.AuditSeverity.Information);
 
                 return true;
             }
             catch (Exception e)
             {
-                OnDalError(e.Message);
+                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
 
                 return false;
             }
@@ -49,6 +62,8 @@ namespace People.Browser.Dal
 
         private bool CloseConnection()
         {
+            string sMethod = MethodBase.GetCurrentMethod().Name;
+
             try
             {
                 m_OleDbConnection.Close();
@@ -57,27 +72,21 @@ namespace People.Browser.Dal
             }
             catch (Exception e)
             {
-                OnDalError(e.Message);
+                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
 
                 return false;
             }
         }
 
-        public void OnDalError(string sErrorMessage)
-        {
-            if (DalError != null)
-            {
-                DalError(sErrorMessage, null);
-            }
-        }
-
-        public void OnDalMessage(string sMessage)
+        public void OnDalMessage(Types.AuditMessage amAuditMessage)
         {
             if (DalMessage != null)
             {
-                DalMessage(sMessage, null);
+                DalMessage(null, amAuditMessage);
             }
         }
+
+        #region Queries Execution
 
         public bool ExecuteNonQuery(string sSql)
         {
@@ -98,12 +107,12 @@ namespace People.Browser.Dal
             try
             {
                 odcOleDbCommand.ExecuteNonQuery();
-                
+
                 return true;
             }
             catch (OleDbException e)
             {
-                OnDalError(e.Message);
+                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
 
                 return false;
             }
@@ -135,7 +144,7 @@ namespace People.Browser.Dal
             }
             catch (OleDbException e)
             {
-                OnDalError(e.Message);
+                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
 
                 return false;
             }
@@ -155,7 +164,7 @@ namespace People.Browser.Dal
 
             if (m_OleDbConnection.State != ConnectionState.Open)
             {
-                OnDalError("Connection State[" + m_OleDbConnection.State + "]");
+                Audit("Connection State[" + m_OleDbConnection.State + "]", sMethod, Enums.AuditSeverity.Warning);
 
                 return false;
             }
@@ -165,16 +174,23 @@ namespace People.Browser.Dal
             {
                 oddrOleDbDataReader = odcOleDbCommand.ExecuteReader();
 
-                OnDalMessage("SQL[" + sSql + "] Executed");
+                Audit("SQL[" + sSql + "] Executed", sMethod, Enums.AuditSeverity.Information);
 
                 return true;
             }
             catch (OleDbException e)
             {
-                OnDalError(e.Message);
+                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
 
                 return false;
             }
+        } 
+
+        #endregion
+
+        private void Audit(string sMessage, string sMethod, Enums.AuditSeverity asAuditSeverity)
+        {
+            OnDalMessage(new Types.AuditMessage(sMessage, m_ModuleName, sMethod, asAuditSeverity));
         }
     }
 }

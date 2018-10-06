@@ -6,21 +6,35 @@ using System.Threading.Tasks;
 using People.Browser.Common;
 using People.Browser.Dal;
 using System.Data.OleDb;
+using System.Reflection;
 
 namespace People.Browser.BLL
 {
     public class Bll
     {
-        public event EventHandler BllError;
+        #region Events
+
         public event EventHandler BllMessage;
 
-        private Dal.Dal m_Dal;
+        #endregion
+
+        #region Data Members
+
+        private readonly string m_ModuleName = "BLL";
+
+        private Dal.Dal m_Dal; 
+
+        #endregion
 
         public Bll()
         {
             m_Dal = new Dal.Dal();
-            m_Dal.DalError += m_Dal_DalError;
             m_Dal.DalMessage += m_Dal_DalMessage;
+        }
+
+        ~Bll()
+        {
+            m_Dal.DalMessage -= m_Dal_DalMessage;
         }
 
         public void SetConnectionString(string sConnectionString)
@@ -28,25 +42,17 @@ namespace People.Browser.BLL
             m_Dal.SetConnectionString(sConnectionString);
         }
 
-        private void m_Dal_DalError(object sender, EventArgs e)
-        {
-            string sErrorMessage = (string)sender;
-
-            OnBllError(sErrorMessage);
-        }
-
-        private void m_Dal_DalMessage(object sender, EventArgs e)
-        {
-            string sMessage = (string)sender;
-
-            OnBllMessage(sMessage);
-        }
-
         public bool GetPerson(int iId, out Common.Types.Person pPerson)
         {
+            #region Data Members
+
             OleDbDataReader oddrOleDbDataReader;
 
             int iValue;
+
+            string sMethod = MethodBase.GetCurrentMethod().Name;
+
+            #endregion
 
             pPerson = null;
 
@@ -79,26 +85,36 @@ namespace People.Browser.BLL
             }
             catch (Exception e)
             {
-                OnBllError(e.Message);
+                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
 
                 return false;
             }
         }
 
-        public void OnBllError(string sErrorMessage)
+        #region Dal Events Handlers
+
+        private void m_Dal_DalMessage(object sender, EventArgs e)
         {
-            if (BllError != null)
-            {
-                BllError(sErrorMessage, null);
-            }
+            OnBllMessage((Types.AuditMessage)e);
         }
 
-        public void OnBllMessage(string sMessage)
+        #endregion
+
+        #region Events Handlers
+
+        public void OnBllMessage(Types.AuditMessage amAuditMessage)
         {
             if (BllMessage != null)
             {
-                BllMessage(sMessage, null);
+                BllMessage(null, amAuditMessage);
             }
+        }
+
+        #endregion
+
+        private void Audit(string sMessage, string sMethod, Enums.AuditSeverity asAuditSeverity)
+        {
+            OnBllMessage(new Types.AuditMessage(sMessage, m_ModuleName, sMethod, asAuditSeverity));
         }
     }
 }
