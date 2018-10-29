@@ -10,19 +10,25 @@ namespace People.Browser.Common
     {
         public class Person
         {
-            public List<RelatedPerson> Parent
+            public List<Person> Parent
             {
                 get;
                 set;
             }
 
-            public List<RelatedPerson> Sibling
+            public List<Person> Sibling
             {
                 get;
                 set;
             }
 
-            public List<RelatedPerson> Descendant
+            public List<Person> Spouse
+            {
+                get;
+                set;
+            }
+
+            public List<Person> Descendant
             {
                 get;
                 set;
@@ -30,24 +36,13 @@ namespace People.Browser.Common
 
             public Person()
             {
-                Parent = new List<RelatedPerson>();
-                Sibling = new List<RelatedPerson>();
-                Descendant = new List<RelatedPerson>();
+                Parent = new List<Person>();
+                Sibling = new List<Person>();
+                Spouse = new List<Person>();
+                Descendant = new List<Person>();
             }
 
             public int ID
-            {
-                get;
-                set;
-            }
-
-            public int FatherID
-            {
-                get;
-                set;
-            }
-
-            public int MotherID
             {
                 get;
                 set;
@@ -78,21 +73,46 @@ namespace People.Browser.Common
             }
         }
 
-        public class RelatedPerson : Person
+        public class FamilyRelation
         {
-            public Enums.DirectFamilyRelation Relation
+            public FamilyRelation(Person _personA, 
+                                  Enums.DirectFamilyRelation _directFamilyRelationA, 
+                                  Person _personB,
+                                  Enums.DirectFamilyRelation _directFamilyRelationB)
+            {
+                PersonA = _personA;
+                PersonB = _personB;
+                DirectFamilyRelationA = _directFamilyRelationA;
+                DirectFamilyRelationB = _directFamilyRelationB;                
+            }
+
+            public Person PersonA
             {
                 get;
                 set;
             }
 
-            public RelatedPerson() 
-            { 
+            public Person PersonB
+            {
+                get;
+                set;
             }
 
-            public RelatedPerson(Enums.DirectFamilyRelation dfrRelation)
+            public Enums.DirectFamilyRelation DirectFamilyRelationA
             {
-                Relation = dfrRelation;
+                get;
+                set;
+            }
+
+            public Enums.DirectFamilyRelation DirectFamilyRelationB
+            {
+                get;
+                set;
+            }
+
+            public bool IsDirectFamilyRelationValid()
+            {
+                return Utils.ValidateDirectFamilyRelation2Ways(DirectFamilyRelationA, DirectFamilyRelationB);
             }
         }
 

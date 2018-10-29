@@ -17,7 +17,8 @@ namespace People.Browser.Common
             Daughter,
             Brother,
             Sister,
-            Spouse
+            Husband,
+            Wife
         };
 
         public enum AuditSeverity

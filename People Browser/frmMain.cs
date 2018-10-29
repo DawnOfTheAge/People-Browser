@@ -41,8 +41,19 @@ namespace People_Browser
             m_Bll.SetConnectionString(myConnectionString);
 
             Types.Person pPerson;
+            Types.FamilyRelation _familyRelation = new Types.FamilyRelation(new Types.Person(), 
+                                                                            Enums.DirectFamilyRelation.Husband, 
+                                                                            new Types.Person(), 
+                                                                            Enums.DirectFamilyRelation.Sister);
+            bool bRc = _familyRelation.IsDirectFamilyRelationValid();
 
-            m_Bll.GetPerson(13297205, out pPerson);
+            pPerson = new Types.Person();
+            m_Bll.GetPersonInformation(27809870, ref pPerson);
+
+            //m_Bll.GetPerson(27809870, out pPerson);
+            //m_Bll.GetParents(ref pPerson);
+            //m_Bll.GetSiblings(ref pPerson);
+            //m_Bll.GetDescendants(ref pPerson);
 
             //OpenConnection();
         }
