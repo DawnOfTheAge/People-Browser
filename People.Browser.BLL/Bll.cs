@@ -7,6 +7,7 @@ using People.Browser.Common;
 using People.Browser.Dal;
 using System.Data.OleDb;
 using System.Reflection;
+using System.Threading;
 
 namespace People.Browser.BLL
 {
@@ -100,7 +101,7 @@ namespace People.Browser.BLL
                 if (oddrOleDbDataReader.Read())
                 {
                     pPerson.ID = iId;
-                    pPerson.Sex = (int.Parse(oddrOleDbDataReader["SEX"].ToString()) == 1) ? true : false;
+                    //pPerson.Sex = (int.Parse(oddrOleDbDataReader["SEX"].ToString()) == 1) ? true : false;
 
                     pPerson.Family = oddrOleDbDataReader["L_NAME"].ToString();
                     pPerson.Name = oddrOleDbDataReader["F_NAME"].ToString();
@@ -115,7 +116,89 @@ namespace People.Browser.BLL
             }
             catch (Exception e)
             {
-                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
+                Audit(e.Message, sMethod, AuditSeverity.Error);
+
+                return false;
+            }
+        }
+
+        public bool GetAllPersons(out List<Types.Person> allPersons, out string result)
+        {
+            int count = 0;
+            int personId = 0;
+
+            OleDbDataReader oddrOleDbDataReader;
+
+
+            result = string.Empty;
+
+            allPersons = null;
+
+            try
+            {
+                //if (!m_Dal.ExecuteReaderQuery($"SELECT COUNT (*) FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
+                //{
+                //    return false;
+                //}
+
+                if (!m_Dal.ExecuteReaderQuery($"SELECT * FROM M", out oddrOleDbDataReader))
+                //if (!m_Dal.ExecuteReaderQuery($"SELECT * FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
+                {
+                    result = "Failed Preforming SQL";
+                    return false;
+                }
+
+                allPersons = new List<Types.Person>();
+
+                count = 0;
+                while (oddrOleDbDataReader.Read())
+                {
+                    Types.Person person = new Types.Person();
+
+                    personId = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out personId) ? personId : Constants.NONE;
+                    person.ID = personId;
+
+                    int personSex = int.TryParse(oddrOleDbDataReader["SEX"].ToString(), out personSex) ? personSex : Constants.NONE;
+                    switch (personSex)
+                    {
+                        case 1:
+                            person.Sex = "Male";
+                            break;
+
+                        case 2:
+                            person.Sex = "Feale";
+                            break;
+
+                        default:
+                            person.Sex = "Unknown";
+                            break;
+                    }
+
+                    person.Family = oddrOleDbDataReader["L_NAME"].ToString();
+                    person.Name = oddrOleDbDataReader["F_NAME"].ToString();
+                    person.OldFamily = oddrOleDbDataReader["F_NAME_OLD"].ToString();
+
+                    int fatherId = int.TryParse(oddrOleDbDataReader["ID_FATHER"].ToString(), out fatherId) ? fatherId : Constants.NONE;
+                    person.FatherId = fatherId;
+                    person.FatherName = oddrOleDbDataReader["FATHER_NAME"].ToString();
+
+                    int motherId = int.TryParse(oddrOleDbDataReader["ID_MOTHER"].ToString(), out motherId) ? motherId : Constants.NONE;
+                    person.MotherId = motherId;
+                    person.MotherName = oddrOleDbDataReader["MOTHER_NAME"].ToString();
+
+                    allPersons.Add(person);
+
+                    ++count;
+                    //Console.WriteLine($"Number: {++count}");
+
+                    Thread.Sleep(10);
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = $"Count[{count}] Person ID[{personId}] {e.Message}";
 
                 return false;
             }
@@ -160,7 +243,7 @@ namespace People.Browser.BLL
             }
             catch (Exception e)
             {
-                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
+                Audit(e.Message, sMethod, AuditSeverity.Error);
 
                 return false;
             }
@@ -185,7 +268,7 @@ namespace People.Browser.BLL
                 sSql = CreateSiblingsSql(pPerson, out sResult);
                 if (string.IsNullOrEmpty(sSql))
                 {
-                    Audit(sResult, sMethod, Enums.AuditSeverity.Warning);
+                    Audit(sResult, sMethod, AuditSeverity.Warning);
 
                     return false;
                 }
@@ -207,7 +290,7 @@ namespace People.Browser.BLL
             }
             catch (Exception e)
             {
-                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
+                Audit(e.Message, sMethod, AuditSeverity.Error);
 
                 return false;
             }
@@ -232,7 +315,7 @@ namespace People.Browser.BLL
                 sSql = CreateDescendantsSql(pPerson, out sResult);
                 if (string.IsNullOrEmpty(sSql))
                 {
-                    Audit(sResult, sMethod, Enums.AuditSeverity.Warning);
+                    Audit(sResult, sMethod, AuditSeverity.Warning);
 
                     return false;
                 }
@@ -254,7 +337,7 @@ namespace People.Browser.BLL
             }
             catch (Exception e)
             {
-                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
+                Audit(e.Message, sMethod, AuditSeverity.Error);
 
                 return false;
             }
@@ -318,7 +401,20 @@ namespace People.Browser.BLL
                 return "";
             }
 
-            string sParent = (pPerson.Sex) ? "ID_FATHER" : "ID_MOTHER";
+            string sParent;
+            switch (pPerson.Sex)
+            {
+                case "Male":
+                    sParent = "ID_FATHER";
+                    break;
+
+                case "Female":
+                    sParent = "ID_MOTHER";
+                    break;
+
+                default:
+                    return String.Empty;
+            }
 
             return "SELECT * FROM M WHERE " + sParent + "=" + pPerson.ID;
         }
@@ -344,7 +440,7 @@ namespace People.Browser.BLL
 
         #endregion
 
-        private void Audit(string sMessage, string sMethod, Enums.AuditSeverity asAuditSeverity)
+        private void Audit(string sMessage, string sMethod, AuditSeverity asAuditSeverity)
         {
             OnBllMessage(new Types.AuditMessage(sMessage, m_ModuleName, sMethod, asAuditSeverity));
         }

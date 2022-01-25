@@ -48,13 +48,13 @@ namespace People.Browser.Dal
 
                 Audit("Connection Opened With Connection String[" + sConnectionString + "]",
                       sMethod,
-                      Enums.AuditSeverity.Information);
+                      AuditSeverity.Information);
 
                 return true;
             }
             catch (Exception e)
             {
-                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
+                Audit(e.Message, sMethod, AuditSeverity.Error);
 
                 return false;
             }
@@ -72,7 +72,7 @@ namespace People.Browser.Dal
             }
             catch (Exception e)
             {
-                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
+                Audit(e.Message, sMethod, AuditSeverity.Error);
 
                 return false;
             }
@@ -112,7 +112,7 @@ namespace People.Browser.Dal
             }
             catch (OleDbException e)
             {
-                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
+                Audit(e.Message, sMethod, AuditSeverity.Error);
 
                 return false;
             }
@@ -144,7 +144,7 @@ namespace People.Browser.Dal
             }
             catch (OleDbException e)
             {
-                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
+                Audit(e.Message, sMethod, AuditSeverity.Error);
 
                 return false;
             }
@@ -164,7 +164,7 @@ namespace People.Browser.Dal
 
             if (m_OleDbConnection.State != ConnectionState.Open)
             {
-                Audit("Connection State[" + m_OleDbConnection.State + "]", sMethod, Enums.AuditSeverity.Warning);
+                Audit("Connection State[" + m_OleDbConnection.State + "]", sMethod, AuditSeverity.Warning);
 
                 return false;
             }
@@ -174,13 +174,13 @@ namespace People.Browser.Dal
             {
                 oddrOleDbDataReader = odcOleDbCommand.ExecuteReader();
 
-                Audit("SQL[" + sSql + "] Executed", sMethod, Enums.AuditSeverity.Information);
+                Audit("SQL[" + sSql + "] Executed", sMethod, AuditSeverity.Information);
 
                 return true;
             }
             catch (OleDbException e)
             {
-                Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
+                Audit(e.Message, sMethod, AuditSeverity.Error);
 
                 return false;
             }
@@ -188,7 +188,7 @@ namespace People.Browser.Dal
 
         #endregion
 
-        private void Audit(string sMessage, string sMethod, Enums.AuditSeverity asAuditSeverity)
+        private void Audit(string sMessage, string sMethod, AuditSeverity asAuditSeverity)
         {
             OnDalMessage(new Types.AuditMessage(sMessage, m_ModuleName, sMethod, asAuditSeverity));
         }

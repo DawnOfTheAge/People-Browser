@@ -20,13 +20,5 @@ namespace People.Browser.Common
             Husband,
             Wife
         };
-
-        public enum AuditSeverity
-        {
-            Error,
-            Warning,
-            Information,
-            Important
-        };
     }
 }

@@ -54,6 +54,30 @@ namespace People.Browser.Common
                 set;
             }
 
+            public int FatherId
+            {
+                get;
+                set;
+            }
+
+            public string FatherName
+            {
+                get;
+                set;
+            }
+
+            public int MotherId
+            {
+                get;
+                set;
+            }
+
+            public string MotherName
+            {
+                get;
+                set;
+            }
+
             public string Family
             {
                 get;
@@ -66,7 +90,7 @@ namespace People.Browser.Common
                 set;
             }
 
-            public bool Sex
+            public string Sex
             {
                 get;
                 set;
@@ -136,7 +160,7 @@ namespace People.Browser.Common
                 set;
             }
 
-            public Enums.AuditSeverity Severity
+            public AuditSeverity Severity
             {
                 get;
                 set;
@@ -145,7 +169,7 @@ namespace People.Browser.Common
             public AuditMessage(string sMessage,
                                 string sModule,
                                 string sMethod,
-                                Enums.AuditSeverity asAuditSeverity)
+                                AuditSeverity asAuditSeverity)
             {
                 Message = sMessage;
                 Module = sModule;

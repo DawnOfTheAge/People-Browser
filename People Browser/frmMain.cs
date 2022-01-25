@@ -13,61 +13,268 @@ using System.Reflection;
 using People.Browser.Common;
 using People.Browser.BLL;
 using System.Diagnostics;
+using System.IO;
 
 namespace People_Browser
 {
     public partial class frmMain : Form
     {
-        private Bll m_Bll;
-        //private List<Types.Person> m_PersonDb;
+        #region Constants
+
+        private const string CONNECTION_STRING_PREFIX = "Provider=Microsoft.Jet.OLEDB.4.0;";
+
+        #endregion
 
         //private OleDbConnection m_OleDbConnection;
+
+        #region Data Members
+
+        private Bll m_Bll;
+        
+        private List<Types.Person> Persons;
+        
+        private bool AuditOn;
+
+        private string databaseFilePath;
+        private string databaseConnectionString;
+
+        #endregion
+
+        #region Constructor
 
         public frmMain()
         {
             InitializeComponent();
         }
 
+        #endregion
+
+        #region Startup
+
         private void frmMain_Load(object sender, EventArgs e)
         {
-            string myConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;";
-            string sPath = "H:\\Stuff\\Db";
-            string sDataSource = "Data Source=" + sPath + "\\TZ092005.mdb";
+            string method = MethodBase.GetCurrentMethod().Name;
 
-            myConnectionString += sDataSource;
+            try
+            {
+                Location = Cursor.Position;
 
-            m_Bll = new Bll();
-            m_Bll.BllMessage += m_Bll_BllMessage;
-            m_Bll.SetConnectionString(myConnectionString);
+                if (!Initialize(out string result))
+                {
+                    Audit(result, method, LINE(), AuditSeverity.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
 
-            Types.Person pPerson;
-            Types.FamilyRelation _familyRelation = new Types.FamilyRelation(new Types.Person(), 
-                                                                            Enums.DirectFamilyRelation.Husband, 
-                                                                            new Types.Person(), 
-                                                                            Enums.DirectFamilyRelation.Sister);
-            bool bRc = _familyRelation.IsDirectFamilyRelationValid();
+            //string myConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;";
+            //string sPath = @"F:\Stuff\Db";
+            //string sDataSource = "Data Source=" + sPath + "\\TZ092005.mdb";
 
-            pPerson = new Types.Person();
-            m_Bll.GetPersonInformation(27809870, ref pPerson);
+            //myConnectionString += sDataSource;
 
-            //m_Bll.GetPerson(27809870, out pPerson);
-            //m_Bll.GetParents(ref pPerson);
-            //m_Bll.GetSiblings(ref pPerson);
-            //m_Bll.GetDescendants(ref pPerson);
+            //m_Bll = new Bll();
+            //m_Bll.BllMessage += m_Bll_BllMessage;
+            //m_Bll.SetConnectionString(myConnectionString);
 
-            //OpenConnection();
+            //List<Types.Person> l1;
+            //m_Bll.GetAllPerson("ספיר", out l1);
+
+            //List<Types.Person> l2;
+            //m_Bll.GetAllPerson("עמרי", out l2);
+
+            //for (int i = 0; i < l1.Count; i++)
+            //{
+            //    for (int j = 0; j < l2.Count; j++)
+            //    {
+            //        if ((l1[i].FatherId == l2[j].FatherId) && (l1[i].FatherId != 0) && (l1[i].FatherId != Constants.NONE))
+            //        {
+            //            Console.WriteLine($"ID:{l1[i].FatherId}  NAME:{l1[i].FatherName}");
+            //        }
+            //    }
+            //}
+
+            //List<Types.Person> l3 = l1.Intersect(l2).ToList();
+
+            //int x = 5;
+            ////Types.Person pPerson;
+            ////Types.FamilyRelation _familyRelation = new Types.FamilyRelation(new Types.Person(), 
+            ////                                                                Enums.DirectFamilyRelation.Husband, 
+            ////                                                                new Types.Person(), 
+            ////                                                                Enums.DirectFamilyRelation.Sister);
+            ////bool bRc = _familyRelation.IsDirectFamilyRelationValid();
+
+            ////pPerson = new Types.Person();
+            ////m_Bll.GetPersonInformation(27809870, ref pPerson);
+
+            ////m_Bll.GetPerson(27809870, out pPerson);
+            ////m_Bll.GetParents(ref pPerson);
+            ////m_Bll.GetSiblings(ref pPerson);
+            ////m_Bll.GetDescendants(ref pPerson);
+
+            ////OpenConnection();
         }
+
+        private bool Initialize(out string result)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            try
+            {
+                if (!Prologue(out result))
+                {
+                    return false;
+                }
+
+                #region Initializations
+
+                AuditOn = true;
+
+
+                #endregion
+
+                #region Get Configuration
+
+
+
+                #endregion
+
+                #region Audit
+
+                dgvAudit.Visible = AuditOn;
+                if (!AuditOn)
+                {
+                    splitContainer.Panel2Collapsed = true;
+                }
+
+                #endregion
+
+                #region Context Menus
+
+                //if (!CreateContextMenus(out result))
+                //{
+                //    return false;
+                //}
+
+                Audit("Create Context Menus", method, LINE(), AuditSeverity.Information);
+
+                #endregion
+
+                if (!Epilogue(out result))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        private bool Prologue(out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        private bool Epilogue(out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        #endregion
 
         void m_Bll_BllMessage(object sender, EventArgs e)
         {
             Types.AuditMessage amAuditMessage = (Types.AuditMessage)e;
 
-            Debug.WriteLine("[" + 
-                            DateTime.Now.ToString() + "]:{" + 
-                            amAuditMessage.Module + "}:[" + 
-                            amAuditMessage.Method + "]:<" + 
-                            amAuditMessage.Severity + "> " + 
-                            amAuditMessage.Message);
+            Audit(amAuditMessage.Message, amAuditMessage.Method,  amAuditMessage.Module, 0, amAuditMessage.Severity);
+        }
+
+        private void mnuConnect_Click(object sender, EventArgs e)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            try
+            {
+                OpenFileDialog openFile = new OpenFileDialog
+                {
+                    Title = "Select Database File",
+                    Filter = "All files (*.*)|*.*",
+                    CheckFileExists = true,
+                    CheckPathExists = true
+                };
+
+                if (openFile.ShowDialog() == DialogResult.OK)
+                {
+                    databaseFilePath = openFile.FileName;
+                }
+
+                if (string.IsNullOrEmpty(databaseFilePath))
+                {
+                    Audit("Database File Name Is Null Or Empty", method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
+
+                if (!File.Exists(databaseFilePath))
+                {
+                    Audit($"Database File Name[{databaseFilePath}] Does Not Exist", method, LINE(), AuditSeverity.Warning);
+                    
+                    return;
+                }
+
+                databaseConnectionString = $@"{CONNECTION_STRING_PREFIX}Data Source={databaseFilePath}";
+
+                m_Bll = new Bll();
+                m_Bll.BllMessage += m_Bll_BllMessage;
+                m_Bll.SetConnectionString(databaseConnectionString);
+
+                if (!m_Bll.GetAllPersons(out Persons, out string result))
+                {
+                    Audit(result, method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
+
+                Audit("Loaded All Persons", method, LINE(), AuditSeverity.Warning);
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
+        }
+
+        private void mnuExit_Click(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
         }
 
         //private bool OpenConnection()
@@ -303,5 +510,97 @@ namespace People_Browser
         //        return null;
         //    }
         //}
+
+        #region Audit
+
+        private Color SeverityColor(AuditSeverity auditSeverity)
+        {
+            switch (auditSeverity)
+            {
+                case AuditSeverity.Information:
+                    return Color.SeaShell;
+
+                case AuditSeverity.Important:
+                    return Color.Aqua;
+
+                case AuditSeverity.Warning:
+                    return Color.Coral;
+
+                case AuditSeverity.Error:
+                    return Color.Red;
+
+                case AuditSeverity.Critical:
+                    return Color.Purple;
+
+                default:
+                    return Color.FromArgb(0, 0, 0, 0);
+            }
+        }
+
+        private void Settings_Message(string message, string method, string module, int line, AuditSeverity auditSeverity)
+        {
+            try
+            {
+                Audit(message, method, module, line, auditSeverity);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[{DateTime.Now:HH-mm-ss dd-MM-yyyy}]:<{auditSeverity}>:<{module}>:<{method}> {message + ". Error:" + ex.Message}");
+            }
+        }
+
+        private void Audit(string message, string method, string module, int line, AuditSeverity auditSeverity)
+        {
+            string dateTime = DateTime.Now.ToString("HH:mm:ss.fff");
+
+            try
+            {
+                if (InvokeRequired)
+                {
+                    BeginInvoke(new AuditMessage(Audit), message, method, module, line, auditSeverity);
+                }
+                else
+                {
+                    if (AuditOn)
+                    {
+                        dgvAudit.Rows.Insert(0, new string[] { dateTime, auditSeverity.ToString(), module, method, line.ToString(), message });
+                        dgvAudit.Rows[0].DefaultCellStyle.BackColor = SeverityColor(auditSeverity);
+
+                        dgvAudit.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                    }
+                    else
+                    {
+                        if ((auditSeverity == AuditSeverity.Error) || (auditSeverity == AuditSeverity.Warning))
+                        {
+                            MessageBox.Show(message,
+                                            module,
+                                            MessageBoxButtons.OK,
+                                            (auditSeverity == AuditSeverity.Error) ?
+                                            MessageBoxIcon.Error :
+                                            MessageBoxIcon.Warning);
+                        }
+                    }
+
+                    Console.WriteLine($"[{dateTime}]:<{auditSeverity}>:<{module}>:<{method}:{line}> {message}");
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"[{dateTime}]:<{auditSeverity}>:<{module}>:<{method}:{line}> {message + ". Audit Error:" + e.Message}");
+            }
+        }
+
+        private void Audit(string message, string method, int line, AuditSeverity auditSeverity)
+        {
+            Audit(message, method, "MOPS Config Tool", line, auditSeverity);
+        }
+
+        public static int LINE([System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0)
+        {
+            return lineNumber;
+        }
+
+        #endregion        
     }
 }

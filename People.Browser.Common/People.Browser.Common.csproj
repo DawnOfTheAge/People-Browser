@@ -40,7 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Delegates.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Enums\AuditSeverity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types.cs" />
     <Compile Include="Utils.cs" />
