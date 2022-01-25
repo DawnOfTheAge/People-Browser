@@ -257,12 +257,21 @@ namespace People_Browser
                 m_Bll.BllMessage += m_Bll_BllMessage;
                 m_Bll.SetConnectionString(databaseConnectionString);
 
-                if (!m_Bll.GetAllPersons(out Persons, out string result))
-                {
-                    Audit(result, method, LINE(), AuditSeverity.Warning);
+                //if (!m_Bll.GetAllPersons(out Persons, out string result))
+                //{
+                //    Audit(result, method, LINE(), AuditSeverity.Warning);
 
-                    return;
+                //    return;
+                //}
+                IAsyncResult asyncResult;
+
+                asyncResult = Task.Run(() => m_Bll.GetAllPersons(out Persons, out string result));
+
+                while (!asyncResult.IsCompleted)
+                {
+                    Application.DoEvents();
                 }
+
 
                 Audit("Loaded All Persons", method, LINE(), AuditSeverity.Warning);
             }

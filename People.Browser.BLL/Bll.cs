@@ -191,7 +191,7 @@ namespace People.Browser.BLL
                     ++count;
                     //Console.WriteLine($"Number: {++count}");
 
-                    Thread.Sleep(10);
+                    Thread.Sleep(1);
                 }
 
                 return true;
