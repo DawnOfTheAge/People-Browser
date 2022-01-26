@@ -40,6 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="DataTypes\Cities.cs" />
+    <Compile Include="DataTypes\City.cs" />
+    <Compile Include="DataTypes\Countries.cs" />
+    <Compile Include="DataTypes\Country.cs" />
     <Compile Include="DataTypes\FamilyRelation.cs" />
     <Compile Include="DataTypes\Person.cs" />
     <Compile Include="Delegates.cs" />
