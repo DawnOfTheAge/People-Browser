@@ -14,7 +14,7 @@ namespace People.Browser.BLL
         #region Events
 
         public event AuditMessage Message;
-        public event LoadAllPersonsProgressMessage LoadAllPersonsProgress;
+        public event LoadAllProgressMessage LoadAllProgress;
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace People.Browser.BLL
 
         private System.Timers.Timer tmrIntervalTimer;
 
-        private int loadAllPersonsPercentage;
+        private int loadAllPercentage;
 
         #endregion
 
@@ -311,7 +311,7 @@ namespace People.Browser.BLL
 
                     ++count;
 
-                    loadAllPersonsPercentage = (100 * count) / numberOfPersons;
+                    loadAllPercentage = (100 * count) / numberOfPersons;
                 }
 
                 return true;
@@ -455,6 +455,97 @@ namespace People.Browser.BLL
             }
         }
 
+        public bool GetAllCountries(out List<Country> allCountries, out string result)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+            string sql;
+
+            int count = 0;
+            int countryId = 0;
+
+            OleDbDataReader oddrOleDbDataReader;
+
+
+            result = string.Empty;
+
+            allCountries = null;
+
+            try
+            {
+                tmrIntervalTimer = new System.Timers.Timer();
+                tmrIntervalTimer.Interval = 2000;
+                tmrIntervalTimer.Elapsed += new ElapsedEventHandler(tmrIntervalTimer_Elapsed);
+
+                //if (!Dal.ExecuteReaderQuery($"SELECT COUNT (*) FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
+                //{
+                //    return false;
+                //}
+
+                sql = "SELECT COUNT(*) FROM COUNTRY";
+                if (!dal.ExecuteScalarQuery(sql, out int numberOfPersons))
+                //if (!Dal.ExecuteReaderQuery($"SELECT * FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
+                {
+                    result = $"Failed Preforming SQL[{sql}]";
+
+                    return false;
+                }
+
+                Audit($"{numberOfPersons} Persons In Total", method, LINE(), AuditSeverity.Information);
+
+                sql = "SELECT * FROM COUNTRY";
+                if (!dal.ExecuteReaderQuery(sql, out oddrOleDbDataReader))
+                //if (!Dal.ExecuteReaderQuery($"SELECT * FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
+                {
+                    result = $"Failed Preforming SQL[{sql}]";
+
+                    return false;
+                }
+
+                allCountries = new List<Country>();
+
+                tmrIntervalTimer.Start();
+
+                count = 0;
+                while (oddrOleDbDataReader.Read())
+                {
+                    Country country = new Country();
+
+                    try
+                    {
+                        countryId = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out countryId) ? countryId : Constants.NONE;
+                        country.Id = countryId;
+
+                        country.Name = oddrOleDbDataReader["NAME"].ToString();
+                        country.NameInEnglish = oddrOleDbDataReader["ENG_NAME"].ToString();
+                    }
+                    catch (Exception ex)
+                    {
+                        Audit($"Error For Country ID[{countryId}]. {ex.Message}", method, LINE(), AuditSeverity.Error);
+
+                        continue;
+                    }
+
+                    allCountries.Add(country);
+
+                    ++count;
+
+                    loadAllPercentage = (100 * count) / numberOfPersons;
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = $"Count[{count}] Country ID[{countryId}] {e.Message}";
+
+                return false;
+            }
+            finally
+            {
+                tmrIntervalTimer.Stop();
+            }
+        }
+
         #endregion
 
         #endregion
@@ -465,7 +556,7 @@ namespace People.Browser.BLL
         {
             tmrIntervalTimer.Stop();
 
-            LoadAllPersonsProgress?.Invoke(loadAllPersonsPercentage);
+            LoadAllProgress?.Invoke(loadAllPercentage);
 
             tmrIntervalTimer.Start();
         }

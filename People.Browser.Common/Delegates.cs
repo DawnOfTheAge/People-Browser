@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 namespace People.Browser.Common
 {
     public delegate void AuditMessage(string message, string method, string module, int line, AuditSeverity auditSeverity);
-    public delegate void LoadAllPersonsProgressMessage(int percentage);
+    public delegate void LoadAllProgressMessage(int percentage);
     public delegate void OneIntegerParameterDelegate(int value);    
 }

@@ -251,7 +251,7 @@ namespace People_Browser
 
                 bll = new Bll();
                 bll.Message += Bll_Message;
-                bll.LoadAllPersonsProgress += Bll_LoadAllPersonsProgress;
+                bll.LoadAllProgress += Bll_LoadAllProgress;
                 bll.SetConnectionString(databaseConnectionString);
 
                 //if (!m_Bll.GetAllPersons(out Persons, out string result))
@@ -284,7 +284,7 @@ namespace People_Browser
             }
         }
 
-        private void Bll_LoadAllPersonsProgress(int percentage)
+        private void Bll_LoadAllProgress(int percentage)
         {
             string method = MethodBase.GetCurrentMethod().Name;
 

@@ -20,6 +20,13 @@ namespace People.Browser.Common
 
         #region Constructor
 
+        public Country()
+        {
+            Id = 0;
+            Name = string.Empty;
+            NameInEnglish = string.Empty;
+        }
+
         public Country(int id, string name, string nameInEnglish)
         {
             Id = id;
