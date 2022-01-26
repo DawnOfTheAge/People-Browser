@@ -300,8 +300,10 @@ namespace People.Browser.BLL
                         person.MotherId = motherId;
                         person.MotherName = oddrOleDbDataReader["MOTHER_NAME"].ToString();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        Audit($"Error For Person ID[{personId}]. {ex.Message}", method, LINE(), AuditSeverity.Error);
+
                         continue;
                     }
 
