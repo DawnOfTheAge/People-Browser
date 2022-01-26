@@ -25,13 +25,11 @@ namespace People_Browser
 
         #endregion
 
-        //private OleDbConnection m_OleDbConnection;
-
         #region Data Members
 
-        private Bll m_Bll;
+        private Bll bll;
         
-        private List<Types.Person> Persons;
+        private List<Person> Persons;
         
         private bool AuditOn;
 
@@ -211,12 +209,9 @@ namespace People_Browser
 
         #endregion
 
-        void m_Bll_BllMessage(object sender, EventArgs e)
-        {
-            Types.AuditMessage amAuditMessage = (Types.AuditMessage)e;
-
-            Audit(amAuditMessage.Message, amAuditMessage.Method,  amAuditMessage.Module, 0, amAuditMessage.Severity);
-        }
+        #region Gui
+        
+        #region Main Menu
 
         private void mnuConnect_Click(object sender, EventArgs e)
         {
@@ -253,9 +248,9 @@ namespace People_Browser
 
                 databaseConnectionString = $@"{CONNECTION_STRING_PREFIX}Data Source={databaseFilePath}";
 
-                m_Bll = new Bll();
-                m_Bll.BllMessage += m_Bll_BllMessage;
-                m_Bll.SetConnectionString(databaseConnectionString);
+                bll = new Bll();
+                bll.Message += Bll_Message;
+                bll.SetConnectionString(databaseConnectionString);
 
                 //if (!m_Bll.GetAllPersons(out Persons, out string result))
                 //{
@@ -265,7 +260,7 @@ namespace People_Browser
                 //}
                 IAsyncResult asyncResult;
 
-                asyncResult = Task.Run(() => m_Bll.GetAllPersons(out Persons, out string result));
+                asyncResult = Task.Run(() => bll.GetAllPersons(out Persons, out string result));
 
                 while (!asyncResult.IsCompleted)
                 {
@@ -285,6 +280,10 @@ namespace People_Browser
         {
             Environment.Exit(0);
         }
+
+        #endregion
+        
+        #endregion
 
         //private bool OpenConnection()
         //{
@@ -519,6 +518,15 @@ namespace People_Browser
         //        return null;
         //    }
         //}
+
+        #region Events Handlers
+
+        private void Bll_Message(string message, string method, string module, int line, AuditSeverity auditSeverity)
+        {
+            Audit(message, method, module, line, auditSeverity);
+        }
+
+        #endregion 
 
         #region Audit
 

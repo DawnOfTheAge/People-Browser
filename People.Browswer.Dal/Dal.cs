@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Odbc;
 using System.Data.OleDb;
 using System.Reflection;
 using System.Data;
 using People.Browser.Common;
 
-namespace People.Browser.Dal
+namespace People.Browser.DAL
 {
     public class Dal
     {
         #region Events
 
-        public event EventHandler DalMessage;
+        public event AuditMessage Message;
 
         #endregion
 
@@ -23,13 +18,17 @@ namespace People.Browser.Dal
 
         private OleDbConnection m_OleDbConnection;
 
-        private readonly string m_ModuleName = "DAL"; 
-
         #endregion
+
+        #region Constructor
 
         public Dal()
         {
         }
+
+        #endregion
+
+        #region Connection
 
         public void SetConnectionString(string sConnectionString)
         {
@@ -38,23 +37,26 @@ namespace People.Browser.Dal
 
         private bool OpenConnection(string sConnectionString)
         {
-            string sMethod = MethodBase.GetCurrentMethod().Name;
+            string method = MethodBase.GetCurrentMethod().Name;
 
             try
             {
-                m_OleDbConnection = new OleDbConnection();
-                m_OleDbConnection.ConnectionString = sConnectionString;
+                m_OleDbConnection = new OleDbConnection
+                {
+                    ConnectionString = sConnectionString
+                };
                 m_OleDbConnection.Open();
 
                 Audit("Connection Opened With Connection String[" + sConnectionString + "]",
-                      sMethod,
+                      method,
+                      LINE(),
                       AuditSeverity.Information);
 
                 return true;
             }
             catch (Exception e)
             {
-                Audit(e.Message, sMethod, AuditSeverity.Error);
+                Audit(e.Message, method, LINE(), AuditSeverity.Error);
 
                 return false;
             }
@@ -62,7 +64,7 @@ namespace People.Browser.Dal
 
         private bool CloseConnection()
         {
-            string sMethod = MethodBase.GetCurrentMethod().Name;
+            string method = MethodBase.GetCurrentMethod().Name;
 
             try
             {
@@ -72,31 +74,21 @@ namespace People.Browser.Dal
             }
             catch (Exception e)
             {
-                Audit(e.Message, sMethod, AuditSeverity.Error);
+                Audit(e.Message, method, LINE(), AuditSeverity.Error);
 
                 return false;
             }
         }
 
-        public void OnDalMessage(Types.AuditMessage amAuditMessage)
-        {
-            if (DalMessage != null)
-            {
-                DalMessage(null, amAuditMessage);
-            }
-        }
+        #endregion
 
         #region Queries Execution
 
         public bool ExecuteNonQuery(string sSql)
         {
-            #region Data Members
-
             OleDbCommand odcOleDbCommand;
 
-            string sMethod = MethodBase.GetCurrentMethod().Name;
-
-            #endregion
+            string method = MethodBase.GetCurrentMethod().Name;
 
             if (m_OleDbConnection.State != ConnectionState.Open)
             {
@@ -112,7 +104,7 @@ namespace People.Browser.Dal
             }
             catch (OleDbException e)
             {
-                Audit(e.Message, sMethod, AuditSeverity.Error);
+                Audit(e.Message, method, LINE(), AuditSeverity.Error);
 
                 return false;
             }
@@ -120,13 +112,10 @@ namespace People.Browser.Dal
 
         public bool ExecuteScalarQuery(string sSql, out int iScalar)
         {
-            #region Data Members
-
             OleDbCommand odcOleDbCommand;
 
-            string sMethod = MethodBase.GetCurrentMethod().Name;
+            string method = MethodBase.GetCurrentMethod().Name;
 
-            #endregion
 
             iScalar = Constants.NONE;
 
@@ -144,7 +133,7 @@ namespace People.Browser.Dal
             }
             catch (OleDbException e)
             {
-                Audit(e.Message, sMethod, AuditSeverity.Error);
+                Audit(e.Message, method, LINE(), AuditSeverity.Error);
 
                 return false;
             }
@@ -152,19 +141,16 @@ namespace People.Browser.Dal
 
         public bool ExecuteReaderQuery(string sSql, out OleDbDataReader oddrOleDbDataReader)
         {
-            #region Data Members
-
             OleDbCommand odcOleDbCommand;
 
-            string sMethod = MethodBase.GetCurrentMethod().Name;
+            string method = MethodBase.GetCurrentMethod().Name;
 
-            #endregion
 
             oddrOleDbDataReader = null;
 
             if (m_OleDbConnection.State != ConnectionState.Open)
             {
-                Audit("Connection State[" + m_OleDbConnection.State + "]", sMethod, AuditSeverity.Warning);
+                Audit("Connection State[" + m_OleDbConnection.State + "]", method, LINE(), AuditSeverity.Warning);
 
                 return false;
             }
@@ -174,23 +160,48 @@ namespace People.Browser.Dal
             {
                 oddrOleDbDataReader = odcOleDbCommand.ExecuteReader();
 
-                Audit("SQL[" + sSql + "] Executed", sMethod, AuditSeverity.Information);
+                Audit("SQL[" + sSql + "] Executed", method, LINE(), AuditSeverity.Information);
 
                 return true;
             }
             catch (OleDbException e)
             {
-                Audit(e.Message, sMethod, AuditSeverity.Error);
+                Audit(e.Message, method, LINE(), AuditSeverity.Error);
 
                 return false;
             }
-        } 
+        }
 
         #endregion
 
-        private void Audit(string sMessage, string sMethod, AuditSeverity asAuditSeverity)
+        #region Events Handlers
+
+        public void OnMessage(string message, string method, string module, int line, AuditSeverity auditSeverity)
         {
-            OnDalMessage(new Types.AuditMessage(sMessage, m_ModuleName, sMethod, asAuditSeverity));
+            Message?.Invoke(message, method, module, line, auditSeverity);
         }
+
+        #endregion
+
+        #region Audit
+
+        private void Audit(string message, string method, string module, int line, AuditSeverity auditSeverity)
+        {
+            OnMessage(message, method, module, line, auditSeverity);
+        }
+
+        private void Audit(string message, string method, int line, AuditSeverity auditSeverity)
+        {
+            string module = "DAL";
+
+            Audit(message, method, module, line, auditSeverity);
+        }
+
+        public static int LINE([System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0)
+        {
+            return lineNumber;
+        }
+
+        #endregion
     }
 }
