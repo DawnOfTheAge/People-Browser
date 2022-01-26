@@ -65,26 +65,26 @@ namespace People.Browser.BLL
                 return "";
             }
 
-            if ((pPerson.Parent[0].ID <= 0) && (pPerson.Parent[1].ID <= 0))
+            if ((pPerson.Parent[0].Id <= 0) && (pPerson.Parent[1].Id <= 0))
             {
                 result = "Person Has No Parents Information";
 
                 return "";
             }
 
-            if (pPerson.Parent[0].ID <= 0)
+            if (pPerson.Parent[0].Id <= 0)
             {
-                return "SELECT * FROM M WHERE ID_FATHER=" + pPerson.Parent[1].ID + " AND ID<>" + pPerson.ID;
+                return "SELECT * FROM M WHERE ID_FATHER=" + pPerson.Parent[1].Id + " AND ID<>" + pPerson.Id;
             }
 
-            if (pPerson.Parent[1].ID <= 0)
+            if (pPerson.Parent[1].Id <= 0)
             {
-                return "SELECT * FROM M WHERE ID_MOTHER=" + pPerson.Parent[0].ID + " AND ID<>" + pPerson.ID;
+                return "SELECT * FROM M WHERE ID_MOTHER=" + pPerson.Parent[0].Id + " AND ID<>" + pPerson.Id;
             }
 
-            return "SELECT * FROM M WHERE ID_FATHER=" + pPerson.Parent[1].ID +
-                   " AND ID_MOTHER=" + pPerson.Parent[0].ID +
-                   " AND ID<>" + pPerson.ID + " ";
+            return "SELECT * FROM M WHERE ID_FATHER=" + pPerson.Parent[1].Id +
+                   " AND ID_MOTHER=" + pPerson.Parent[0].Id +
+                   " AND ID<>" + pPerson.Id + " ";
         }
 
         private string CreateDescendantsSql(Person pPerson, out string result)
@@ -98,7 +98,7 @@ namespace People.Browser.BLL
                 return "";
             }
 
-            if (pPerson.ID <= 0) 
+            if (pPerson.Id <= 0) 
             {
                 result = "Person Has No Valid ID";
 
@@ -120,7 +120,7 @@ namespace People.Browser.BLL
                     return String.Empty;
             }
 
-            return "SELECT * FROM M WHERE " + sParent + "=" + pPerson.ID;
+            return "SELECT * FROM M WHERE " + sParent + "=" + pPerson.Id;
         }
 
         #endregion
@@ -145,7 +145,7 @@ namespace People.Browser.BLL
 
             for (int i = 0; i < pPerson.Parent.Count; i++)
             {
-                int iCurrentId = pPerson.Parent[i].ID;
+                int iCurrentId = pPerson.Parent[i].Id;
                 Person currentPerson = new Person();
                 GetPerson(iCurrentId, ref currentPerson);
                 pPerson.Parent[i] = currentPerson;
@@ -153,7 +153,7 @@ namespace People.Browser.BLL
 
             for (int i = 0; i < pPerson.Sibling.Count; i++)
             {
-                int iCurrentId = pPerson.Sibling[i].ID;
+                int iCurrentId = pPerson.Sibling[i].Id;
                 Person currentPerson = new Person();
                 GetPerson(iCurrentId, ref currentPerson);
                 pPerson.Sibling[i] = currentPerson;
@@ -161,7 +161,7 @@ namespace People.Browser.BLL
 
             for (int i = 0; i < pPerson.Descendant.Count; i++)
             {
-                int iCurrentId = pPerson.Descendant[i].ID;
+                int iCurrentId = pPerson.Descendant[i].Id;
                 Person currentPerson = new Person();
                 GetPerson(iCurrentId, ref currentPerson);
                 pPerson.Descendant[i] = currentPerson;
@@ -190,7 +190,7 @@ namespace People.Browser.BLL
 
                 if (oddrOleDbDataReader.Read())
                 {
-                    pPerson.ID = iId;
+                    pPerson.Id = iId;
                     //pPerson.Sex = (int.Parse(oddrOleDbDataReader["SEX"].ToString()) == 1) ? true : false;
 
                     pPerson.Family = oddrOleDbDataReader["L_NAME"].ToString();
@@ -233,14 +233,8 @@ namespace People.Browser.BLL
                 tmrIntervalTimer.Interval = 2000;
                 tmrIntervalTimer.Elapsed += new ElapsedEventHandler(tmrIntervalTimer_Elapsed);
 
-                //if (!Dal.ExecuteReaderQuery($"SELECT COUNT (*) FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
-                //{
-                //    return false;
-                //}
-
                 sql = "SELECT COUNT(*) FROM M";
                 if (!dal.ExecuteScalarQuery(sql, out int numberOfPersons))
-                //if (!Dal.ExecuteReaderQuery($"SELECT * FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
                 {
                     result = $"Failed Preforming SQL[{sql}]";
 
@@ -251,7 +245,6 @@ namespace People.Browser.BLL
 
                 sql = "SELECT * FROM M";
                 if (!dal.ExecuteReaderQuery(sql, out oddrOleDbDataReader))
-                //if (!Dal.ExecuteReaderQuery($"SELECT * FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
                 {
                     result = $"Failed Preforming SQL[{sql}]";
 
@@ -270,7 +263,7 @@ namespace People.Browser.BLL
                     try
                     {
                         personId = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out personId) ? personId : Constants.NONE;
-                        person.ID = personId;
+                        person.Id = personId;
 
                         int personSex = int.TryParse(oddrOleDbDataReader["SEX"].ToString(), out personSex) ? personSex : Constants.NONE;
                         switch (personSex)
@@ -299,6 +292,18 @@ namespace People.Browser.BLL
                         int motherId = int.TryParse(oddrOleDbDataReader["ID_MOTHER"].ToString(), out motherId) ? motherId : Constants.NONE;
                         person.MotherId = motherId;
                         person.MotherName = oddrOleDbDataReader["MOTHER_NAME"].ToString();
+
+                        person.BirthDate = oddrOleDbDataReader["B_YEAR"].ToString();
+                        person.Street = oddrOleDbDataReader["STREET"].ToString();
+
+                        int house = int.TryParse(oddrOleDbDataReader["HOUSE"].ToString(), out house) ? house : Constants.NONE; ;
+                        person.House = house;
+
+                        int cityId = int.TryParse(oddrOleDbDataReader["ID_CITY"].ToString(), out cityId) ? cityId : Constants.NONE; ;
+                        person.CityId = cityId;
+
+                        int countryId = int.TryParse(oddrOleDbDataReader["B_COUNTRY"].ToString(), out countryId) ? countryId : Constants.NONE; ;
+                        person.CountryId = countryId;
                     }
                     catch (Exception ex)
                     {
@@ -338,7 +343,7 @@ namespace People.Browser.BLL
 
             try
             {
-                if (!dal.ExecuteReaderQuery("SELECT * FROM M WHERE ID=" + pPerson.ID, out oddrOleDbDataReader))
+                if (!dal.ExecuteReaderQuery("SELECT * FROM M WHERE ID=" + pPerson.Id, out oddrOleDbDataReader))
                 {
                     return false;
                 }
@@ -347,11 +352,11 @@ namespace People.Browser.BLL
                 {
                     Person _person = new Person();
 
-                    _person.ID = int.TryParse(oddrOleDbDataReader["ID_MOTHER"].ToString(), out iValue) ? iValue : Constants.NONE;
+                    _person.Id = int.TryParse(oddrOleDbDataReader["ID_MOTHER"].ToString(), out iValue) ? iValue : Constants.NONE;
                     pPerson.Parent.Add(_person);
 
                     _person = new Person();
-                    _person.ID = int.TryParse(oddrOleDbDataReader["ID_FATHER"].ToString(), out iValue) ? iValue : Constants.NONE;
+                    _person.Id = int.TryParse(oddrOleDbDataReader["ID_FATHER"].ToString(), out iValue) ? iValue : Constants.NONE;
                     pPerson.Parent.Add(_person);
 
                     return true;
@@ -398,7 +403,7 @@ namespace People.Browser.BLL
                 {
                     Person _person = new Person();
 
-                    _person.ID = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out iValue) ? iValue : Constants.NONE;
+                    _person.Id = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out iValue) ? iValue : Constants.NONE;
                     pPerson.Sibling.Add(_person);
                 }
 
@@ -441,7 +446,7 @@ namespace People.Browser.BLL
                 {
                     Person _person = new Person();
 
-                    _person.ID = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out iValue) ? iValue : Constants.NONE;
+                    _person.Id = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out iValue) ? iValue : Constants.NONE;
                     pPerson.Descendant.Add(_person);
                 }
 

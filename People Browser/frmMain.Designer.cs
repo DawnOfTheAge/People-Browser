@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblPercentage = new System.Windows.Forms.Label();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.mnuConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,22 +39,18 @@
             this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pbProgress = new System.Windows.Forms.ProgressBar();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.pbPercentage = new System.Windows.Forms.ToolStripProgressBar();
+            this.lblPercentage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblMessage = new System.Windows.Forms.ToolStripStatusLabel();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAudit)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lblPercentage
-            // 
-            this.lblPercentage.AutoSize = true;
-            this.lblPercentage.Location = new System.Drawing.Point(486, 179);
-            this.lblPercentage.Name = "lblPercentage";
-            this.lblPercentage.Size = new System.Drawing.Size(0, 13);
-            this.lblPercentage.TabIndex = 1;
             // 
             // mnuMain
             // 
@@ -91,8 +86,7 @@
             // 
             // splitContainer.Panel1
             // 
-            this.splitContainer.Panel1.Controls.Add(this.pbProgress);
-            this.splitContainer.Panel1.Controls.Add(this.lblPercentage);
+            this.splitContainer.Panel1.Controls.Add(this.statusStrip1);
             // 
             // splitContainer.Panel2
             // 
@@ -148,12 +142,32 @@
             this.colMessage.HeaderText = "Message";
             this.colMessage.Name = "colMessage";
             // 
-            // pbProgress
+            // statusStrip1
             // 
-            this.pbProgress.Location = new System.Drawing.Point(110, 179);
-            this.pbProgress.Name = "pbProgress";
-            this.pbProgress.Size = new System.Drawing.Size(370, 14);
-            this.pbProgress.TabIndex = 0;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pbPercentage,
+            this.lblPercentage,
+            this.lblMessage});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 235);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(845, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // pbPercentage
+            // 
+            this.pbPercentage.Name = "pbPercentage";
+            this.pbPercentage.Size = new System.Drawing.Size(100, 16);
+            // 
+            // lblPercentage
+            // 
+            this.lblPercentage.Name = "lblPercentage";
+            this.lblPercentage.Size = new System.Drawing.Size(0, 17);
+            // 
+            // lblMessage
+            // 
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(0, 17);
             // 
             // frmMain
             // 
@@ -175,13 +189,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAudit)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Label lblPercentage;
         private System.Windows.Forms.MenuStrip mnuMain;
         private System.Windows.Forms.ToolStripMenuItem mnuConnect;
         private System.Windows.Forms.ToolStripMenuItem mnuExit;
@@ -193,7 +208,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colMethod;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLine;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMessage;
-        private System.Windows.Forms.ProgressBar pbProgress;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripProgressBar pbPercentage;
+        private System.Windows.Forms.ToolStripStatusLabel lblPercentage;
+        private System.Windows.Forms.ToolStripStatusLabel lblMessage;
     }
 }
 

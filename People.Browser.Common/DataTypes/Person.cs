@@ -40,7 +40,7 @@ namespace People.Browser.Common
             Descendant = new List<Person>();
         }
 
-        public int ID
+        public int Id
         {
             get;
             set;
@@ -83,6 +83,36 @@ namespace People.Browser.Common
         }
 
         public string OldFamily
+        {
+            get;
+            set;
+        }
+
+        public string BirthDate
+        {
+            get;
+            set;
+        }
+
+        public int CityId
+        {
+            get;
+            set;
+        }
+
+        public int CountryId
+        {
+            get;
+            set;
+        }
+
+        public string Street
+        {
+            get;
+            set;
+        }
+
+        public int House
         {
             get;
             set;

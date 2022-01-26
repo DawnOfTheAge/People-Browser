@@ -14,6 +14,7 @@ using People.Browser.Common;
 using People.Browser.BLL;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 
 namespace People_Browser
 {
@@ -258,63 +259,20 @@ namespace People_Browser
                 bll.LoadAllProgress += Bll_LoadAllProgress;
                 bll.SetConnectionString(databaseConnectionString);
 
-                //if (!m_Bll.GetAllPersons(out Persons, out string result))
-                //{
-                //    Audit(result, method, LINE(), AuditSeverity.Warning);
+                lblMessage.Text = "Loading Persons ...";
+                GetAllPersons();
 
-                //    return;
-                //}
-                IAsyncResult asyncResult;
+                lblMessage.Text = "Loading Countries ...";
+                GetAllCountries();
 
-                asyncResult = Task.Run(() => bll.GetAllPersons(out persons, out result));
+                lblMessage.Text = "Loading Cities ...";
+                GetAllCities();
 
-                while (!asyncResult.IsCompleted)
-                {
-                    Application.DoEvents();
-                }
+                Thread.Sleep(1000);
 
-                if (string.IsNullOrEmpty(result))
-                {
-                    Audit($"Loaded All Persons. {persons.Count} Records", method, LINE(), AuditSeverity.Information);
-                }
-                else
-                {
-                    Audit($"Failed Loading All Persons. Loaded {persons.Count} Records. {result}", method, LINE(), AuditSeverity.Warning);
-                }
-
-
-                asyncResult = Task.Run(() => bll.GetAllCountries(out countries, out result));
-
-                while (!asyncResult.IsCompleted)
-                {
-                    Application.DoEvents();
-                }
-
-                if (string.IsNullOrEmpty(result))
-                {
-                    Audit($"Loaded All Countries. {countries.Count()} Records", method, LINE(), AuditSeverity.Information);
-                }
-                else
-                {
-                    Audit($"Failed Loading All Countries. Loaded {countries.Count()} Records. {result}", method, LINE(), AuditSeverity.Warning);
-                }
-
-
-                asyncResult = Task.Run(() => bll.GetAllCities(out cities, out result));
-
-                while (!asyncResult.IsCompleted)
-                {
-                    Application.DoEvents();
-                }
-
-                if (string.IsNullOrEmpty(result))
-                {
-                    Audit($"Loaded All Cities. {cities.Count()} Records", method, LINE(), AuditSeverity.Information);
-                }
-                else
-                {
-                    Audit($"Failed Loading All Cities. Loaded {cities.Count()} Records. {result}", method, LINE(), AuditSeverity.Warning);
-                }
+                pbPercentage.Visible = false;
+                lblPercentage.Visible = false;
+                lblMessage.Visible = false;                
             }
             catch (Exception ex)
             {
@@ -366,247 +324,238 @@ namespace People_Browser
             }
             else
             {
-                pbProgress.Value = value;
+                pbPercentage.Value = value;
             }
         }
 
         #endregion
 
         #endregion
+        
+        #region Get
 
-        //private bool OpenConnection()
-        //{
-        //    try
-        //    {
-        //        m_PersonDb = new List<Types.Person>();
+        private bool GetAllPersons()
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+            string result = string.Empty;
 
-        //        string myConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;";
-        //        string sPath = "H:\\Stuff\\Db";
-        //        string sDataSource = "Data Source=" + sPath + "\\TZ092005.mdb";
+            try
+            {
+                IAsyncResult asyncResult = Task.Run(() => bll.GetAllPersons(out persons, out result));
 
-        //        myConnectionString += sDataSource;
+                while (!asyncResult.IsCompleted)
+                {
+                    Application.DoEvents();
+                }
 
-        //        m_OleDbConnection = new OleDbConnection();
-        //        m_OleDbConnection.ConnectionString = myConnectionString;
-        //        m_OleDbConnection.Open();
+                if (string.IsNullOrEmpty(result))
+                {
+                    Audit($"Loaded All Persons. {persons.Count} Records", method, LINE(), AuditSeverity.Information);
+                }
+                else
+                {
+                    Audit($"Failed Loading All Persons. Loaded {persons.Count} Records. {result}", method, LINE(), AuditSeverity.Warning);
+                }
 
-        //        return true;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return false;
-        //    }
-        //}
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
 
-        //private bool CloseConnection()
-        //{
-        //    try
-        //    {
-        //        m_OleDbConnection.Close();
+                return false;   
+            }
+        }
 
-        //        return true;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return false;
-        //    }
-        //}
+        private bool GetAllCountries()
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+            string result = string.Empty;
 
-        //private void Audit(string sLine, string sMethod, Enums.AuditSeverity asAuditSeverity)
-        //{
-        //    Console.WriteLine("[" + sMethod + "]:<" + asAuditSeverity + "> " + sLine);
-        //}
+            try
+            {
+                IAsyncResult asyncResult = Task.Run(() => bll.GetAllCountries(out countries, out result));
 
-        //private void Start()
-        //{
-        //    try
-        //    {
-        //        OpenConnection();
+                while (!asyncResult.IsCompleted)
+                {
+                    Application.DoEvents();
+                }
 
-        //        string query = "Select count (*) From M";
-        //        OleDbCommand command = new OleDbCommand(query, m_OleDbConnection);
-        //        int iNumberOfRecords = int.Parse(command.ExecuteScalar().ToString());
+                if (string.IsNullOrEmpty(result))
+                {
+                    Audit($"Loaded All Countries. {countries.Count()} Records", method, LINE(), AuditSeverity.Information);
+                }
+                else
+                {
+                    Audit($"Failed Loading All Countries. Loaded {countries.Count()} Records. {result}", method, LINE(), AuditSeverity.Warning);
+                }
 
-        //        query = "Select * From M";
-        //        command = new OleDbCommand(query, m_OleDbConnection);
-        //        OleDbDataReader reader = command.ExecuteReader();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
 
-        //        int iPersonCounter = 0;
+                return false;
+            }
+        }
 
-        //        while (reader.Read())
-        //        {
-        //            Types.Person p = new Types.Person();
+        private bool GetAllCities()
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+            string result = string.Empty;
 
-        //            int iValue;
+            try
+            {
+                IAsyncResult asyncResult = Task.Run(() => bll.GetAllCities(out cities, out result));
 
-        //            p.ID = int.TryParse(reader["ID"].ToString(), out iValue) ? iValue : Constants.NONE;
-        //            if (p.ID == Constants.NONE)
-        //            {
-        //                continue;
-        //            }
+                while (!asyncResult.IsCompleted)
+                {
+                    Application.DoEvents();
+                }
 
-        //            //p.MotherID = int.TryParse(reader["ID_MOTHER"].ToString(), out iValue) ? iValue : Constants.NONE;
-        //            //p.FatherID = int.TryParse(reader["ID_FATHER"].ToString(), out iValue) ? iValue : Constants.NONE;
+                if (string.IsNullOrEmpty(result))
+                {
+                    Audit($"Loaded All Cities. {cities.Count()} Records", method, LINE(), AuditSeverity.Information);
+                }
+                else
+                {
+                    Audit($"Failed Loading All Cities. Loaded {cities.Count()} Records. {result}", method, LINE(), AuditSeverity.Warning);
+                }
 
-        //            //if (LegalId(p.FatherID) || LegalId(p.MotherID))
-        //            //{
-        //            //    p.Sibling = GetSiblings(p);
-        //            //}
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
 
-        //            p.Sex = (int.Parse(reader["SEX"].ToString()) == 1) ? true : false;
+                return false;
+            }
+        }
 
-        //            p.Family = reader["L_NAME"].ToString();
-        //            p.Name = reader["F_NAME"].ToString();
-        //            p.OldFamily = reader["F_NAME_OLD"].ToString();
+        private bool GetSiblings(int personId, out List<int> siblingsIds, out string result)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
 
-        //            p.Descendant = GetDescendants(p);
+            List<Person> siblings;
 
-        //            m_PersonDb.Add(p);
-        //            double dValue = ((double)iPersonCounter / (double)iNumberOfRecords) * 10000D;
+            siblingsIds = null;
+            result = string.Empty;
 
-        //            lblPercentage.Text = ((int)(dValue / 100D)).ToString() + "%";
+            try
+            {
+                if ((persons == null) || (persons.Count == 0))
+                {
+                    result = "Persons List Is Null Or Empty";
 
-        //            pbPersons.Value = (int)(dValue);
+                    return false;
+                }
 
-        //            iPersonCounter++;
+                Person person = persons.First(currentPerson => currentPerson.Id == personId);
+                if (person == null)
+                {
+                    result = $"Person With ID[{personId}] not Found";
 
-        //            Application.DoEvents();
-        //        }
+                    return false;
+                }
 
-        //        CloseConnection();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //}
+                if ((person.MotherId == Constants.NONE) && (person.FatherId != Constants.NONE))
+                {
+                    siblings = persons.Where(currentPerson => currentPerson.FatherId == person.FatherId).ToList();
+                }
+                else
+                {
+                    if ((person.MotherId != Constants.NONE) && (person.FatherId == Constants.NONE))
+                    {
+                        siblings = persons.Where(currentPerson => currentPerson.MotherId == person.MotherId).ToList();
+                    }
+                    else
+                    {
+                        siblings = persons.Where(currentPerson => ((currentPerson.MotherId == person.MotherId) && 
+                                                                   (currentPerson.FatherId == person.FatherId))).ToList();
+                    }
+                }
 
-        //private bool LegalId(int iId)
-        //{
-        //    if ((iId == Constants.NONE) || (iId == 0))
-        //    {
-        //        return false;
-        //    }
+                siblingsIds = siblings.Select(sibling => sibling.Id).ToList();
 
-        //    return true;
-        //}
+                return true;
+            }
+            catch (Exception e)
+            {
+                Audit(e.Message, method, LINE(), AuditSeverity.Error);
 
-        //private List<Types.Person> GetSiblings(Types.Person pPerson)
-        //{
-        //    string sQuery;
-        //    string sMethod = MethodBase.GetCurrentMethod().Name;
+                return false;
+            }
+        }
 
-        //    try
-        //    {
-        //        if ((pPerson.MotherID == Constants.NONE) && (pPerson.FatherID != Constants.NONE))
-        //        {
-        //            sQuery = "Select * FROM M WHERE ID_FATHER=" + pPerson.FatherID + " ";
-        //        }
-        //        else
-        //        {
-        //            if ((pPerson.MotherID != Constants.NONE) && (pPerson.FatherID == Constants.NONE))
-        //            {
-        //                sQuery = "Select * FROM M WHERE ID_MOTHER=" + pPerson.MotherID + " ";
-        //            }
-        //            else
-        //            {
-        //                sQuery = "Select * FROM M WHERE ID_FATHER=" + pPerson.FatherID + " AND ID_MOTHER=" + pPerson.MotherID + " ";
-        //            }
-        //        }
+        private bool GetDescendants(int personId, out List<int> descendantsIds, out string result)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
 
-        //        OleDbCommand command = new OleDbCommand(sQuery, m_OleDbConnection);
-        //        OleDbDataReader reader = command.ExecuteReader();
+            List<Person> descendants;
 
-        //        List<Types.Person> Sibling = new List<Types.Person>();
+            descendantsIds = null;
+            result = string.Empty;
 
-        //        while (reader.Read())
-        //        {
-        //            Types.Person p = new Types.Person();
+            try
+            {
+                if ((persons == null) || (persons.Count == 0))
+                {
+                    result = "Persons List Is Null Or Empty";
 
-        //            int iValue;
+                    return false;
+                }
 
-        //            p.ID = int.TryParse(reader["ID"].ToString(), out iValue) ? iValue : Constants.NONE;
-        //            if (p.ID == Constants.NONE)
-        //            {
-        //                continue;
-        //            }
+                Person person = persons.First(currentPerson => currentPerson.Id == personId);
+                if (person == null)
+                {
+                    result = $"Person With ID[{personId}] not Found";
 
-        //            p.MotherID = int.TryParse(reader["ID_MOTHER"].ToString(), out iValue) ? iValue : Constants.NONE;
-        //            p.FatherID = int.TryParse(reader["ID_FATHER"].ToString(), out iValue) ? iValue : Constants.NONE;
+                    return false;
+                }
 
-        //            p.Sex = (int.Parse(reader["SEX"].ToString()) == 1) ? true : false;
+                switch (person.Sex)
+                {
+                    case PersonSex.Male:
+                        descendants = persons.Where(currentPerson => currentPerson.FatherId == person.Id).ToList();
+                        break;
 
-        //            p.Family = reader["L_NAME"].ToString();
-        //            p.Name = reader["F_NAME"].ToString();
-        //            p.OldFamily = reader["F_NAME_OLD"].ToString();
+                    case PersonSex.Female:
+                        descendants = persons.Where(currentPerson => currentPerson.MotherId == person.Id).ToList();
+                        break;
 
-        //            Sibling.Add(p);
-        //        }
+                    default:
+                        result = $"Person With ID[{person}] Has No Sex Defined";
+                        return false;
+                }
 
-        //        return Sibling;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
+                descendantsIds = descendants.Select(descendant => descendant.Id).ToList();
 
-        //        return null;
-        //    }
-        //}
+                return true;
+            }
+            catch (Exception e)
+            {
+                Audit(e.Message, method, LINE(), AuditSeverity.Error);
 
-        //private List<Types.Person> GetDescendants(Types.Person pPerson)
-        //{
-        //    string sQuery;
-        //    string sMethod = MethodBase.GetCurrentMethod().Name;
+                return false;
+            }
+        }
 
-        //    try
-        //    {
-        //        if (pPerson.Sex == true)
-        //        {
-        //            sQuery = "Select * FROM M WHERE ID_FATHER=" + pPerson.ID + " ";
-        //        }
-        //        else
-        //        {
-        //            sQuery = "Select * FROM M WHERE ID_MOTHER=" + pPerson.ID + " ";
-        //        }
+        #endregion
 
-        //        OleDbCommand command = new OleDbCommand(sQuery, m_OleDbConnection);
-        //        OleDbDataReader reader = command.ExecuteReader();
+        #region Utils
 
-        //        List<Types.Person> Descendants = new List<Types.Person>();
+        private bool LegalId(int iId)
+        {
+            if ((iId == Constants.NONE) || (iId == 0))
+            {
+                return false;
+            }
 
-        //        while (reader.Read())
-        //        {
-        //            Types.Person p = new Types.Person();
+            return true;
+        }
 
-        //            int iValue;
-
-        //            p.ID = int.TryParse(reader["ID"].ToString(), out iValue) ? iValue : Constants.NONE;
-        //            if (p.ID == Constants.NONE)
-        //            {
-        //                continue;
-        //            }
-
-        //            p.MotherID = int.TryParse(reader["ID_MOTHER"].ToString(), out iValue) ? iValue : Constants.NONE;
-        //            p.FatherID = int.TryParse(reader["ID_FATHER"].ToString(), out iValue) ? iValue : Constants.NONE;
-
-        //            p.Sex = (int.Parse(reader["SEX"].ToString()) == 1) ? true : false;
-
-        //            p.Family = reader["L_NAME"].ToString();
-        //            p.Name = reader["F_NAME"].ToString();
-        //            p.OldFamily = reader["F_NAME_OLD"].ToString();
-
-        //            Descendants.Add(p);
-        //        }
-
-        //        return Descendants;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Audit(e.Message, sMethod, Enums.AuditSeverity.Error);
-
-        //        return null;
-        //    }
-        //}
+        #endregion        
 
         #region Events Handlers
 
