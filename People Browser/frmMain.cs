@@ -29,9 +29,11 @@ namespace People_Browser
 
         private Bll bll;
         
-        private List<Person> Persons;
+        private List<Person> persons;
 
         private Countries countries;
+        
+        private Cities cities;
 
         private bool AuditOn;
 
@@ -264,7 +266,7 @@ namespace People_Browser
                 //}
                 IAsyncResult asyncResult;
 
-                asyncResult = Task.Run(() => bll.GetAllPersons(out Persons, out result));
+                asyncResult = Task.Run(() => bll.GetAllPersons(out persons, out result));
 
                 while (!asyncResult.IsCompleted)
                 {
@@ -273,11 +275,11 @@ namespace People_Browser
 
                 if (string.IsNullOrEmpty(result))
                 {
-                    Audit($"Loaded All Persons. {Persons.Count} Records", method, LINE(), AuditSeverity.Information);
+                    Audit($"Loaded All Persons. {persons.Count} Records", method, LINE(), AuditSeverity.Information);
                 }
                 else
                 {
-                    Audit($"Failed Loading All Persons. Loaded {Persons.Count} Records. {result}", method, LINE(), AuditSeverity.Warning);
+                    Audit($"Failed Loading All Persons. Loaded {persons.Count} Records. {result}", method, LINE(), AuditSeverity.Warning);
                 }
 
 
@@ -295,6 +297,23 @@ namespace People_Browser
                 else
                 {
                     Audit($"Failed Loading All Countries. Loaded {countries.Count()} Records. {result}", method, LINE(), AuditSeverity.Warning);
+                }
+
+
+                asyncResult = Task.Run(() => bll.GetAllCities(out cities, out result));
+
+                while (!asyncResult.IsCompleted)
+                {
+                    Application.DoEvents();
+                }
+
+                if (string.IsNullOrEmpty(result))
+                {
+                    Audit($"Loaded All Cities. {cities.Count()} Records", method, LINE(), AuditSeverity.Information);
+                }
+                else
+                {
+                    Audit($"Failed Loading All Cities. Loaded {cities.Count()} Records. {result}", method, LINE(), AuditSeverity.Warning);
                 }
             }
             catch (Exception ex)

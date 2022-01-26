@@ -476,14 +476,8 @@ namespace People.Browser.BLL
                 tmrIntervalTimer.Interval = 2000;
                 tmrIntervalTimer.Elapsed += new ElapsedEventHandler(tmrIntervalTimer_Elapsed);
 
-                //if (!Dal.ExecuteReaderQuery($"SELECT COUNT (*) FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
-                //{
-                //    return false;
-                //}
-
                 sql = "SELECT COUNT(*) FROM COUNTRY";
                 if (!dal.ExecuteScalarQuery(sql, out int numberOfCountries))
-                //if (!Dal.ExecuteReaderQuery($"SELECT * FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
                 {
                     result = $"Failed Preforming SQL[{sql}]";
 
@@ -494,7 +488,6 @@ namespace People.Browser.BLL
 
                 sql = "SELECT * FROM COUNTRY";
                 if (!dal.ExecuteReaderQuery(sql, out oddrOleDbDataReader))
-                //if (!Dal.ExecuteReaderQuery($"SELECT * FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
                 {
                     result = $"Failed Preforming SQL[{sql}]";
 
@@ -542,6 +535,95 @@ namespace People.Browser.BLL
             catch (Exception e)
             {
                 result = $"Count[{count}] Country ID[{countryId}] {e.Message}";
+
+                return false;
+            }
+            finally
+            {
+                tmrIntervalTimer.Stop();
+            }
+        }
+
+        public bool GetAllCities(out Cities allCities, out string result)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+            string sql;
+
+            int count = 0;
+            int cityId = 0;
+
+            OleDbDataReader oddrOleDbDataReader;
+
+
+            result = string.Empty;
+
+            allCities = null;
+
+            try
+            {
+                tmrIntervalTimer = new System.Timers.Timer();
+                tmrIntervalTimer.Interval = 2000;
+                tmrIntervalTimer.Elapsed += new ElapsedEventHandler(tmrIntervalTimer_Elapsed);
+
+                sql = "SELECT COUNT(*) FROM CITY";
+                if (!dal.ExecuteScalarQuery(sql, out int numberOfCities))
+                {
+                    result = $"Failed Preforming SQL[{sql}]";
+
+                    return false;
+                }
+
+                Audit($"{numberOfCities} Cities In Total", method, LINE(), AuditSeverity.Information);
+
+                sql = "SELECT * FROM CITY";
+                if (!dal.ExecuteReaderQuery(sql, out oddrOleDbDataReader))
+                //if (!Dal.ExecuteReaderQuery($"SELECT * FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
+                {
+                    result = $"Failed Preforming SQL[{sql}]";
+
+                    return false;
+                }
+
+                allCities = new Cities();
+
+                tmrIntervalTimer.Start();
+
+                count = 0;
+                while (oddrOleDbDataReader.Read())
+                {
+                    City city = new City();
+
+                    try
+                    {
+                        cityId = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out cityId) ? cityId : Constants.NONE;
+                        city.Id = cityId;
+
+                        city.Name = oddrOleDbDataReader["NAME_CITY"].ToString();
+                    }
+                    catch (Exception ex)
+                    {
+                        Audit($"Error For City ID[{cityId}]. {ex.Message}", method, LINE(), AuditSeverity.Error);
+
+                        continue;
+                    }
+
+                    if (allCities.Add(city, out result))
+                    {
+                        ++count;
+                    }
+                    else
+                    {
+                        Audit($"Failed Adding City. {result}", method, LINE(), AuditSeverity.Warning);
+                    }
+
+                    loadAllPercentage = (100 * count) / numberOfCities;
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = $"Count[{count}] City ID[{cityId}] {e.Message}";
 
                 return false;
             }

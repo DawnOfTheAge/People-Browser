@@ -10,7 +10,7 @@ namespace People.Browser.Common
     {
         #region Data Members
 
-        private List<City> cityList;
+        private List<City> cities;
 
         #endregion
 
@@ -18,7 +18,7 @@ namespace People.Browser.Common
 
         public Cities()
         {
-            cityList = new List<City>();
+            cities = new List<City>();
         }
 
         #endregion
@@ -31,14 +31,14 @@ namespace People.Browser.Common
 
             try
             {
-                if (cityList == null)
+                if (cities == null)
                 {
                     result = "Citeis List Is Null";
 
                     return false;
                 }
 
-                cityList.Add(city);
+                cities.Add(city);
 
                 return true;
             }
@@ -57,14 +57,14 @@ namespace People.Browser.Common
 
             try
             {
-                if ((cityList == null) || (cityList.Count == 0))
+                if ((cities == null) || (cities.Count == 0))
                 {
                     result = "Citeis List Is Null Or Empty";
 
                     return false;
                 }
 
-                City city = cityList.First(currentCity => currentCity.Id == cityId);
+                City city = cities.First(currentCity => currentCity.Id == cityId);
                 cityName = city.Name;   
 
                 return true;
@@ -75,6 +75,11 @@ namespace People.Browser.Common
 
                 return false;
             }
+        }
+
+        public object Count()
+        {
+            return (cities == null) ? Constants.NONE : cities.Count;
         }
 
         #endregion

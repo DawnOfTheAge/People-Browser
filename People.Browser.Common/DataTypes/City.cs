@@ -18,6 +18,12 @@ namespace People.Browser.Common
 
         #region Constructor
 
+        public City()
+        {
+            Id = 0;
+            Name = string.Empty;
+        }
+
         public City(int id, string name)
         {
             Id = id;
