@@ -455,7 +455,7 @@ namespace People.Browser.BLL
             }
         }
 
-        public bool GetAllCountries(out List<Country> allCountries, out string result)
+        public bool GetAllCountries(out Countries allCountries, out string result)
         {
             string method = MethodBase.GetCurrentMethod().Name;
             string sql;
@@ -482,7 +482,7 @@ namespace People.Browser.BLL
                 //}
 
                 sql = "SELECT COUNT(*) FROM COUNTRY";
-                if (!dal.ExecuteScalarQuery(sql, out int numberOfPersons))
+                if (!dal.ExecuteScalarQuery(sql, out int numberOfCountries))
                 //if (!Dal.ExecuteReaderQuery($"SELECT * FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
                 {
                     result = $"Failed Preforming SQL[{sql}]";
@@ -490,7 +490,7 @@ namespace People.Browser.BLL
                     return false;
                 }
 
-                Audit($"{numberOfPersons} Persons In Total", method, LINE(), AuditSeverity.Information);
+                Audit($"{numberOfCountries} Countries In Total", method, LINE(), AuditSeverity.Information);
 
                 sql = "SELECT * FROM COUNTRY";
                 if (!dal.ExecuteReaderQuery(sql, out oddrOleDbDataReader))
@@ -501,7 +501,7 @@ namespace People.Browser.BLL
                     return false;
                 }
 
-                allCountries = new List<Country>();
+                allCountries = new Countries();
 
                 tmrIntervalTimer.Start();
 
@@ -515,8 +515,8 @@ namespace People.Browser.BLL
                         countryId = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out countryId) ? countryId : Constants.NONE;
                         country.Id = countryId;
 
-                        country.Name = oddrOleDbDataReader["NAME"].ToString();
-                        country.NameInEnglish = oddrOleDbDataReader["ENG_NAME"].ToString();
+                        country.Name = oddrOleDbDataReader["NAME_HEB"].ToString();
+                        country.NameInEnglish = oddrOleDbDataReader["NAME_ENG"].ToString();
                     }
                     catch (Exception ex)
                     {
@@ -525,11 +525,16 @@ namespace People.Browser.BLL
                         continue;
                     }
 
-                    allCountries.Add(country);
+                    if (allCountries.Add(country, out result))
+                    {
+                        ++count;
+                    }
+                    else
+                    {
+                        Audit($"Failed Adding Country. {result}", method, LINE(), AuditSeverity.Warning);
+                    }
 
-                    ++count;
-
-                    loadAllPercentage = (100 * count) / numberOfPersons;
+                    loadAllPercentage = (100 * count) / numberOfCountries;
                 }
 
                 return true;

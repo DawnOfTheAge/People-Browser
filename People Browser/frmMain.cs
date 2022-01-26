@@ -30,7 +30,9 @@ namespace People_Browser
         private Bll bll;
         
         private List<Person> Persons;
-        
+
+        private Countries countries;
+
         private bool AuditOn;
 
         private string databaseFilePath;
@@ -276,6 +278,23 @@ namespace People_Browser
                 else
                 {
                     Audit($"Failed Loading All Persons. Loaded {Persons.Count} Records. {result}", method, LINE(), AuditSeverity.Warning);
+                }
+
+
+                asyncResult = Task.Run(() => bll.GetAllCountries(out countries, out result));
+
+                while (!asyncResult.IsCompleted)
+                {
+                    Application.DoEvents();
+                }
+
+                if (string.IsNullOrEmpty(result))
+                {
+                    Audit($"Loaded All Countries. {countries.Count()} Records", method, LINE(), AuditSeverity.Information);
+                }
+                else
+                {
+                    Audit($"Failed Loading All Countries. Loaded {countries.Count()} Records. {result}", method, LINE(), AuditSeverity.Warning);
                 }
             }
             catch (Exception ex)

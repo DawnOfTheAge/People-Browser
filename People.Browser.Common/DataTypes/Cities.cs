@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace People.Browser.Common.DataTypes
-{
+namespace People.Browser.Common
+{ 
     public class Cities
     {
         #region Data Members
