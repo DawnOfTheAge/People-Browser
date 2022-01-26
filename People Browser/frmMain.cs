@@ -216,6 +216,7 @@ namespace People_Browser
         private void mnuConnect_Click(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
+            string result = string.Empty;
 
             try
             {
@@ -250,6 +251,7 @@ namespace People_Browser
 
                 bll = new Bll();
                 bll.Message += Bll_Message;
+                bll.LoadAllPersonsProgress += Bll_LoadAllPersonsProgress;
                 bll.SetConnectionString(databaseConnectionString);
 
                 //if (!m_Bll.GetAllPersons(out Persons, out string result))
@@ -260,15 +262,36 @@ namespace People_Browser
                 //}
                 IAsyncResult asyncResult;
 
-                asyncResult = Task.Run(() => bll.GetAllPersons(out Persons, out string result));
+                asyncResult = Task.Run(() => bll.GetAllPersons(out Persons, out result));
 
                 while (!asyncResult.IsCompleted)
                 {
                     Application.DoEvents();
                 }
 
+                if (string.IsNullOrEmpty(result))
+                {
+                    Audit($"Loaded All Persons. {Persons.Count} Records", method, LINE(), AuditSeverity.Information);
+                }
+                else
+                {
+                    Audit($"Failed Loading All Persons. Loaded {Persons.Count} Records. {result}", method, LINE(), AuditSeverity.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
+        }
 
-                Audit("Loaded All Persons", method, LINE(), AuditSeverity.Warning);
+        private void Bll_LoadAllPersonsProgress(int percentage)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            try
+            {
+                SetProgressBar(percentage);
+                SetProgressNumber(percentage);
             }
             catch (Exception ex)
             {
@@ -282,7 +305,35 @@ namespace People_Browser
         }
 
         #endregion
-        
+
+        #region Invoke Methods
+
+        private void SetProgressNumber(int value)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new OneIntegerParameterDelegate(SetProgressNumber), value);
+            }
+            else
+            {
+                lblPercentage.Text = $"{value}%";
+            }
+        }
+
+        private void SetProgressBar(int value)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new OneIntegerParameterDelegate(SetProgressBar), value);
+            }
+            else
+            {
+                pbProgress.Value = value;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         //private bool OpenConnection()

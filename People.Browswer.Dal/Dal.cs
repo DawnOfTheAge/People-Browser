@@ -110,24 +110,24 @@ namespace People.Browser.DAL
             }
         }
 
-        public bool ExecuteScalarQuery(string sSql, out int iScalar)
+        public bool ExecuteScalarQuery(string sql, out int scalar)
         {
             OleDbCommand odcOleDbCommand;
 
             string method = MethodBase.GetCurrentMethod().Name;
 
 
-            iScalar = Constants.NONE;
+            scalar = Constants.NONE;
 
             if (m_OleDbConnection.State != ConnectionState.Open)
             {
                 return false;
             }
 
-            odcOleDbCommand = new OleDbCommand(sSql, m_OleDbConnection);
+            odcOleDbCommand = new OleDbCommand(sql, m_OleDbConnection);
             try
             {
-                bool bRc = int.TryParse(odcOleDbCommand.ExecuteScalar().ToString(), out iScalar);
+                bool bRc = int.TryParse(odcOleDbCommand.ExecuteScalar().ToString(), out scalar);
 
                 return bRc;
             }

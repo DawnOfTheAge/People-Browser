@@ -4,6 +4,8 @@ using People.Browser.Common;
 using System.Data.OleDb;
 using System.Reflection;
 using People.Browser.DAL;
+using System.Timers;
+using System.Threading;
 
 namespace People.Browser.BLL
 {
@@ -12,12 +14,17 @@ namespace People.Browser.BLL
         #region Events
 
         public event AuditMessage Message;
+        public event LoadAllPersonsProgressMessage LoadAllPersonsProgress;
 
         #endregion
 
         #region Data Members
 
         private Dal dal;
+
+        private System.Timers.Timer tmrIntervalTimer;
+
+        private int loadAllPersonsPercentage;
 
         #endregion
 
@@ -207,6 +214,9 @@ namespace People.Browser.BLL
 
         public bool GetAllPersons(out List<Person> allPersons, out string result)
         {
+            string method = MethodBase.GetCurrentMethod().Name;
+            string sql;
+
             int count = 0;
             int personId = 0;
 
@@ -219,62 +229,87 @@ namespace People.Browser.BLL
 
             try
             {
+                tmrIntervalTimer = new System.Timers.Timer();
+                tmrIntervalTimer.Interval = 2000;
+                tmrIntervalTimer.Elapsed += new ElapsedEventHandler(tmrIntervalTimer_Elapsed);
+
                 //if (!Dal.ExecuteReaderQuery($"SELECT COUNT (*) FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
                 //{
                 //    return false;
                 //}
 
-                if (!dal.ExecuteReaderQuery($"SELECT * FROM M", out oddrOleDbDataReader))
+                sql = "SELECT COUNT(*) FROM M";
+                if (!dal.ExecuteScalarQuery(sql, out int numberOfPersons))
                 //if (!Dal.ExecuteReaderQuery($"SELECT * FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
                 {
-                    result = "Failed Preforming SQL";
+                    result = $"Failed Preforming SQL[{sql}]";
+
+                    return false;
+                }
+
+                Audit($"{numberOfPersons} Persons In Total", method, LINE(), AuditSeverity.Information);
+
+                sql = "SELECT * FROM M";
+                if (!dal.ExecuteReaderQuery(sql, out oddrOleDbDataReader))
+                //if (!Dal.ExecuteReaderQuery($"SELECT * FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
+                {
+                    result = $"Failed Preforming SQL[{sql}]";
+
                     return false;
                 }
 
                 allPersons = new List<Person>();
+
+                tmrIntervalTimer.Start();
 
                 count = 0;
                 while (oddrOleDbDataReader.Read())
                 {
                     Person person = new Person();
 
-                    personId = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out personId) ? personId : Constants.NONE;
-                    person.ID = personId;
-
-                    int personSex = int.TryParse(oddrOleDbDataReader["SEX"].ToString(), out personSex) ? personSex : Constants.NONE;
-                    switch (personSex)
+                    try
                     {
-                        case 1:
-                            person.Sex = PersonSex.Male;
-                            break;
+                        personId = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out personId) ? personId : Constants.NONE;
+                        person.ID = personId;
 
-                        case 2:
-                            person.Sex = PersonSex.Female;
-                            break;
+                        int personSex = int.TryParse(oddrOleDbDataReader["SEX"].ToString(), out personSex) ? personSex : Constants.NONE;
+                        switch (personSex)
+                        {
+                            case 1:
+                                person.Sex = PersonSex.Male;
+                                break;
 
-                        default:
-                            person.Sex = PersonSex.Unknown;
-                            break;
+                            case 2:
+                                person.Sex = PersonSex.Female;
+                                break;
+
+                            default:
+                                person.Sex = PersonSex.Unknown;
+                                break;
+                        }
+
+                        person.Family = oddrOleDbDataReader["L_NAME"].ToString();
+                        person.Name = oddrOleDbDataReader["F_NAME"].ToString();
+                        person.OldFamily = oddrOleDbDataReader["F_NAME_OLD"].ToString();
+
+                        int fatherId = int.TryParse(oddrOleDbDataReader["ID_FATHER"].ToString(), out fatherId) ? fatherId : Constants.NONE;
+                        person.FatherId = fatherId;
+                        person.FatherName = oddrOleDbDataReader["FATHER_NAME"].ToString();
+
+                        int motherId = int.TryParse(oddrOleDbDataReader["ID_MOTHER"].ToString(), out motherId) ? motherId : Constants.NONE;
+                        person.MotherId = motherId;
+                        person.MotherName = oddrOleDbDataReader["MOTHER_NAME"].ToString();
                     }
-
-                    person.Family = oddrOleDbDataReader["L_NAME"].ToString();
-                    person.Name = oddrOleDbDataReader["F_NAME"].ToString();
-                    person.OldFamily = oddrOleDbDataReader["F_NAME_OLD"].ToString();
-
-                    int fatherId = int.TryParse(oddrOleDbDataReader["ID_FATHER"].ToString(), out fatherId) ? fatherId : Constants.NONE;
-                    person.FatherId = fatherId;
-                    person.FatherName = oddrOleDbDataReader["FATHER_NAME"].ToString();
-
-                    int motherId = int.TryParse(oddrOleDbDataReader["ID_MOTHER"].ToString(), out motherId) ? motherId : Constants.NONE;
-                    person.MotherId = motherId;
-                    person.MotherName = oddrOleDbDataReader["MOTHER_NAME"].ToString();
+                    catch (Exception)
+                    {
+                        continue;
+                    }
 
                     allPersons.Add(person);
 
                     ++count;
-                    //Console.WriteLine($"Number: {++count}");
 
-                    //Thread.Sleep(1);
+                    loadAllPersonsPercentage = (100 * count) / numberOfPersons;
                 }
 
                 return true;
@@ -284,6 +319,10 @@ namespace People.Browser.BLL
                 result = $"Count[{count}] Person ID[{personId}] {e.Message}";
 
                 return false;
+            }
+            finally
+            {
+                tmrIntervalTimer.Stop();
             }
         }
 
@@ -415,6 +454,19 @@ namespace People.Browser.BLL
         }
 
         #endregion
+
+        #endregion
+
+        #region Timers
+
+        void tmrIntervalTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            tmrIntervalTimer.Stop();
+
+            LoadAllPersonsProgress?.Invoke(loadAllPersonsPercentage);
+
+            tmrIntervalTimer.Start();
+        }
 
         #endregion
 
