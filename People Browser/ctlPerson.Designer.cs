@@ -1,0 +1,268 @@
+﻿namespace People.Browser.UI
+{
+    partial class btn
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.lblName = new System.Windows.Forms.Label();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.dtBirthDate = new System.Windows.Forms.DateTimePicker();
+            this.lblHouse = new System.Windows.Forms.Label();
+            this.lblStreet = new System.Windows.Forms.Label();
+            this.lblCity = new System.Windows.Forms.Label();
+            this.lblBirthDate = new System.Windows.Forms.Label();
+            this.lblFamily = new System.Windows.Forms.Label();
+            this.lblOldFamily = new System.Windows.Forms.Label();
+            this.txtOldFamily = new System.Windows.Forms.TextBox();
+            this.txtFamily = new System.Windows.Forms.TextBox();
+            this.gbName = new System.Windows.Forms.GroupBox();
+            this.txtStreet = new System.Windows.Forms.TextBox();
+            this.gbAddress = new System.Windows.Forms.GroupBox();
+            this.cboCity = new System.Windows.Forms.ComboBox();
+            this.nudHouse = new System.Windows.Forms.NumericUpDown();
+            this.lblCountry = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.gbName.SuspendLayout();
+            this.gbAddress.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHouse)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Location = new System.Drawing.Point(211, 31);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(51, 13);
+            this.lblName.TabIndex = 0;
+            this.lblName.Text = "שם פרטי";
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(14, 28);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(147, 20);
+            this.txtName.TabIndex = 1;
+            // 
+            // dtBirthDate
+            // 
+            this.dtBirthDate.Location = new System.Drawing.Point(21, 263);
+            this.dtBirthDate.Name = "dtBirthDate";
+            this.dtBirthDate.Size = new System.Drawing.Size(197, 20);
+            this.dtBirthDate.TabIndex = 3;
+            // 
+            // lblHouse
+            // 
+            this.lblHouse.AutoSize = true;
+            this.lblHouse.Location = new System.Drawing.Point(237, 78);
+            this.lblHouse.Name = "lblHouse";
+            this.lblHouse.Size = new System.Drawing.Size(26, 13);
+            this.lblHouse.TabIndex = 5;
+            this.lblHouse.Text = "בית";
+            // 
+            // lblStreet
+            // 
+            this.lblStreet.AutoSize = true;
+            this.lblStreet.Location = new System.Drawing.Point(231, 55);
+            this.lblStreet.Name = "lblStreet";
+            this.lblStreet.Size = new System.Drawing.Size(32, 13);
+            this.lblStreet.TabIndex = 6;
+            this.lblStreet.Text = "רחוב";
+            // 
+            // lblCity
+            // 
+            this.lblCity.AutoSize = true;
+            this.lblCity.Location = new System.Drawing.Point(230, 32);
+            this.lblCity.Name = "lblCity";
+            this.lblCity.Size = new System.Drawing.Size(33, 13);
+            this.lblCity.TabIndex = 7;
+            this.lblCity.Text = "ישוב";
+            // 
+            // lblBirthDate
+            // 
+            this.lblBirthDate.AutoSize = true;
+            this.lblBirthDate.Location = new System.Drawing.Point(224, 266);
+            this.lblBirthDate.Name = "lblBirthDate";
+            this.lblBirthDate.Size = new System.Drawing.Size(69, 13);
+            this.lblBirthDate.TabIndex = 8;
+            this.lblBirthDate.Text = "תאריך לידה";
+            // 
+            // lblFamily
+            // 
+            this.lblFamily.AutoSize = true;
+            this.lblFamily.Location = new System.Drawing.Point(199, 79);
+            this.lblFamily.Name = "lblFamily";
+            this.lblFamily.Size = new System.Drawing.Size(63, 13);
+            this.lblFamily.TabIndex = 9;
+            this.lblFamily.Text = "שם משפחה";
+            // 
+            // lblOldFamily
+            // 
+            this.lblOldFamily.AutoSize = true;
+            this.lblOldFamily.Location = new System.Drawing.Point(177, 55);
+            this.lblOldFamily.Name = "lblOldFamily";
+            this.lblOldFamily.Size = new System.Drawing.Size(85, 13);
+            this.lblOldFamily.TabIndex = 10;
+            this.lblOldFamily.Text = "שם משפחה ישן";
+            // 
+            // txtOldFamily
+            // 
+            this.txtOldFamily.Location = new System.Drawing.Point(14, 52);
+            this.txtOldFamily.Name = "txtOldFamily";
+            this.txtOldFamily.Size = new System.Drawing.Size(147, 20);
+            this.txtOldFamily.TabIndex = 11;
+            // 
+            // txtFamily
+            // 
+            this.txtFamily.Location = new System.Drawing.Point(14, 76);
+            this.txtFamily.Name = "txtFamily";
+            this.txtFamily.Size = new System.Drawing.Size(147, 20);
+            this.txtFamily.TabIndex = 12;
+            // 
+            // gbName
+            // 
+            this.gbName.Controls.Add(this.txtFamily);
+            this.gbName.Controls.Add(this.lblName);
+            this.gbName.Controls.Add(this.txtOldFamily);
+            this.gbName.Controls.Add(this.txtName);
+            this.gbName.Controls.Add(this.lblOldFamily);
+            this.gbName.Controls.Add(this.lblFamily);
+            this.gbName.Location = new System.Drawing.Point(13, 13);
+            this.gbName.Name = "gbName";
+            this.gbName.Size = new System.Drawing.Size(286, 114);
+            this.gbName.TabIndex = 13;
+            this.gbName.TabStop = false;
+            this.gbName.Text = "שם";
+            // 
+            // txtStreet
+            // 
+            this.txtStreet.Location = new System.Drawing.Point(13, 52);
+            this.txtStreet.Name = "txtStreet";
+            this.txtStreet.Size = new System.Drawing.Size(211, 20);
+            this.txtStreet.TabIndex = 14;
+            // 
+            // gbAddress
+            // 
+            this.gbAddress.Controls.Add(this.nudHouse);
+            this.gbAddress.Controls.Add(this.cboCity);
+            this.gbAddress.Controls.Add(this.txtStreet);
+            this.gbAddress.Controls.Add(this.lblHouse);
+            this.gbAddress.Controls.Add(this.lblStreet);
+            this.gbAddress.Controls.Add(this.lblCity);
+            this.gbAddress.Location = new System.Drawing.Point(13, 133);
+            this.gbAddress.Name = "gbAddress";
+            this.gbAddress.Size = new System.Drawing.Size(286, 114);
+            this.gbAddress.TabIndex = 15;
+            this.gbAddress.TabStop = false;
+            this.gbAddress.Text = "כתובת";
+            // 
+            // cboCity
+            // 
+            this.cboCity.FormattingEnabled = true;
+            this.cboCity.Location = new System.Drawing.Point(13, 29);
+            this.cboCity.Name = "cboCity";
+            this.cboCity.Size = new System.Drawing.Size(211, 21);
+            this.cboCity.TabIndex = 15;
+            // 
+            // nudHouse
+            // 
+            this.nudHouse.Location = new System.Drawing.Point(158, 76);
+            this.nudHouse.Name = "nudHouse";
+            this.nudHouse.Size = new System.Drawing.Size(67, 20);
+            this.nudHouse.TabIndex = 16;
+            // 
+            // lblCountry
+            // 
+            this.lblCountry.AutoSize = true;
+            this.lblCountry.Location = new System.Drawing.Point(234, 295);
+            this.lblCountry.Name = "lblCountry";
+            this.lblCountry.Size = new System.Drawing.Size(59, 13);
+            this.lblCountry.TabIndex = 16;
+            this.lblCountry.Text = "ארץ מוצא";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(21, 292);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(197, 21);
+            this.comboBox2.TabIndex = 17;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(206, 352);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(105, 32);
+            this.button1.TabIndex = 18;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // btn
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.lblCountry);
+            this.Controls.Add(this.gbAddress);
+            this.Controls.Add(this.gbName);
+            this.Controls.Add(this.lblBirthDate);
+            this.Controls.Add(this.dtBirthDate);
+            this.Name = "btn";
+            this.Size = new System.Drawing.Size(314, 387);
+            this.gbName.ResumeLayout(false);
+            this.gbName.PerformLayout();
+            this.gbAddress.ResumeLayout(false);
+            this.gbAddress.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudHouse)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.DateTimePicker dtBirthDate;
+        private System.Windows.Forms.Label lblHouse;
+        private System.Windows.Forms.Label lblStreet;
+        private System.Windows.Forms.Label lblCity;
+        private System.Windows.Forms.Label lblBirthDate;
+        private System.Windows.Forms.Label lblFamily;
+        private System.Windows.Forms.Label lblOldFamily;
+        private System.Windows.Forms.TextBox txtOldFamily;
+        private System.Windows.Forms.TextBox txtFamily;
+        private System.Windows.Forms.GroupBox gbName;
+        private System.Windows.Forms.TextBox txtStreet;
+        private System.Windows.Forms.GroupBox gbAddress;
+        private System.Windows.Forms.NumericUpDown nudHouse;
+        private System.Windows.Forms.ComboBox cboCity;
+        private System.Windows.Forms.Label lblCountry;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Button button1;
+    }
+}

@@ -32,6 +32,10 @@
             this.mnuConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.pbPercentage = new System.Windows.Forms.ToolStripProgressBar();
+            this.lblPercentage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblMessage = new System.Windows.Forms.ToolStripStatusLabel();
             this.dgvAudit = new System.Windows.Forms.DataGridView();
             this.colDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSeverity = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,17 +43,28 @@
             this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.pbPercentage = new System.Windows.Forms.ToolStripProgressBar();
-            this.lblPercentage = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblMessage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.personsSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.dgvPersons = new System.Windows.Forms.DataGridView();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFamily = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOldFamily = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBirthDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStreet = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHouse = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBirthCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAudit)).BeginInit();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAudit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.personsSplitContainer)).BeginInit();
+            this.personsSplitContainer.Panel1.SuspendLayout();
+            this.personsSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPersons)).BeginInit();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -59,7 +74,7 @@
             this.mnuExit});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
-            this.mnuMain.Size = new System.Drawing.Size(845, 24);
+            this.mnuMain.Size = new System.Drawing.Size(1212, 24);
             this.mnuMain.TabIndex = 2;
             this.mnuMain.Text = "menuStrip1";
             // 
@@ -86,14 +101,42 @@
             // 
             // splitContainer.Panel1
             // 
+            this.splitContainer.Panel1.Controls.Add(this.personsSplitContainer);
             this.splitContainer.Panel1.Controls.Add(this.statusStrip1);
             // 
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.dgvAudit);
-            this.splitContainer.Size = new System.Drawing.Size(845, 514);
-            this.splitContainer.SplitterDistance = 257;
+            this.splitContainer.Size = new System.Drawing.Size(1212, 673);
+            this.splitContainer.SplitterDistance = 336;
             this.splitContainer.TabIndex = 3;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pbPercentage,
+            this.lblPercentage,
+            this.lblMessage});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 314);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1212, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // pbPercentage
+            // 
+            this.pbPercentage.Name = "pbPercentage";
+            this.pbPercentage.Size = new System.Drawing.Size(100, 16);
+            // 
+            // lblPercentage
+            // 
+            this.lblPercentage.Name = "lblPercentage";
+            this.lblPercentage.Size = new System.Drawing.Size(0, 17);
+            // 
+            // lblMessage
+            // 
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(0, 17);
             // 
             // dgvAudit
             // 
@@ -109,7 +152,7 @@
             this.dgvAudit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAudit.Location = new System.Drawing.Point(0, 0);
             this.dgvAudit.Name = "dgvAudit";
-            this.dgvAudit.Size = new System.Drawing.Size(845, 253);
+            this.dgvAudit.Size = new System.Drawing.Size(1212, 333);
             this.dgvAudit.TabIndex = 1;
             // 
             // colDateTime
@@ -142,38 +185,89 @@
             this.colMessage.HeaderText = "Message";
             this.colMessage.Name = "colMessage";
             // 
-            // statusStrip1
+            // personsSplitContainer
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pbPercentage,
-            this.lblPercentage,
-            this.lblMessage});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 235);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(845, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
+            this.personsSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.personsSplitContainer.Location = new System.Drawing.Point(0, 0);
+            this.personsSplitContainer.Name = "personsSplitContainer";
             // 
-            // pbPercentage
+            // personsSplitContainer.Panel1
             // 
-            this.pbPercentage.Name = "pbPercentage";
-            this.pbPercentage.Size = new System.Drawing.Size(100, 16);
+            this.personsSplitContainer.Panel1.Controls.Add(this.dgvPersons);
+            this.personsSplitContainer.Size = new System.Drawing.Size(1212, 314);
+            this.personsSplitContainer.SplitterDistance = 690;
+            this.personsSplitContainer.TabIndex = 3;
             // 
-            // lblPercentage
+            // dgvPersons
             // 
-            this.lblPercentage.Name = "lblPercentage";
-            this.lblPercentage.Size = new System.Drawing.Size(0, 17);
+            this.dgvPersons.AllowUserToAddRows = false;
+            this.dgvPersons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPersons.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colId,
+            this.colFamily,
+            this.colOldFamily,
+            this.colName,
+            this.colBirthDate,
+            this.colCity,
+            this.colStreet,
+            this.colHouse,
+            this.colBirthCountry});
+            this.dgvPersons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvPersons.Location = new System.Drawing.Point(0, 0);
+            this.dgvPersons.Name = "dgvPersons";
+            this.dgvPersons.Size = new System.Drawing.Size(690, 314);
+            this.dgvPersons.TabIndex = 0;
             // 
-            // lblMessage
+            // colId
             // 
-            this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(0, 17);
+            this.colId.HeaderText = "מספר זהות";
+            this.colId.Name = "colId";
+            // 
+            // colFamily
+            // 
+            this.colFamily.HeaderText = "שם משפחה";
+            this.colFamily.Name = "colFamily";
+            // 
+            // colOldFamily
+            // 
+            this.colOldFamily.HeaderText = "שם משפחה ישן";
+            this.colOldFamily.Name = "colOldFamily";
+            // 
+            // colName
+            // 
+            this.colName.HeaderText = "שם פרטי";
+            this.colName.Name = "colName";
+            // 
+            // colBirthDate
+            // 
+            this.colBirthDate.HeaderText = "תאריך לידה";
+            this.colBirthDate.Name = "colBirthDate";
+            // 
+            // colCity
+            // 
+            this.colCity.HeaderText = "ישוב";
+            this.colCity.Name = "colCity";
+            // 
+            // colStreet
+            // 
+            this.colStreet.HeaderText = "רחוב";
+            this.colStreet.Name = "colStreet";
+            // 
+            // colHouse
+            // 
+            this.colHouse.HeaderText = "מספר";
+            this.colHouse.Name = "colHouse";
+            // 
+            // colBirthCountry
+            // 
+            this.colBirthCountry.HeaderText = "ארץ לידה";
+            this.colBirthCountry.Name = "colBirthCountry";
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(845, 538);
+            this.ClientSize = new System.Drawing.Size(1212, 697);
             this.Controls.Add(this.splitContainer);
             this.Controls.Add(this.mnuMain);
             this.MainMenuStrip = this.mnuMain;
@@ -188,9 +282,13 @@
             this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAudit)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAudit)).EndInit();
+            this.personsSplitContainer.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.personsSplitContainer)).EndInit();
+            this.personsSplitContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPersons)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,6 +310,17 @@
         private System.Windows.Forms.ToolStripProgressBar pbPercentage;
         private System.Windows.Forms.ToolStripStatusLabel lblPercentage;
         private System.Windows.Forms.ToolStripStatusLabel lblMessage;
+        private System.Windows.Forms.SplitContainer personsSplitContainer;
+        private System.Windows.Forms.DataGridView dgvPersons;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFamily;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOldFamily;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBirthDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStreet;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHouse;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBirthCountry;
     }
 }
 
