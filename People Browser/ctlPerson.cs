@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace People.Browser.UI
 {
-    public partial class btn : UserControl
+    public partial class ctlPerson : UserControl
     {
-        public btn()
+        public ctlPerson()
         {
             InitializeComponent();
         }

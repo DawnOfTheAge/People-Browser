@@ -1,6 +1,6 @@
 ﻿namespace People.Browser.UI
 {
-    partial class btn
+    partial class ctlPerson
     {
         /// <summary> 
         /// Required designer variable.
@@ -42,11 +42,11 @@
             this.gbName = new System.Windows.Forms.GroupBox();
             this.txtStreet = new System.Windows.Forms.TextBox();
             this.gbAddress = new System.Windows.Forms.GroupBox();
-            this.cboCity = new System.Windows.Forms.ComboBox();
             this.nudHouse = new System.Windows.Forms.NumericUpDown();
+            this.cboCity = new System.Windows.Forms.ComboBox();
             this.lblCountry = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn = new System.Windows.Forms.Button();
             this.gbName.SuspendLayout();
             this.gbAddress.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHouse)).BeginInit();
@@ -180,6 +180,13 @@
             this.gbAddress.TabStop = false;
             this.gbAddress.Text = "כתובת";
             // 
+            // nudHouse
+            // 
+            this.nudHouse.Location = new System.Drawing.Point(158, 76);
+            this.nudHouse.Name = "nudHouse";
+            this.nudHouse.Size = new System.Drawing.Size(67, 20);
+            this.nudHouse.TabIndex = 16;
+            // 
             // cboCity
             // 
             this.cboCity.FormattingEnabled = true;
@@ -187,13 +194,6 @@
             this.cboCity.Name = "cboCity";
             this.cboCity.Size = new System.Drawing.Size(211, 21);
             this.cboCity.TabIndex = 15;
-            // 
-            // nudHouse
-            // 
-            this.nudHouse.Location = new System.Drawing.Point(158, 76);
-            this.nudHouse.Name = "nudHouse";
-            this.nudHouse.Size = new System.Drawing.Size(67, 20);
-            this.nudHouse.TabIndex = 16;
             // 
             // lblCountry
             // 
@@ -212,26 +212,26 @@
             this.comboBox2.Size = new System.Drawing.Size(197, 21);
             this.comboBox2.TabIndex = 17;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(206, 352);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(105, 32);
-            this.button1.TabIndex = 18;
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // btn
+            // 
+            this.btn.Location = new System.Drawing.Point(206, 352);
+            this.btn.Name = "btn";
+            this.btn.Size = new System.Drawing.Size(105, 32);
+            this.btn.TabIndex = 18;
+            this.btn.UseVisualStyleBackColor = true;
+            // 
+            // ctlPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.lblCountry);
             this.Controls.Add(this.gbAddress);
             this.Controls.Add(this.gbName);
             this.Controls.Add(this.lblBirthDate);
             this.Controls.Add(this.dtBirthDate);
-            this.Name = "btn";
+            this.Name = "ctlPerson";
             this.Size = new System.Drawing.Size(314, 387);
             this.gbName.ResumeLayout(false);
             this.gbName.PerformLayout();
@@ -263,6 +263,6 @@
         private System.Windows.Forms.ComboBox cboCity;
         private System.Windows.Forms.Label lblCountry;
         private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn;
     }
 }

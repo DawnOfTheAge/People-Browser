@@ -32,17 +32,6 @@
             this.mnuConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.pbPercentage = new System.Windows.Forms.ToolStripProgressBar();
-            this.lblPercentage = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblMessage = new System.Windows.Forms.ToolStripStatusLabel();
-            this.dgvAudit = new System.Windows.Forms.DataGridView();
-            this.colDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSeverity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colModule = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.personsSplitContainer = new System.Windows.Forms.SplitContainer();
             this.dgvPersons = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,17 +43,28 @@
             this.colStreet = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHouse = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colBirthCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.pbPercentage = new System.Windows.Forms.ToolStripProgressBar();
+            this.lblPercentage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblMessage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.dgvAudit = new System.Windows.Forms.DataGridView();
+            this.colDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSeverity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colModule = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAudit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.personsSplitContainer)).BeginInit();
             this.personsSplitContainer.Panel1.SuspendLayout();
             this.personsSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPersons)).BeginInit();
+            this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAudit)).BeginInit();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -108,82 +108,8 @@
             // 
             this.splitContainer.Panel2.Controls.Add(this.dgvAudit);
             this.splitContainer.Size = new System.Drawing.Size(1212, 673);
-            this.splitContainer.SplitterDistance = 336;
+            this.splitContainer.SplitterDistance = 335;
             this.splitContainer.TabIndex = 3;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pbPercentage,
-            this.lblPercentage,
-            this.lblMessage});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 314);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1212, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // pbPercentage
-            // 
-            this.pbPercentage.Name = "pbPercentage";
-            this.pbPercentage.Size = new System.Drawing.Size(100, 16);
-            // 
-            // lblPercentage
-            // 
-            this.lblPercentage.Name = "lblPercentage";
-            this.lblPercentage.Size = new System.Drawing.Size(0, 17);
-            // 
-            // lblMessage
-            // 
-            this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(0, 17);
-            // 
-            // dgvAudit
-            // 
-            this.dgvAudit.AllowUserToAddRows = false;
-            this.dgvAudit.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAudit.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colDateTime,
-            this.colSeverity,
-            this.colModule,
-            this.colMethod,
-            this.colLine,
-            this.colMessage});
-            this.dgvAudit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvAudit.Location = new System.Drawing.Point(0, 0);
-            this.dgvAudit.Name = "dgvAudit";
-            this.dgvAudit.Size = new System.Drawing.Size(1212, 333);
-            this.dgvAudit.TabIndex = 1;
-            // 
-            // colDateTime
-            // 
-            this.colDateTime.HeaderText = "Date/Time";
-            this.colDateTime.Name = "colDateTime";
-            // 
-            // colSeverity
-            // 
-            this.colSeverity.HeaderText = "Severity";
-            this.colSeverity.Name = "colSeverity";
-            // 
-            // colModule
-            // 
-            this.colModule.HeaderText = "Module";
-            this.colModule.Name = "colModule";
-            // 
-            // colMethod
-            // 
-            this.colMethod.HeaderText = "Method";
-            this.colMethod.Name = "colMethod";
-            // 
-            // colLine
-            // 
-            this.colLine.HeaderText = "Line";
-            this.colLine.Name = "colLine";
-            // 
-            // colMessage
-            // 
-            this.colMessage.HeaderText = "Message";
-            this.colMessage.Name = "colMessage";
             // 
             // personsSplitContainer
             // 
@@ -194,7 +120,7 @@
             // personsSplitContainer.Panel1
             // 
             this.personsSplitContainer.Panel1.Controls.Add(this.dgvPersons);
-            this.personsSplitContainer.Size = new System.Drawing.Size(1212, 314);
+            this.personsSplitContainer.Size = new System.Drawing.Size(1212, 313);
             this.personsSplitContainer.SplitterDistance = 690;
             this.personsSplitContainer.TabIndex = 3;
             // 
@@ -215,7 +141,7 @@
             this.dgvPersons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPersons.Location = new System.Drawing.Point(0, 0);
             this.dgvPersons.Name = "dgvPersons";
-            this.dgvPersons.Size = new System.Drawing.Size(690, 314);
+            this.dgvPersons.Size = new System.Drawing.Size(690, 313);
             this.dgvPersons.TabIndex = 0;
             // 
             // colId
@@ -263,6 +189,80 @@
             this.colBirthCountry.HeaderText = "ארץ לידה";
             this.colBirthCountry.Name = "colBirthCountry";
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pbPercentage,
+            this.lblPercentage,
+            this.lblMessage});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 313);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1212, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // pbPercentage
+            // 
+            this.pbPercentage.Name = "pbPercentage";
+            this.pbPercentage.Size = new System.Drawing.Size(100, 16);
+            // 
+            // lblPercentage
+            // 
+            this.lblPercentage.Name = "lblPercentage";
+            this.lblPercentage.Size = new System.Drawing.Size(0, 17);
+            // 
+            // lblMessage
+            // 
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(0, 17);
+            // 
+            // dgvAudit
+            // 
+            this.dgvAudit.AllowUserToAddRows = false;
+            this.dgvAudit.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAudit.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colDateTime,
+            this.colSeverity,
+            this.colModule,
+            this.colMethod,
+            this.colLine,
+            this.colMessage});
+            this.dgvAudit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvAudit.Location = new System.Drawing.Point(0, 0);
+            this.dgvAudit.Name = "dgvAudit";
+            this.dgvAudit.Size = new System.Drawing.Size(1212, 334);
+            this.dgvAudit.TabIndex = 1;
+            // 
+            // colDateTime
+            // 
+            this.colDateTime.HeaderText = "Date/Time";
+            this.colDateTime.Name = "colDateTime";
+            // 
+            // colSeverity
+            // 
+            this.colSeverity.HeaderText = "Severity";
+            this.colSeverity.Name = "colSeverity";
+            // 
+            // colModule
+            // 
+            this.colModule.HeaderText = "Module";
+            this.colModule.Name = "colModule";
+            // 
+            // colMethod
+            // 
+            this.colMethod.HeaderText = "Method";
+            this.colMethod.Name = "colMethod";
+            // 
+            // colLine
+            // 
+            this.colLine.HeaderText = "Line";
+            this.colLine.Name = "colLine";
+            // 
+            // colMessage
+            // 
+            this.colMessage.HeaderText = "Message";
+            this.colMessage.Name = "colMessage";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -282,13 +282,13 @@
             this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAudit)).EndInit();
             this.personsSplitContainer.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.personsSplitContainer)).EndInit();
             this.personsSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPersons)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAudit)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
