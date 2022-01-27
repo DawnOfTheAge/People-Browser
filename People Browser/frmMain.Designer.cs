@@ -43,7 +43,7 @@
             this.colStreet = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHouse = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colBirthCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
             this.pbPercentage = new System.Windows.Forms.ToolStripProgressBar();
             this.lblPercentage = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblMessage = new System.Windows.Forms.ToolStripStatusLabel();
@@ -54,6 +54,7 @@
             this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ctlCurrentPerson = new People.Browser.UI.ctlPerson();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -61,9 +62,10 @@
             this.splitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.personsSplitContainer)).BeginInit();
             this.personsSplitContainer.Panel1.SuspendLayout();
+            this.personsSplitContainer.Panel2.SuspendLayout();
             this.personsSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPersons)).BeginInit();
-            this.statusStrip1.SuspendLayout();
+            this.mainStatusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAudit)).BeginInit();
             this.SuspendLayout();
             // 
@@ -102,13 +104,13 @@
             // splitContainer.Panel1
             // 
             this.splitContainer.Panel1.Controls.Add(this.personsSplitContainer);
-            this.splitContainer.Panel1.Controls.Add(this.statusStrip1);
+            this.splitContainer.Panel1.Controls.Add(this.mainStatusStrip);
             // 
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.dgvAudit);
             this.splitContainer.Size = new System.Drawing.Size(1212, 673);
-            this.splitContainer.SplitterDistance = 335;
+            this.splitContainer.SplitterDistance = 420;
             this.splitContainer.TabIndex = 3;
             // 
             // personsSplitContainer
@@ -120,8 +122,12 @@
             // personsSplitContainer.Panel1
             // 
             this.personsSplitContainer.Panel1.Controls.Add(this.dgvPersons);
-            this.personsSplitContainer.Size = new System.Drawing.Size(1212, 313);
-            this.personsSplitContainer.SplitterDistance = 690;
+            // 
+            // personsSplitContainer.Panel2
+            // 
+            this.personsSplitContainer.Panel2.Controls.Add(this.ctlCurrentPerson);
+            this.personsSplitContainer.Size = new System.Drawing.Size(1212, 398);
+            this.personsSplitContainer.SplitterDistance = 888;
             this.personsSplitContainer.TabIndex = 3;
             // 
             // dgvPersons
@@ -141,7 +147,7 @@
             this.dgvPersons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPersons.Location = new System.Drawing.Point(0, 0);
             this.dgvPersons.Name = "dgvPersons";
-            this.dgvPersons.Size = new System.Drawing.Size(690, 313);
+            this.dgvPersons.Size = new System.Drawing.Size(888, 398);
             this.dgvPersons.TabIndex = 0;
             // 
             // colId
@@ -189,17 +195,17 @@
             this.colBirthCountry.HeaderText = "ארץ לידה";
             this.colBirthCountry.Name = "colBirthCountry";
             // 
-            // statusStrip1
+            // mainStatusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pbPercentage,
             this.lblPercentage,
             this.lblMessage});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 313);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1212, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
+            this.mainStatusStrip.Location = new System.Drawing.Point(0, 398);
+            this.mainStatusStrip.Name = "mainStatusStrip";
+            this.mainStatusStrip.Size = new System.Drawing.Size(1212, 22);
+            this.mainStatusStrip.TabIndex = 2;
+            this.mainStatusStrip.Text = "statusStrip1";
             // 
             // pbPercentage
             // 
@@ -230,7 +236,7 @@
             this.dgvAudit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAudit.Location = new System.Drawing.Point(0, 0);
             this.dgvAudit.Name = "dgvAudit";
-            this.dgvAudit.Size = new System.Drawing.Size(1212, 334);
+            this.dgvAudit.Size = new System.Drawing.Size(1212, 249);
             this.dgvAudit.TabIndex = 1;
             // 
             // colDateTime
@@ -263,6 +269,14 @@
             this.colMessage.HeaderText = "Message";
             this.colMessage.Name = "colMessage";
             // 
+            // ctlCurrentPerson
+            // 
+            this.ctlCurrentPerson.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ctlCurrentPerson.Location = new System.Drawing.Point(0, 0);
+            this.ctlCurrentPerson.Name = "ctlCurrentPerson";
+            this.ctlCurrentPerson.Size = new System.Drawing.Size(320, 398);
+            this.ctlCurrentPerson.TabIndex = 0;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -283,11 +297,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
             this.personsSplitContainer.Panel1.ResumeLayout(false);
+            this.personsSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.personsSplitContainer)).EndInit();
             this.personsSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPersons)).EndInit();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.mainStatusStrip.ResumeLayout(false);
+            this.mainStatusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAudit)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -306,7 +321,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colMethod;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLine;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMessage;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip mainStatusStrip;
         private System.Windows.Forms.ToolStripProgressBar pbPercentage;
         private System.Windows.Forms.ToolStripStatusLabel lblPercentage;
         private System.Windows.Forms.ToolStripStatusLabel lblMessage;
@@ -321,6 +336,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colStreet;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHouse;
         private System.Windows.Forms.DataGridViewTextBoxColumn colBirthCountry;
+        private People.Browser.UI.ctlPerson ctlCurrentPerson;
     }
 }
 

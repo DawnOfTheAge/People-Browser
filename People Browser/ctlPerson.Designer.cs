@@ -153,6 +153,7 @@
             this.gbName.Controls.Add(this.lblFamily);
             this.gbName.Location = new System.Drawing.Point(13, 13);
             this.gbName.Name = "gbName";
+            this.gbName.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.gbName.Size = new System.Drawing.Size(286, 114);
             this.gbName.TabIndex = 13;
             this.gbName.TabStop = false;
@@ -175,6 +176,7 @@
             this.gbAddress.Controls.Add(this.lblCity);
             this.gbAddress.Location = new System.Drawing.Point(13, 133);
             this.gbAddress.Name = "gbAddress";
+            this.gbAddress.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.gbAddress.Size = new System.Drawing.Size(286, 114);
             this.gbAddress.TabIndex = 15;
             this.gbAddress.TabStop = false;
