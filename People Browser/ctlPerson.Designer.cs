@@ -45,7 +45,7 @@
             this.nudHouse = new System.Windows.Forms.NumericUpDown();
             this.cboCity = new System.Windows.Forms.ComboBox();
             this.lblCountry = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cboCountry = new System.Windows.Forms.ComboBox();
             this.btn = new System.Windows.Forms.Button();
             this.gbName.SuspendLayout();
             this.gbAddress.SuspendLayout();
@@ -206,13 +206,13 @@
             this.lblCountry.TabIndex = 16;
             this.lblCountry.Text = "ארץ מוצא";
             // 
-            // comboBox2
+            // cboCountry
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(21, 292);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(197, 21);
-            this.comboBox2.TabIndex = 17;
+            this.cboCountry.FormattingEnabled = true;
+            this.cboCountry.Location = new System.Drawing.Point(21, 292);
+            this.cboCountry.Name = "cboCountry";
+            this.cboCountry.Size = new System.Drawing.Size(197, 21);
+            this.cboCountry.TabIndex = 17;
             // 
             // btn
             // 
@@ -221,13 +221,14 @@
             this.btn.Size = new System.Drawing.Size(105, 32);
             this.btn.TabIndex = 18;
             this.btn.UseVisualStyleBackColor = true;
+            this.btn.Visible = false;
             // 
             // ctlPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btn);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.cboCountry);
             this.Controls.Add(this.lblCountry);
             this.Controls.Add(this.gbAddress);
             this.Controls.Add(this.gbName);
@@ -235,6 +236,7 @@
             this.Controls.Add(this.dtBirthDate);
             this.Name = "ctlPerson";
             this.Size = new System.Drawing.Size(314, 387);
+            this.Load += new System.EventHandler(this.ctlPerson_Load);
             this.gbName.ResumeLayout(false);
             this.gbName.PerformLayout();
             this.gbAddress.ResumeLayout(false);
@@ -264,7 +266,7 @@
         private System.Windows.Forms.NumericUpDown nudHouse;
         private System.Windows.Forms.ComboBox cboCity;
         private System.Windows.Forms.Label lblCountry;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cboCountry;
         private System.Windows.Forms.Button btn;
     }
 }

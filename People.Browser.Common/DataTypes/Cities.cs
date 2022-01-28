@@ -77,7 +77,7 @@ namespace People.Browser.Common
             }
         }
 
-        public object Count()
+        public int Count()
         {
             return (cities == null) ? Constants.NONE : cities.Count;
         }
