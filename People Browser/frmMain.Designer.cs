@@ -43,6 +43,7 @@
             this.colStreet = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHouse = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colBirthCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ctlCurrentPerson = new People.Browser.UI.ctlPerson();
             this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
             this.pbPercentage = new System.Windows.Forms.ToolStripProgressBar();
             this.lblPercentage = new System.Windows.Forms.ToolStripStatusLabel();
@@ -54,7 +55,6 @@
             this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ctlCurrentPerson = new People.Browser.UI.ctlPerson();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -149,6 +149,7 @@
             this.dgvPersons.Name = "dgvPersons";
             this.dgvPersons.Size = new System.Drawing.Size(888, 398);
             this.dgvPersons.TabIndex = 0;
+            this.dgvPersons.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvPersons_MouseDown);
             // 
             // colId
             // 
@@ -194,6 +195,16 @@
             // 
             this.colBirthCountry.HeaderText = "ארץ לידה";
             this.colBirthCountry.Name = "colBirthCountry";
+            // 
+            // ctlCurrentPerson
+            // 
+            this.ctlCurrentPerson.cities = null;
+            this.ctlCurrentPerson.countries = null;
+            this.ctlCurrentPerson.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ctlCurrentPerson.Location = new System.Drawing.Point(0, 0);
+            this.ctlCurrentPerson.Name = "ctlCurrentPerson";
+            this.ctlCurrentPerson.Size = new System.Drawing.Size(320, 398);
+            this.ctlCurrentPerson.TabIndex = 0;
             // 
             // mainStatusStrip
             // 
@@ -268,14 +279,6 @@
             // 
             this.colMessage.HeaderText = "Message";
             this.colMessage.Name = "colMessage";
-            // 
-            // ctlCurrentPerson
-            // 
-            this.ctlCurrentPerson.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ctlCurrentPerson.Location = new System.Drawing.Point(0, 0);
-            this.ctlCurrentPerson.Name = "ctlCurrentPerson";
-            this.ctlCurrentPerson.Size = new System.Drawing.Size(320, 398);
-            this.ctlCurrentPerson.TabIndex = 0;
             // 
             // frmMain
             // 

@@ -15,6 +15,7 @@ using People.Browser.BLL;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Globalization;
 
 namespace People_Browser
 {
@@ -40,6 +41,8 @@ namespace People_Browser
 
         private string databaseFilePath;
         private string databaseConnectionString;
+
+        private ContextMenu personsContextMenu;
 
         #endregion
 
@@ -302,6 +305,36 @@ namespace People_Browser
 
         #endregion
 
+        #region Context Menus
+
+        private bool CreateContextMenus(out string result)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            result = string.Empty;
+
+            try
+            {
+                #region Persons Context Menu
+
+                personsContextMenu = new ContextMenu();
+                //personsContextMenu.MenuItems.Add("Set Device Instance ID To Config File", new EventHandler(SetDevicesIdsEvent));
+                //personsContextMenu.MenuItems.Add("-");
+
+                #endregion
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Audit(e.Message, method, LINE(), AuditSeverity.Error);
+
+                return false;
+            }
+        }
+
+        #endregion
+
         #region Invoke Methods
 
         private void SetProgressNumber(int value)
@@ -330,8 +363,83 @@ namespace People_Browser
 
         #endregion
 
-        #endregion
+        #region Grids
+
+        public bool FillPersons(List<Person> personsList, out string result)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+            
+            result = string.Empty;
+
+            try
+            {
+                if ((personsList == null) || (personsList.Count == 0))
+                {
+                    result = "Persons List Is Null Or Empty";
+
+                    return false;
+                }
+
+                dgvPersons.Rows.Clear();
+                foreach (Person person in personsList)
+                {
+                    dgvPersons.Rows.Add(new string[] { person.Id.ToString(), 
+                                                       person.Family, 
+                                                       person.OldFamily, 
+                                                       person.Name,
+                                                       GetBirthDate(person.BirthDate), 
+                                                       GetCity(person.CityId), 
+                                                       person.Street, 
+                                                       person.House.ToString(), 
+                                                       GetCountry(person.CountryId) });
+
+                    dgvPersons.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+             
+                return false;
+            }
+        }
         
+        private void dgvPersons_MouseDown(object sender, MouseEventArgs e)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            DataGridView.HitTestInfo hitTestInfo;
+
+            try
+            {
+                if ((dgvPersons.Rows == null) || (dgvPersons.Rows.Count == 0))
+                {
+                    Audit("No Persons", method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
+
+                if (e.Button == MouseButtons.Right)
+                {
+                    hitTestInfo = dgvPersons.HitTest(e.X, e.Y);
+                    if ((hitTestInfo.Type == DataGridViewHitTestType.RowHeader) || (hitTestInfo.Type == DataGridViewHitTestType.Cell))
+                    {
+                        personsContextMenu.Show(dgvPersons, new Point(e.X, e.Y));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
+        }
+
+        #endregion
+
+        #endregion
+
         #region Get
 
         private bool GetAllPersons()
@@ -555,6 +663,62 @@ namespace People_Browser
             return true;
         }
 
+        private string GetBirthDate(string birthDate)
+        {
+            if (string.IsNullOrEmpty(birthDate))
+            {
+                return string.Empty;
+            }
+
+            DateTime dtBirthDate = DateTime.TryParseExact(birthDate, 
+                                                          "yyyyMMdd",
+                                                          new CultureInfo("he-IL"),
+                                                          DateTimeStyles.None, 
+                                                          out dtBirthDate) ? dtBirthDate : new DateTime(2000, 1, 1);
+
+            return dtBirthDate.ToString("dd/MM/yyyy");
+        }
+
+        private string GetCity(int cityId)
+        {
+            if (cityId == 0)
+            {
+                return string.Empty;
+            }
+
+            if ((cities == null) || (cities.Count() == 0))
+            {
+                return string.Empty;
+            }
+
+            if (cities.GetCityNameByCityId(cityId, out string cityName, out _))
+            { 
+                cityName = string.Empty;
+            }
+
+            return cityName;
+        }
+
+        private string GetCountry(int countryId)
+        {
+            if (countryId == 0)
+            {
+                return string.Empty;
+            }
+
+            if ((countries == null) || (countries.Count() == 0))
+            {
+                return string.Empty;
+            }
+
+            if (countries.GetCountryNameByCountryId(countryId, out string countryName, out _, out _))
+            {
+                countryName = string.Empty;
+            }
+
+            return countryName;
+        }
+
         #endregion        
 
         #region Events Handlers
@@ -589,18 +753,6 @@ namespace People_Browser
 
                 default:
                     return Color.FromArgb(0, 0, 0, 0);
-            }
-        }
-
-        private void Settings_Message(string message, string method, string module, int line, AuditSeverity auditSeverity)
-        {
-            try
-            {
-                Audit(message, method, module, line, auditSeverity);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[{DateTime.Now:HH-mm-ss dd-MM-yyyy}]:<{auditSeverity}>:<{module}>:<{method}> {message + ". Error:" + ex.Message}");
             }
         }
 
@@ -656,6 +808,6 @@ namespace People_Browser
             return lineNumber;
         }
 
-        #endregion        
+        #endregion
     }
 }
