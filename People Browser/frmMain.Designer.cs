@@ -30,6 +30,7 @@
         {
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.mnuConnect = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSearch = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.personsSplitContainer = new System.Windows.Forms.SplitContainer();
@@ -73,6 +74,7 @@
             // 
             this.mnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuConnect,
+            this.mnuSearch,
             this.mnuExit});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
@@ -86,6 +88,13 @@
             this.mnuConnect.Size = new System.Drawing.Size(64, 20);
             this.mnuConnect.Text = "Connect";
             this.mnuConnect.Click += new System.EventHandler(this.mnuConnect_Click);
+            // 
+            // mnuSearch
+            // 
+            this.mnuSearch.Name = "mnuSearch";
+            this.mnuSearch.Size = new System.Drawing.Size(54, 20);
+            this.mnuSearch.Text = "Search";
+            this.mnuSearch.Click += new System.EventHandler(this.mnuSearch_Click);
             // 
             // mnuExit
             // 
@@ -340,6 +349,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colHouse;
         private System.Windows.Forms.DataGridViewTextBoxColumn colBirthCountry;
         private People.Browser.UI.ctlPerson ctlCurrentPerson;
+        private System.Windows.Forms.ToolStripMenuItem mnuSearch;
     }
 }
 

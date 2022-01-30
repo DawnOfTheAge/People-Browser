@@ -30,6 +30,11 @@ namespace People.Browser.Common
             return (countries == null) ? Constants.NONE : countries.Count;
         }
 
+        public List<Country> CountriesList()
+        {
+            return countries;
+        }
+
         public bool Add(Country country, out string result)
         {
             result = string.Empty;

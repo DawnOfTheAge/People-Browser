@@ -82,6 +82,11 @@ namespace People.Browser.Common
             return (cities == null) ? Constants.NONE : cities.Count;
         }
 
+        public List<City> CitiesList()
+        {
+            return cities;
+        }
+
         #endregion
     }
 }

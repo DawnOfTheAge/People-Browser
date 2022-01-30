@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Globalization;
+using People.Browser.UI;
 
 namespace People_Browser
 {
@@ -276,6 +277,43 @@ namespace People_Browser
                 pbPercentage.Visible = false;
                 lblPercentage.Visible = false;
                 lblMessage.Visible = false;                
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
+        }
+        
+        private void mnuSearch_Click(object sender, EventArgs e)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+            string result = string.Empty;
+
+            try
+            {
+                frmSearch search = new frmSearch();
+                if (!search.SetForSearch(cities, countries, out result))
+                {
+                    Audit(result, method, LINE(), AuditSeverity.Error);
+
+                    return;
+                }
+                search.SearchParameters += Search_SearchParameters;
+                search.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
+        }
+
+        private void Search_SearchParameters(Person searchFilter)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            try
+            {
+                
             }
             catch (Exception ex)
             {
@@ -808,6 +846,7 @@ namespace People_Browser
             return lineNumber;
         }
 
-        #endregion
+
+        #endregion       
     }
 }

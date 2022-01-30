@@ -211,6 +211,7 @@
             this.cboCountry.FormattingEnabled = true;
             this.cboCountry.Location = new System.Drawing.Point(21, 292);
             this.cboCountry.Name = "cboCountry";
+            this.cboCountry.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cboCountry.Size = new System.Drawing.Size(197, 21);
             this.cboCountry.TabIndex = 17;
             // 

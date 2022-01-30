@@ -17,21 +17,16 @@ namespace People.Browser.UI
         #region Events
 
         public event AuditMessage Message;
-
-        #endregion
-
-        #region Properties
-
-        public Cities cities { get; set; }
-
-        public Countries countries { get; set; }
+        public event SearchParametersMessage SearchParameters;
 
         #endregion
 
         #region Data Members
 
-        private Person person;
+        public Cities cities { get; set; }
 
+        public Countries countries { get; set; }
+        
         #endregion
 
         #region Constructor
@@ -39,15 +34,6 @@ namespace People.Browser.UI
         public ctlPerson()
         {
             InitializeComponent();
-
-            person = null;
-        }
-
-        public ctlPerson(Person inPerson)
-        {
-            InitializeComponent();
-
-            person = inPerson;
         }
 
         #endregion
@@ -68,6 +54,39 @@ namespace People.Browser.UI
             }
         }
 
+        public bool SetForSearch(Cities inCities, Countries inCountries, out string result)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            result = string.Empty;
+
+            try
+            {
+                btn.Visible = true;
+                btn.Text = "Search";
+
+                cities = inCities;
+                foreach (City city in cities.CitiesList())
+                {
+                    cboCity.Items.Add(city.Name);
+                }
+
+                countries = inCountries;
+                foreach (Country country in countries.CountriesList())
+                {
+                    cboCountry.Items.Add(country.Name);
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Audit(e.Message, method, LINE(), AuditSeverity.Error);
+
+                return false;
+            }
+        }
+
         #endregion
 
         #region Gui
@@ -81,9 +100,7 @@ namespace People.Browser.UI
             try
             {
                 if (person != null)
-                {
-                    btn.Visible = true;
-
+                {                    
                     txtFamily.Text = person.Family;
                     txtOldFamily.Text = person.Family;
                     txtName.Text = person.Name;
@@ -130,6 +147,11 @@ namespace People.Browser.UI
         #endregion
 
         #region Events Handlers
+
+        public void OnSearchParameter(Person searchFilter)
+        {
+            SearchParameters?.Invoke(searchFilter);
+        }
 
         public void OnMessage(string message, string method, string module, int line, AuditSeverity auditSeverity)
         {
