@@ -160,10 +160,10 @@ namespace People_Browser
 
                 #region Context Menus
 
-                //if (!CreateContextMenus(out result))
-                //{
-                //    return false;
-                //}
+                if (!CreateContextMenus(out result))
+                {
+                    return false;
+                }
 
                 Audit("Create Context Menus", method, LINE(), AuditSeverity.Information);
 
@@ -845,7 +845,6 @@ namespace People_Browser
         {
             return lineNumber;
         }
-
 
         #endregion       
     }
