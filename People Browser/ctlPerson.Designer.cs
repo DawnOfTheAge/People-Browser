@@ -195,6 +195,7 @@
             this.cboCity.Location = new System.Drawing.Point(13, 29);
             this.cboCity.Name = "cboCity";
             this.cboCity.Size = new System.Drawing.Size(211, 21);
+            this.cboCity.Sorted = true;
             this.cboCity.TabIndex = 15;
             // 
             // lblCountry
@@ -213,6 +214,7 @@
             this.cboCountry.Name = "cboCountry";
             this.cboCountry.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cboCountry.Size = new System.Drawing.Size(197, 21);
+            this.cboCountry.Sorted = true;
             this.cboCountry.TabIndex = 17;
             // 
             // btn

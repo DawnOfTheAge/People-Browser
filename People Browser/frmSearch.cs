@@ -34,7 +34,18 @@ namespace People.Browser.UI
 
         private void frmSearch_Load(object sender, EventArgs e)
         {
+            string method = MethodBase.GetCurrentMethod().Name;
 
+            try
+            {
+                Location = Cursor.Position;
+
+                
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
         }
 
         #endregion
