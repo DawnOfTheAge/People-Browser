@@ -47,6 +47,8 @@
             this.lblCountry = new System.Windows.Forms.Label();
             this.cboCountry = new System.Windows.Forms.ComboBox();
             this.btn = new System.Windows.Forms.Button();
+            this.cboSex = new System.Windows.Forms.ComboBox();
+            this.lblSex = new System.Windows.Forms.Label();
             this.gbName.SuspendLayout();
             this.gbAddress.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHouse)).BeginInit();
@@ -226,10 +228,34 @@
             this.btn.UseVisualStyleBackColor = true;
             this.btn.Visible = false;
             // 
+            // cboSex
+            // 
+            this.cboSex.FormattingEnabled = true;
+            this.cboSex.Items.AddRange(new object[] {
+            "זכר",
+            "נקבה"});
+            this.cboSex.Location = new System.Drawing.Point(156, 319);
+            this.cboSex.Name = "cboSex";
+            this.cboSex.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cboSex.Size = new System.Drawing.Size(62, 21);
+            this.cboSex.Sorted = true;
+            this.cboSex.TabIndex = 19;
+            // 
+            // lblSex
+            // 
+            this.lblSex.AutoSize = true;
+            this.lblSex.Location = new System.Drawing.Point(269, 322);
+            this.lblSex.Name = "lblSex";
+            this.lblSex.Size = new System.Drawing.Size(24, 13);
+            this.lblSex.TabIndex = 20;
+            this.lblSex.Text = "מין";
+            // 
             // ctlPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblSex);
+            this.Controls.Add(this.cboSex);
             this.Controls.Add(this.btn);
             this.Controls.Add(this.cboCountry);
             this.Controls.Add(this.lblCountry);
@@ -271,5 +297,7 @@
         private System.Windows.Forms.Label lblCountry;
         private System.Windows.Forms.ComboBox cboCountry;
         private System.Windows.Forms.Button btn;
+        private System.Windows.Forms.ComboBox cboSex;
+        private System.Windows.Forms.Label lblSex;
     }
 }

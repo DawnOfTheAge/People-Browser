@@ -132,6 +132,21 @@ namespace People.Browser.UI
                         }
                     }
                     cboCountry.Text = country;
+
+                    switch (person.Sex)
+                    {
+                        case PersonSex.Male:
+                            cboSex.Text = cboSex.Items[0].ToString();
+                            break;
+
+                        case PersonSex.Female:
+                            cboSex.Text = cboSex.Items[1].ToString();
+                            break;
+
+                        default:
+                            cboSex.Text = string.Empty;
+                            break;
+                    }
                 }
 
                 return true;
