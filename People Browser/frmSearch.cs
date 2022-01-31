@@ -100,6 +100,8 @@ namespace People.Browser.UI
         private void CtlSearchFilter_SearchParameters(Person searchFilter)
         {
             OnSearchParameter(searchFilter);
+
+            Close();
         }
 
         public void OnSearchParameter(Person searchFilter)

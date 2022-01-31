@@ -192,17 +192,23 @@ namespace People.Browser.UI
 
                 #endregion
 
-                #region ID
+                #region IDs
 
-                int id = int.TryParse(txtId.Text, out id) ? id : Constants.NONE; 
+                int id = int.TryParse(txtId.Text, out id) ? id : Constants.NONE;
+                int fatherId = int.TryParse(txtFatherId.Text, out id) ? id : Constants.NONE;
+                int motherId = int.TryParse(txtMotherId.Text, out id) ? id : Constants.NONE;
 
                 #endregion
 
                 Person searchFilter = new Person()
                 {
                     Id = id,
+                    FatherId = fatherId,
+                    MotherId = motherId,
 
                     Name = txtName.Text,
+                    FatherName = txtFatherName.Text,
+                    MotherName = txtMotherName.Text,
                     Family = txtFamily.Text,
                     OldFamily = txtOldFamily.Text,
 
@@ -234,12 +240,16 @@ namespace People.Browser.UI
             try
             {
                 if (person != null)
-                {                 
+                {
                     txtId.Text = person.Id.ToString();
+                    txtFatherId.Text = person.FatherId.ToString();
+                    txtMotherId.Text = person.MotherId.ToString();
 
                     txtFamily.Text = person.Family;
                     txtOldFamily.Text = person.Family;
                     txtName.Text = person.Name;
+                    txtFatherName.Text = person.FatherName;
+                    txtMotherName.Text = person.MotherName;
 
                     #region Birth Date
 

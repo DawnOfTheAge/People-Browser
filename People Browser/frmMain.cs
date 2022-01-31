@@ -592,6 +592,7 @@ namespace People_Browser
         private bool SearchByFilter(List<Person> persons, Person searchFilter, out List<Person> personsSearchResult, out string result)
         {
             string method = MethodBase.GetCurrentMethod().Name;
+            string parmeterName;
 
             personsSearchResult = null;
             result = string.Empty;
@@ -612,11 +613,38 @@ namespace People_Browser
                     return false;
                 }
 
-                #region ID
+                #region Id
 
                 if (searchFilter.Id != Constants.NONE)
                 {
                     personsSearchResult = persons.Where(person => person.Id.ToString().Contains(searchFilter.Id.ToString())).ToList();
+                    
+                    parmeterName = nameof(searchFilter.Id);
+                    Audit($"Filter[{parmeterName} - {searchFilter.Id}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                }
+
+                #endregion
+
+                #region Father Id
+
+                if (searchFilter.FatherId != Constants.NONE)
+                {
+                    personsSearchResult = persons.Where(person => person.FatherId.ToString().Contains(searchFilter.FatherId.ToString())).ToList();
+
+                    parmeterName = nameof(searchFilter.FatherId);
+                    Audit($"Filter[{parmeterName} - {searchFilter.FatherId}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                }
+
+                #endregion
+
+                #region Mother Id
+
+                if (searchFilter.MotherId != Constants.NONE)
+                {
+                    personsSearchResult = persons.Where(person => person.MotherId.ToString().Contains(searchFilter.MotherId.ToString())).ToList();
+
+                    parmeterName = nameof(searchFilter.MotherId);
+                    Audit($"Filter[{parmeterName} - {searchFilter.MotherId}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -625,7 +653,34 @@ namespace People_Browser
 
                 if (!string.IsNullOrEmpty(searchFilter.Name))
                 {
-                    personsSearchResult = persons.Where(person => person.Name.Contains(searchFilter.Name)).ToList();
+                    personsSearchResult = personsSearchResult.Where(person => person.Name.Contains(searchFilter.Name)).ToList();
+
+                    parmeterName = nameof(searchFilter.Name);
+                    Audit($"Filter[{parmeterName} - {searchFilter.Name}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                }
+
+                #endregion
+
+                #region Father Name
+
+                if (!string.IsNullOrEmpty(searchFilter.FatherName))
+                {
+                    personsSearchResult = personsSearchResult.Where(person => person.FatherName.Contains(searchFilter.FatherName)).ToList();
+
+                    parmeterName = nameof(searchFilter.FatherName);
+                    Audit($"Filter[{parmeterName} - {searchFilter.FatherName}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                }
+
+                #endregion
+
+                #region Mother Name
+
+                if (!string.IsNullOrEmpty(searchFilter.MotherName))
+                {
+                    personsSearchResult = personsSearchResult.Where(person => person.MotherName.Contains(searchFilter.MotherName)).ToList();
+
+                    parmeterName = nameof(searchFilter.MotherName);
+                    Audit($"Filter[{parmeterName} - {searchFilter.MotherName}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -634,7 +689,10 @@ namespace People_Browser
 
                 if (!string.IsNullOrEmpty(searchFilter.Family))
                 {
-                    personsSearchResult = persons.Where(person => person.Family.Contains(searchFilter.Family)).ToList();
+                    personsSearchResult = personsSearchResult.Where(person => person.Family.Contains(searchFilter.Family)).ToList();
+
+                    parmeterName = nameof(searchFilter.Family);
+                    Audit($"Filter[{parmeterName} - {searchFilter.Family}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -643,7 +701,10 @@ namespace People_Browser
 
                 if (!string.IsNullOrEmpty(searchFilter.OldFamily))
                 {
-                    personsSearchResult = persons.Where(person => person.OldFamily.Contains(searchFilter.OldFamily)).ToList();
+                    personsSearchResult = personsSearchResult.Where(person => person.OldFamily.Contains(searchFilter.OldFamily)).ToList();
+
+                    parmeterName = nameof(searchFilter.OldFamily);
+                    Audit($"Filter[{parmeterName} - {searchFilter.OldFamily}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -652,7 +713,10 @@ namespace People_Browser
 
                 if (searchFilter.CityId != Constants.NONE)
                 {
-                    personsSearchResult = persons.Where(person => person.CityId == searchFilter.CityId).ToList();
+                    personsSearchResult = personsSearchResult.Where(person => person.CityId == searchFilter.CityId).ToList();
+
+                    parmeterName = nameof(searchFilter.CityId);
+                    Audit($"Filter[{parmeterName} - {searchFilter.CityId}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -661,7 +725,10 @@ namespace People_Browser
 
                 if (!string.IsNullOrEmpty(searchFilter.Street))
                 {
-                    personsSearchResult = persons.Where(person => person.Street.Contains(searchFilter.Street)).ToList();
+                    personsSearchResult = personsSearchResult.Where(person => person.Street.Contains(searchFilter.Street)).ToList();
+
+                    parmeterName = nameof(searchFilter.Street);
+                    Audit($"Filter[{parmeterName} - {searchFilter.Street}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -670,7 +737,10 @@ namespace People_Browser
 
                 if (searchFilter.House != Constants.NONE)
                 {
-                    personsSearchResult = persons.Where(person => person.House == searchFilter.House).ToList();
+                    personsSearchResult = personsSearchResult.Where(person => person.House == searchFilter.House).ToList();
+
+                    parmeterName = nameof(searchFilter.House);
+                    Audit($"Filter[{parmeterName} - {searchFilter.House}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -679,7 +749,10 @@ namespace People_Browser
 
                 if (searchFilter.CountryId != Constants.NONE)
                 {
-                    personsSearchResult = persons.Where(person => person.CountryId == searchFilter.CountryId).ToList();
+                    personsSearchResult = personsSearchResult.Where(person => person.CountryId == searchFilter.CountryId).ToList();
+
+                    parmeterName = nameof(searchFilter.CountryId);
+                    Audit($"Filter[{parmeterName} - {searchFilter.CountryId}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -688,7 +761,10 @@ namespace People_Browser
 
                 if (searchFilter.Sex != PersonSex.Unknown)
                 {
-                    personsSearchResult = persons.Where(person => person.Sex == searchFilter.Sex).ToList();
+                    personsSearchResult = personsSearchResult.Where(person => person.Sex == searchFilter.Sex).ToList();
+
+                    parmeterName = nameof(searchFilter.Sex);
+                    Audit($"Filter[{parmeterName} - {searchFilter.Sex}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion

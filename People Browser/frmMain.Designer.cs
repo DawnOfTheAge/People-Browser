@@ -49,6 +49,7 @@
             this.pbPercentage = new System.Windows.Forms.ToolStripProgressBar();
             this.lblPercentage = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblMessage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblNumberOfHits = new System.Windows.Forms.ToolStripStatusLabel();
             this.dgvAudit = new System.Windows.Forms.DataGridView();
             this.colDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSeverity = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,7 +57,6 @@
             this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblNumberOfHits = new System.Windows.Forms.ToolStripStatusLabel();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -119,8 +119,8 @@
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.dgvAudit);
-            this.splitContainer.Size = new System.Drawing.Size(1212, 673);
-            this.splitContainer.SplitterDistance = 420;
+            this.splitContainer.Size = new System.Drawing.Size(1212, 799);
+            this.splitContainer.SplitterDistance = 498;
             this.splitContainer.TabIndex = 3;
             // 
             // personsSplitContainer
@@ -136,7 +136,7 @@
             // personsSplitContainer.Panel2
             // 
             this.personsSplitContainer.Panel2.Controls.Add(this.ctlCurrentPerson);
-            this.personsSplitContainer.Size = new System.Drawing.Size(1212, 398);
+            this.personsSplitContainer.Size = new System.Drawing.Size(1212, 476);
             this.personsSplitContainer.SplitterDistance = 888;
             this.personsSplitContainer.TabIndex = 3;
             // 
@@ -157,7 +157,7 @@
             this.dgvPersons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPersons.Location = new System.Drawing.Point(0, 0);
             this.dgvPersons.Name = "dgvPersons";
-            this.dgvPersons.Size = new System.Drawing.Size(888, 398);
+            this.dgvPersons.Size = new System.Drawing.Size(888, 476);
             this.dgvPersons.TabIndex = 0;
             this.dgvPersons.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvPersons_MouseDown);
             // 
@@ -213,7 +213,7 @@
             this.ctlCurrentPerson.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ctlCurrentPerson.Location = new System.Drawing.Point(0, 0);
             this.ctlCurrentPerson.Name = "ctlCurrentPerson";
-            this.ctlCurrentPerson.Size = new System.Drawing.Size(320, 398);
+            this.ctlCurrentPerson.Size = new System.Drawing.Size(320, 476);
             this.ctlCurrentPerson.TabIndex = 0;
             // 
             // mainStatusStrip
@@ -223,7 +223,7 @@
             this.lblPercentage,
             this.lblMessage,
             this.lblNumberOfHits});
-            this.mainStatusStrip.Location = new System.Drawing.Point(0, 398);
+            this.mainStatusStrip.Location = new System.Drawing.Point(0, 476);
             this.mainStatusStrip.Name = "mainStatusStrip";
             this.mainStatusStrip.Size = new System.Drawing.Size(1212, 22);
             this.mainStatusStrip.TabIndex = 2;
@@ -244,6 +244,11 @@
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(0, 17);
             // 
+            // lblNumberOfHits
+            // 
+            this.lblNumberOfHits.Name = "lblNumberOfHits";
+            this.lblNumberOfHits.Size = new System.Drawing.Size(0, 17);
+            // 
             // dgvAudit
             // 
             this.dgvAudit.AllowUserToAddRows = false;
@@ -258,7 +263,7 @@
             this.dgvAudit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAudit.Location = new System.Drawing.Point(0, 0);
             this.dgvAudit.Name = "dgvAudit";
-            this.dgvAudit.Size = new System.Drawing.Size(1212, 249);
+            this.dgvAudit.Size = new System.Drawing.Size(1212, 297);
             this.dgvAudit.TabIndex = 1;
             // 
             // colDateTime
@@ -291,16 +296,11 @@
             this.colMessage.HeaderText = "Message";
             this.colMessage.Name = "colMessage";
             // 
-            // lblNumberOfHits
-            // 
-            this.lblNumberOfHits.Name = "lblNumberOfHits";
-            this.lblNumberOfHits.Size = new System.Drawing.Size(0, 17);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1212, 697);
+            this.ClientSize = new System.Drawing.Size(1212, 823);
             this.Controls.Add(this.splitContainer);
             this.Controls.Add(this.mnuMain);
             this.MainMenuStrip = this.mnuMain;
