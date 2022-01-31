@@ -291,13 +291,7 @@ namespace People_Browser
 
             try
             {
-                frmSearch search = new frmSearch();
-                if (!search.SetForSearch(cities, countries, out result))
-                {
-                    Audit(result, method, LINE(), AuditSeverity.Error);
-
-                    return;
-                }
+                frmSearch search = new frmSearch(cities, countries);
                 search.SearchParameters += Search_SearchParameters;
                 search.ShowDialog();
             }
@@ -574,6 +568,45 @@ namespace People_Browser
             catch (Exception ex)
             {
                 Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Search
+
+        private bool SearchByFilter(List<Person> persons, Person searchFilter, List<Person> personsSearchResult, out string result)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            personsSearchResult = null;
+            result = string.Empty;
+
+            try
+            {
+                if ((persons == null) || (persons.Count == 0))
+                {
+                    result = "Persons List Is Null Or Empty";
+
+                    return false;
+                }
+
+                if (searchFilter == null)
+                {
+                    result = "Search Filter Is Null";
+
+                    return false;
+                }
+
+                
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Audit(e.Message, method, LINE(), AuditSeverity.Error);
 
                 return false;
             }

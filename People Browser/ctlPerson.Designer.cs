@@ -216,7 +216,7 @@
             // 
             // btn
             // 
-            this.btn.Location = new System.Drawing.Point(206, 352);
+            this.btn.Location = new System.Drawing.Point(188, 352);
             this.btn.Name = "btn";
             this.btn.Size = new System.Drawing.Size(105, 32);
             this.btn.TabIndex = 18;
@@ -226,10 +226,8 @@
             // 
             // cboSex
             // 
+            this.cboSex.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSex.FormattingEnabled = true;
-            this.cboSex.Items.AddRange(new object[] {
-            "זכר",
-            "נקבה"});
             this.cboSex.Location = new System.Drawing.Point(156, 319);
             this.cboSex.Name = "cboSex";
             this.cboSex.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -248,6 +246,7 @@
             // 
             // cboYear
             // 
+            this.cboYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboYear.FormattingEnabled = true;
             this.cboYear.Items.AddRange(new object[] {
             "זכר",
@@ -256,11 +255,11 @@
             this.cboYear.Name = "cboYear";
             this.cboYear.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cboYear.Size = new System.Drawing.Size(62, 21);
-            this.cboYear.Sorted = true;
             this.cboYear.TabIndex = 21;
             // 
             // cboMonth
             // 
+            this.cboMonth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMonth.FormattingEnabled = true;
             this.cboMonth.Items.AddRange(new object[] {
             "זכר",
@@ -269,11 +268,11 @@
             this.cboMonth.Name = "cboMonth";
             this.cboMonth.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cboMonth.Size = new System.Drawing.Size(39, 21);
-            this.cboMonth.Sorted = true;
             this.cboMonth.TabIndex = 22;
             // 
             // cboDay
             // 
+            this.cboDay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDay.FormattingEnabled = true;
             this.cboDay.Items.AddRange(new object[] {
             "זכר",
@@ -282,7 +281,6 @@
             this.cboDay.Name = "cboDay";
             this.cboDay.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cboDay.Size = new System.Drawing.Size(39, 21);
-            this.cboDay.Sorted = true;
             this.cboDay.TabIndex = 23;
             // 
             // ctlPerson

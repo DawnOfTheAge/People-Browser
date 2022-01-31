@@ -65,35 +65,65 @@ namespace People.Browser.UI
                 btn.Visible = true;
                 btn.Text = "Search";
 
-                cities = inCities;
-                foreach (City city in cities.CitiesList())
+                #region City
+
+                if (inCities != null)
                 {
-                    cboCity.Items.Add(city.Name);
+                    cities = inCities;
+                    foreach (City city in cities.CitiesList())
+                    {
+                        cboCity.Items.Add(city.Name);
+                    }
                 }
 
-                countries = inCountries;
-                foreach (Country country in countries.CountriesList())
+                #endregion
+
+                #region Country
+
+                if (inCountries != null)
                 {
-                    cboCountry.Items.Add(country.Name);
+                    countries = inCountries;
+                    foreach (Country country in countries.CountriesList())
+                    {
+                        cboCountry.Items.Add(country.Name);
+                    }
                 }
+
+                #endregion
+
+                #region Birth Date
 
                 cboYear.Items.Clear();
+                cboYear.Items.Add(string.Empty);
                 for (int year = 1900; year < 2030; year++)
                 {
                     cboYear.Items.Add(year.ToString());
                 }
 
                 cboMonth.Items.Clear();
+                cboMonth.Items.Add(string.Empty);
                 for (int month = 1; month < 13; month++)
                 {
                     cboMonth.Items.Add(month.ToString());
                 }
 
                 cboDay.Items.Clear();
+                cboDay.Items.Add(string.Empty);
                 for (int day = 1; day < 32; day++)
                 {
                     cboDay.Items.Add(day.ToString());
                 }
+
+                #endregion
+
+                #region Sex
+
+                cboSex.Items.Clear();
+                cboSex.Items.Add("זכר");
+                cboSex.Items.Add("נקבה");
+                cboSex.Items.Add("");
+
+                #endregion
 
                 return true;
             }
@@ -276,7 +306,7 @@ namespace People.Browser.UI
             string month = string.IsNullOrEmpty(cboMonth.Text) ? "00" : cboMonth.Text;
             string day = string.IsNullOrEmpty(cboDay.Text) ? "00" : cboDay.Text;
 
-            birthDate = $"{year}{month}{day}";
+            birthDate = $"{year, 4}{month, 2}{day, 2}";
 
             return birthDate;
         }

@@ -21,11 +21,22 @@ namespace People.Browser.UI
 
         #endregion
 
+        #region Data Members
+
+        public Cities cities { get; set; }
+
+        public Countries countries { get; set; }
+
+        #endregion
+
         #region Constructor
 
-        public frmSearch()
+        public frmSearch(Cities inCities, Countries inCountries)
         {
             InitializeComponent();
+
+            cities = inCities;
+            countries = inCountries;
         }
 
         #endregion
@@ -40,7 +51,12 @@ namespace People.Browser.UI
             {
                 Location = Cursor.Position;
 
-                
+                if (!SetForSearch(cities, countries, out string result))
+                {
+                    Audit(result, method, LINE(), AuditSeverity.Warning);
+                }
+
+                ctlSearchFilter.SearchParameters += CtlSearchFilter_SearchParameters;
             }
             catch (Exception ex)
             {
@@ -52,7 +68,7 @@ namespace People.Browser.UI
 
         #region Public Methods
 
-        public bool SetForSearch(Cities cities, Countries countries, out string result)
+        private bool SetForSearch(Cities cities, Countries countries, out string result)
         {
             string method = MethodBase.GetCurrentMethod().Name;
 
@@ -60,7 +76,7 @@ namespace People.Browser.UI
 
             try
             {
-                if (!ctlPerson1.SetForSearch(cities, countries, out result))
+                if (!ctlSearchFilter.SetForSearch(cities, countries, out result))
                 {
                     Audit(result, method, LINE(), AuditSeverity.Warning);
 
@@ -80,6 +96,11 @@ namespace People.Browser.UI
         #endregion
 
         #region Events Handlers
+        
+        private void CtlSearchFilter_SearchParameters(Person searchFilter)
+        {
+            OnSearchParameter(searchFilter);
+        }
 
         public void OnSearchParameter(Person searchFilter)
         {

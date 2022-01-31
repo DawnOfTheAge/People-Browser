@@ -28,24 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ctlPerson1 = new People.Browser.UI.ctlPerson();
+            this.ctlSearchFilter = new People.Browser.UI.ctlPerson();
             this.SuspendLayout();
             // 
-            // ctlPerson1
+            // ctlSearchFilter
             // 
-            this.ctlPerson1.cities = null;
-            this.ctlPerson1.countries = null;
-            this.ctlPerson1.Location = new System.Drawing.Point(12, 12);
-            this.ctlPerson1.Name = "ctlPerson1";
-            this.ctlPerson1.Size = new System.Drawing.Size(301, 399);
-            this.ctlPerson1.TabIndex = 0;
+            this.ctlSearchFilter.cities = null;
+            this.ctlSearchFilter.countries = null;
+            this.ctlSearchFilter.Location = new System.Drawing.Point(12, 12);
+            this.ctlSearchFilter.Name = "ctlSearchFilter";
+            this.ctlSearchFilter.Size = new System.Drawing.Size(301, 399);
+            this.ctlSearchFilter.TabIndex = 0;
             // 
             // frmSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(328, 426);
-            this.Controls.Add(this.ctlPerson1);
+            this.Controls.Add(this.ctlSearchFilter);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmSearch";
             this.Text = "Search";
@@ -56,6 +56,6 @@
 
         #endregion
 
-        private ctlPerson ctlPerson1;
+        private ctlPerson ctlSearchFilter;
     }
 }
