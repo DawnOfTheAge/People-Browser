@@ -77,6 +77,24 @@ namespace People.Browser.UI
                     cboCountry.Items.Add(country.Name);
                 }
 
+                cboYear.Items.Clear();
+                for (int year = 1900; year < 2030; year++)
+                {
+                    cboYear.Items.Add(year.ToString());
+                }
+
+                cboMonth.Items.Clear();
+                for (int month = 1; month < 13; month++)
+                {
+                    cboMonth.Items.Add(month.ToString());
+                }
+
+                cboDay.Items.Clear();
+                for (int day = 1; day < 32; day++)
+                {
+                    cboDay.Items.Add(day.ToString());
+                }
+
                 return true;
             }
             catch (Exception e)
@@ -90,6 +108,71 @@ namespace People.Browser.UI
         #endregion
 
         #region Gui
+        private void btn_Click(object sender, EventArgs e)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+            string result;
+
+            try
+            {
+                int cityId = Constants.NONE;
+                if (!string.IsNullOrEmpty(cboCity.Text))
+                {
+                    if (!cities.GetCityIdByCityName(cboCity.Text, out cityId, out result))
+                    {
+                        Audit(result, method, LINE(), AuditSeverity.Warning);
+                    }
+                }
+
+                int countryId = Constants.NONE;
+                if (!string.IsNullOrEmpty(cboCountry.Text))
+                {
+                    if (!countries.GetCountryIdByCountryName(cboCountry.Text, out countryId, out result))
+                    {
+                        Audit(result, method, LINE(), AuditSeverity.Warning);
+                    }
+                }
+
+                PersonSex sex = new PersonSex();
+                switch (cboSex.Text)
+                {
+                    case "זכר":
+                        sex = PersonSex.Male;
+                        break;
+
+                    case "נקבה":
+                        sex = PersonSex.Female;
+                        break;
+
+                    default:
+                        sex = PersonSex.Unknown;
+                        break;
+                }
+
+                Person searchFilter = new Person()
+                {
+                    Name = txtName.Text,
+                    Family = txtFamily.Text,
+                    OldFamily = txtOldFamily.Text,
+
+                    Street = txtStreet.Text,
+                    House = (int)nudHouse.Value,
+
+                    CityId = cityId,
+                    CountryId = countryId,
+
+                    Sex = sex,
+
+                    BirthDate = GetBirthDatFromGui()
+                };
+
+                OnSearchParameter(searchFilter);
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
+        }
 
         public bool Fill(Person person, out string result)
         {
@@ -105,7 +188,16 @@ namespace People.Browser.UI
                     txtOldFamily.Text = person.Family;
                     txtName.Text = person.Name;
 
-                    dtBirthDate.Text = person.BirthDate;
+                    #region Birth Date
+
+                    if (!string.IsNullOrEmpty(person.BirthDate))
+                    {
+                        FillBirthDate(person.BirthDate);
+                    }
+
+                    #endregion
+
+                    #region City
 
                     string city = string.Empty;
                     if ((cities != null) && (cities.Count() > 0))
@@ -117,8 +209,12 @@ namespace People.Browser.UI
                     }
                     cboCity.Text = city;
 
+                    #endregion
+
                     txtStreet.Text = person.Street;
                     nudHouse.Value = person.House;
+
+                    #region Country
 
                     string country = string.Empty;
                     string countryNameInEnglish = string.Empty;
@@ -132,6 +228,10 @@ namespace People.Browser.UI
                         }
                     }
                     cboCountry.Text = country;
+
+                    #endregion
+
+                    #region Sex
 
                     switch (person.Sex)
                     {
@@ -147,6 +247,8 @@ namespace People.Browser.UI
                             cboSex.Text = string.Empty;
                             break;
                     }
+
+                    #endregion
                 }
 
                 return true;
@@ -157,6 +259,26 @@ namespace People.Browser.UI
 
                 return false;
             }
+        }
+
+        private void FillBirthDate(string birthDate)
+        {
+            cboYear.Text = birthDate.Substring(0, 4);
+            cboMonth.Text = birthDate.Substring(4, 2);
+            cboDay.Text = birthDate.Substring(6, 2);
+        }
+
+        private string GetBirthDatFromGui()
+        {
+            string birthDate;
+
+            string year = string.IsNullOrEmpty(cboYear.Text) ? "0000" : cboYear.Text;
+            string month = string.IsNullOrEmpty(cboMonth.Text) ? "00" : cboMonth.Text;
+            string day = string.IsNullOrEmpty(cboDay.Text) ? "00" : cboDay.Text;
+
+            birthDate = $"{year}{month}{day}";
+
+            return birthDate;
         }
 
         #endregion
@@ -194,6 +316,6 @@ namespace People.Browser.UI
             return lineNumber;
         }
 
-        #endregion        
+        #endregion
     }
 }

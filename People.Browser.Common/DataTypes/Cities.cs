@@ -77,6 +77,33 @@ namespace People.Browser.Common
             }
         }
 
+        public bool GetCityIdByCityName(string cityName, out int cityId, out string result)
+        {
+            result = string.Empty;
+            cityId = Constants.NONE;
+
+            try
+            {
+                if ((cities == null) || (cities.Count == 0))
+                {
+                    result = "Citeis List Is Null Or Empty";
+
+                    return false;
+                }
+
+                City city = cities.First(currentCity => currentCity.Name == cityName);
+                cityId = city.Id;
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
         public int Count()
         {
             return (cities == null) ? Constants.NONE : cities.Count;

@@ -89,6 +89,33 @@ namespace People.Browser.Common
             }
         }
 
+        public bool GetCountryIdByCountryName(string countryName, out int countryId, out string result)
+        {
+            result = string.Empty;
+            countryId = Constants.NONE;
+
+            try
+            {
+                if ((countries == null) || (countries.Count == 0))
+                {
+                    result = "Countries List Is Null Or Empty";
+
+                    return false;
+                }
+
+                Country country = countries.First(currentCountry => currentCountry.Name == countryName);
+                countryId = country.Id;
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
         #endregion
     }
 }

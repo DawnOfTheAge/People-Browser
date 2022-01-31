@@ -30,7 +30,6 @@
         {
             this.lblName = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.dtBirthDate = new System.Windows.Forms.DateTimePicker();
             this.lblHouse = new System.Windows.Forms.Label();
             this.lblStreet = new System.Windows.Forms.Label();
             this.lblCity = new System.Windows.Forms.Label();
@@ -49,6 +48,9 @@
             this.btn = new System.Windows.Forms.Button();
             this.cboSex = new System.Windows.Forms.ComboBox();
             this.lblSex = new System.Windows.Forms.Label();
+            this.cboYear = new System.Windows.Forms.ComboBox();
+            this.cboMonth = new System.Windows.Forms.ComboBox();
+            this.cboDay = new System.Windows.Forms.ComboBox();
             this.gbName.SuspendLayout();
             this.gbAddress.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHouse)).BeginInit();
@@ -69,13 +71,6 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(147, 20);
             this.txtName.TabIndex = 1;
-            // 
-            // dtBirthDate
-            // 
-            this.dtBirthDate.Location = new System.Drawing.Point(21, 263);
-            this.dtBirthDate.Name = "dtBirthDate";
-            this.dtBirthDate.Size = new System.Drawing.Size(197, 20);
-            this.dtBirthDate.TabIndex = 3;
             // 
             // lblHouse
             // 
@@ -227,6 +222,7 @@
             this.btn.TabIndex = 18;
             this.btn.UseVisualStyleBackColor = true;
             this.btn.Visible = false;
+            this.btn.Click += new System.EventHandler(this.btn_Click);
             // 
             // cboSex
             // 
@@ -250,10 +246,52 @@
             this.lblSex.TabIndex = 20;
             this.lblSex.Text = "מין";
             // 
+            // cboYear
+            // 
+            this.cboYear.FormattingEnabled = true;
+            this.cboYear.Items.AddRange(new object[] {
+            "זכר",
+            "נקבה"});
+            this.cboYear.Location = new System.Drawing.Point(156, 263);
+            this.cboYear.Name = "cboYear";
+            this.cboYear.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cboYear.Size = new System.Drawing.Size(62, 21);
+            this.cboYear.Sorted = true;
+            this.cboYear.TabIndex = 21;
+            // 
+            // cboMonth
+            // 
+            this.cboMonth.FormattingEnabled = true;
+            this.cboMonth.Items.AddRange(new object[] {
+            "זכר",
+            "נקבה"});
+            this.cboMonth.Location = new System.Drawing.Point(79, 263);
+            this.cboMonth.Name = "cboMonth";
+            this.cboMonth.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cboMonth.Size = new System.Drawing.Size(39, 21);
+            this.cboMonth.Sorted = true;
+            this.cboMonth.TabIndex = 22;
+            // 
+            // cboDay
+            // 
+            this.cboDay.FormattingEnabled = true;
+            this.cboDay.Items.AddRange(new object[] {
+            "זכר",
+            "נקבה"});
+            this.cboDay.Location = new System.Drawing.Point(21, 263);
+            this.cboDay.Name = "cboDay";
+            this.cboDay.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cboDay.Size = new System.Drawing.Size(39, 21);
+            this.cboDay.Sorted = true;
+            this.cboDay.TabIndex = 23;
+            // 
             // ctlPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cboDay);
+            this.Controls.Add(this.cboMonth);
+            this.Controls.Add(this.cboYear);
             this.Controls.Add(this.lblSex);
             this.Controls.Add(this.cboSex);
             this.Controls.Add(this.btn);
@@ -262,7 +300,6 @@
             this.Controls.Add(this.gbAddress);
             this.Controls.Add(this.gbName);
             this.Controls.Add(this.lblBirthDate);
-            this.Controls.Add(this.dtBirthDate);
             this.Name = "ctlPerson";
             this.Size = new System.Drawing.Size(314, 387);
             this.Load += new System.EventHandler(this.ctlPerson_Load);
@@ -280,7 +317,6 @@
 
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.DateTimePicker dtBirthDate;
         private System.Windows.Forms.Label lblHouse;
         private System.Windows.Forms.Label lblStreet;
         private System.Windows.Forms.Label lblCity;
@@ -299,5 +335,8 @@
         private System.Windows.Forms.Button btn;
         private System.Windows.Forms.ComboBox cboSex;
         private System.Windows.Forms.Label lblSex;
+        private System.Windows.Forms.ComboBox cboYear;
+        private System.Windows.Forms.ComboBox cboMonth;
+        private System.Windows.Forms.ComboBox cboDay;
     }
 }
