@@ -51,6 +51,8 @@
             this.cboYear = new System.Windows.Forms.ComboBox();
             this.cboMonth = new System.Windows.Forms.ComboBox();
             this.cboDay = new System.Windows.Forms.ComboBox();
+            this.txtId = new System.Windows.Forms.TextBox();
+            this.lblId = new System.Windows.Forms.Label();
             this.gbName.SuspendLayout();
             this.gbAddress.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHouse)).BeginInit();
@@ -59,7 +61,7 @@
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(211, 31);
+            this.lblName.Location = new System.Drawing.Point(211, 41);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(51, 13);
             this.lblName.TabIndex = 0;
@@ -67,7 +69,7 @@
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(14, 28);
+            this.txtName.Location = new System.Drawing.Point(14, 38);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(147, 20);
             this.txtName.TabIndex = 1;
@@ -102,7 +104,7 @@
             // lblBirthDate
             // 
             this.lblBirthDate.AutoSize = true;
-            this.lblBirthDate.Location = new System.Drawing.Point(224, 266);
+            this.lblBirthDate.Location = new System.Drawing.Point(224, 253);
             this.lblBirthDate.Name = "lblBirthDate";
             this.lblBirthDate.Size = new System.Drawing.Size(69, 13);
             this.lblBirthDate.TabIndex = 8;
@@ -111,7 +113,7 @@
             // lblFamily
             // 
             this.lblFamily.AutoSize = true;
-            this.lblFamily.Location = new System.Drawing.Point(199, 79);
+            this.lblFamily.Location = new System.Drawing.Point(199, 89);
             this.lblFamily.Name = "lblFamily";
             this.lblFamily.Size = new System.Drawing.Size(63, 13);
             this.lblFamily.TabIndex = 9;
@@ -120,7 +122,7 @@
             // lblOldFamily
             // 
             this.lblOldFamily.AutoSize = true;
-            this.lblOldFamily.Location = new System.Drawing.Point(177, 55);
+            this.lblOldFamily.Location = new System.Drawing.Point(177, 65);
             this.lblOldFamily.Name = "lblOldFamily";
             this.lblOldFamily.Size = new System.Drawing.Size(85, 13);
             this.lblOldFamily.TabIndex = 10;
@@ -128,20 +130,22 @@
             // 
             // txtOldFamily
             // 
-            this.txtOldFamily.Location = new System.Drawing.Point(14, 52);
+            this.txtOldFamily.Location = new System.Drawing.Point(14, 62);
             this.txtOldFamily.Name = "txtOldFamily";
             this.txtOldFamily.Size = new System.Drawing.Size(147, 20);
             this.txtOldFamily.TabIndex = 11;
             // 
             // txtFamily
             // 
-            this.txtFamily.Location = new System.Drawing.Point(14, 76);
+            this.txtFamily.Location = new System.Drawing.Point(14, 86);
             this.txtFamily.Name = "txtFamily";
             this.txtFamily.Size = new System.Drawing.Size(147, 20);
             this.txtFamily.TabIndex = 12;
             // 
             // gbName
             // 
+            this.gbName.Controls.Add(this.lblId);
+            this.gbName.Controls.Add(this.txtId);
             this.gbName.Controls.Add(this.txtFamily);
             this.gbName.Controls.Add(this.lblName);
             this.gbName.Controls.Add(this.txtOldFamily);
@@ -171,7 +175,7 @@
             this.gbAddress.Controls.Add(this.lblHouse);
             this.gbAddress.Controls.Add(this.lblStreet);
             this.gbAddress.Controls.Add(this.lblCity);
-            this.gbAddress.Location = new System.Drawing.Point(13, 133);
+            this.gbAddress.Location = new System.Drawing.Point(13, 129);
             this.gbAddress.Name = "gbAddress";
             this.gbAddress.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.gbAddress.Size = new System.Drawing.Size(286, 114);
@@ -198,7 +202,7 @@
             // lblCountry
             // 
             this.lblCountry.AutoSize = true;
-            this.lblCountry.Location = new System.Drawing.Point(234, 295);
+            this.lblCountry.Location = new System.Drawing.Point(234, 282);
             this.lblCountry.Name = "lblCountry";
             this.lblCountry.Size = new System.Drawing.Size(59, 13);
             this.lblCountry.TabIndex = 16;
@@ -207,7 +211,7 @@
             // cboCountry
             // 
             this.cboCountry.FormattingEnabled = true;
-            this.cboCountry.Location = new System.Drawing.Point(21, 292);
+            this.cboCountry.Location = new System.Drawing.Point(21, 279);
             this.cboCountry.Name = "cboCountry";
             this.cboCountry.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cboCountry.Size = new System.Drawing.Size(197, 21);
@@ -216,7 +220,7 @@
             // 
             // btn
             // 
-            this.btn.Location = new System.Drawing.Point(188, 352);
+            this.btn.Location = new System.Drawing.Point(188, 347);
             this.btn.Name = "btn";
             this.btn.Size = new System.Drawing.Size(105, 32);
             this.btn.TabIndex = 18;
@@ -228,7 +232,7 @@
             // 
             this.cboSex.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSex.FormattingEnabled = true;
-            this.cboSex.Location = new System.Drawing.Point(156, 319);
+            this.cboSex.Location = new System.Drawing.Point(156, 306);
             this.cboSex.Name = "cboSex";
             this.cboSex.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cboSex.Size = new System.Drawing.Size(62, 21);
@@ -238,7 +242,7 @@
             // lblSex
             // 
             this.lblSex.AutoSize = true;
-            this.lblSex.Location = new System.Drawing.Point(269, 322);
+            this.lblSex.Location = new System.Drawing.Point(269, 309);
             this.lblSex.Name = "lblSex";
             this.lblSex.Size = new System.Drawing.Size(24, 13);
             this.lblSex.TabIndex = 20;
@@ -251,7 +255,7 @@
             this.cboYear.Items.AddRange(new object[] {
             "זכר",
             "נקבה"});
-            this.cboYear.Location = new System.Drawing.Point(156, 263);
+            this.cboYear.Location = new System.Drawing.Point(156, 250);
             this.cboYear.Name = "cboYear";
             this.cboYear.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cboYear.Size = new System.Drawing.Size(62, 21);
@@ -264,7 +268,7 @@
             this.cboMonth.Items.AddRange(new object[] {
             "זכר",
             "נקבה"});
-            this.cboMonth.Location = new System.Drawing.Point(79, 263);
+            this.cboMonth.Location = new System.Drawing.Point(79, 250);
             this.cboMonth.Name = "cboMonth";
             this.cboMonth.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cboMonth.Size = new System.Drawing.Size(39, 21);
@@ -277,11 +281,27 @@
             this.cboDay.Items.AddRange(new object[] {
             "זכר",
             "נקבה"});
-            this.cboDay.Location = new System.Drawing.Point(21, 263);
+            this.cboDay.Location = new System.Drawing.Point(21, 250);
             this.cboDay.Name = "cboDay";
             this.cboDay.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.cboDay.Size = new System.Drawing.Size(39, 21);
             this.cboDay.TabIndex = 23;
+            // 
+            // txtId
+            // 
+            this.txtId.Location = new System.Drawing.Point(14, 14);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(147, 20);
+            this.txtId.TabIndex = 13;
+            // 
+            // lblId
+            // 
+            this.lblId.AutoSize = true;
+            this.lblId.Location = new System.Drawing.Point(202, 17);
+            this.lblId.Name = "lblId";
+            this.lblId.Size = new System.Drawing.Size(61, 13);
+            this.lblId.TabIndex = 14;
+            this.lblId.Text = "מספר זהות";
             // 
             // ctlPerson
             // 
@@ -336,5 +356,7 @@
         private System.Windows.Forms.ComboBox cboYear;
         private System.Windows.Forms.ComboBox cboMonth;
         private System.Windows.Forms.ComboBox cboDay;
+        private System.Windows.Forms.Label lblId;
+        private System.Windows.Forms.TextBox txtId;
     }
 }

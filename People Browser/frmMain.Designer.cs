@@ -56,6 +56,7 @@
             this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblNumberOfHits = new System.Windows.Forms.ToolStripStatusLabel();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -220,7 +221,8 @@
             this.mainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pbPercentage,
             this.lblPercentage,
-            this.lblMessage});
+            this.lblMessage,
+            this.lblNumberOfHits});
             this.mainStatusStrip.Location = new System.Drawing.Point(0, 398);
             this.mainStatusStrip.Name = "mainStatusStrip";
             this.mainStatusStrip.Size = new System.Drawing.Size(1212, 22);
@@ -289,6 +291,11 @@
             this.colMessage.HeaderText = "Message";
             this.colMessage.Name = "colMessage";
             // 
+            // lblNumberOfHits
+            // 
+            this.lblNumberOfHits.Name = "lblNumberOfHits";
+            this.lblNumberOfHits.Size = new System.Drawing.Size(0, 17);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -350,6 +357,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colBirthCountry;
         private People.Browser.UI.ctlPerson ctlCurrentPerson;
         private System.Windows.Forms.ToolStripMenuItem mnuSearch;
+        private System.Windows.Forms.ToolStripStatusLabel lblNumberOfHits;
     }
 }
 

@@ -304,10 +304,22 @@ namespace People_Browser
         private void Search_SearchParameters(Person searchFilter)
         {
             string method = MethodBase.GetCurrentMethod().Name;
-
+            
             try
             {
-                
+                if (!SearchByFilter(persons, searchFilter, out List<Person> personsSearchResult, out string result))
+                {
+                    Audit(result, method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
+
+                if (!FillPersons(personsSearchResult, out result))
+                {
+                    Audit(result, method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -577,7 +589,7 @@ namespace People_Browser
 
         #region Search
 
-        private bool SearchByFilter(List<Person> persons, Person searchFilter, List<Person> personsSearchResult, out string result)
+        private bool SearchByFilter(List<Person> persons, Person searchFilter, out List<Person> personsSearchResult, out string result)
         {
             string method = MethodBase.GetCurrentMethod().Name;
 
@@ -600,7 +612,88 @@ namespace People_Browser
                     return false;
                 }
 
-                
+                #region ID
+
+                if (searchFilter.Id != Constants.NONE)
+                {
+                    personsSearchResult = persons.Where(person => person.Id.ToString().Contains(searchFilter.Id.ToString())).ToList();
+                }
+
+                #endregion
+
+                #region Name
+
+                if (!string.IsNullOrEmpty(searchFilter.Name))
+                {
+                    personsSearchResult = persons.Where(person => person.Name.Contains(searchFilter.Name)).ToList();
+                }
+
+                #endregion
+
+                #region Family
+
+                if (!string.IsNullOrEmpty(searchFilter.Family))
+                {
+                    personsSearchResult = persons.Where(person => person.Family.Contains(searchFilter.Family)).ToList();
+                }
+
+                #endregion
+
+                #region Old Family
+
+                if (!string.IsNullOrEmpty(searchFilter.OldFamily))
+                {
+                    personsSearchResult = persons.Where(person => person.OldFamily.Contains(searchFilter.OldFamily)).ToList();
+                }
+
+                #endregion
+
+                #region City
+
+                if (searchFilter.CityId != Constants.NONE)
+                {
+                    personsSearchResult = persons.Where(person => person.CityId == searchFilter.CityId).ToList();
+                }
+
+                #endregion
+
+                #region Street
+
+                if (!string.IsNullOrEmpty(searchFilter.Street))
+                {
+                    personsSearchResult = persons.Where(person => person.Street.Contains(searchFilter.Street)).ToList();
+                }
+
+                #endregion
+
+                #region House
+
+                if (searchFilter.House != Constants.NONE)
+                {
+                    personsSearchResult = persons.Where(person => person.House == searchFilter.House).ToList();
+                }
+
+                #endregion
+
+                #region Country
+
+                if (searchFilter.CountryId != Constants.NONE)
+                {
+                    personsSearchResult = persons.Where(person => person.CountryId == searchFilter.CountryId).ToList();
+                }
+
+                #endregion
+
+                #region Sex
+
+                if (searchFilter.Sex != PersonSex.Unknown)
+                {
+                    personsSearchResult = persons.Where(person => person.Sex == searchFilter.Sex).ToList();
+                }
+
+                #endregion
+
+                lblNumberOfHits.Text = $"{personsSearchResult.Count} Records";
 
                 return true;
             }
@@ -762,7 +855,7 @@ namespace People_Browser
                 return string.Empty;
             }
 
-            if (cities.GetCityNameByCityId(cityId, out string cityName, out _))
+            if (!cities.GetCityNameByCityId(cityId, out string cityName, out _))
             { 
                 cityName = string.Empty;
             }
@@ -782,7 +875,7 @@ namespace People_Browser
                 return string.Empty;
             }
 
-            if (countries.GetCountryNameByCountryId(countryId, out string countryName, out _, out _))
+            if (!countries.GetCountryNameByCountryId(countryId, out string countryName, out _, out _))
             {
                 countryName = string.Empty;
             }

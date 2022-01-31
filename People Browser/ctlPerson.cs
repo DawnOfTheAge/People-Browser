@@ -138,6 +138,7 @@ namespace People.Browser.UI
         #endregion
 
         #region Gui
+        
         private void btn_Click(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
@@ -145,6 +146,8 @@ namespace People.Browser.UI
 
             try
             {
+                #region City
+
                 int cityId = Constants.NONE;
                 if (!string.IsNullOrEmpty(cboCity.Text))
                 {
@@ -154,6 +157,10 @@ namespace People.Browser.UI
                     }
                 }
 
+                #endregion
+
+                #region Country
+
                 int countryId = Constants.NONE;
                 if (!string.IsNullOrEmpty(cboCountry.Text))
                 {
@@ -162,6 +169,10 @@ namespace People.Browser.UI
                         Audit(result, method, LINE(), AuditSeverity.Warning);
                     }
                 }
+
+                #endregion
+
+                #region Sex
 
                 PersonSex sex = new PersonSex();
                 switch (cboSex.Text)
@@ -179,8 +190,18 @@ namespace People.Browser.UI
                         break;
                 }
 
+                #endregion
+
+                #region ID
+
+                int id = int.TryParse(txtId.Text, out id) ? id : Constants.NONE; 
+
+                #endregion
+
                 Person searchFilter = new Person()
                 {
+                    Id = id,
+
                     Name = txtName.Text,
                     Family = txtFamily.Text,
                     OldFamily = txtOldFamily.Text,
@@ -213,7 +234,9 @@ namespace People.Browser.UI
             try
             {
                 if (person != null)
-                {                    
+                {                 
+                    txtId.Text = person.Id.ToString();
+
                     txtFamily.Text = person.Family;
                     txtOldFamily.Text = person.Family;
                     txtName.Text = person.Name;
