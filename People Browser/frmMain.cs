@@ -309,10 +309,11 @@ namespace People_Browser
         private void Search_SearchParameters(Person searchFilter)
         {
             string method = MethodBase.GetCurrentMethod().Name;
-            
+            string result;
+
             try
             {
-                if (!SearchByFilter(persons, searchFilter, out List<Person> personsSearchResult, out string result))
+                if (!SearchByFilter(persons, searchFilter, out List<Person> personsSearchResult, out result))
                 {
                     Audit(result, method, LINE(), AuditSeverity.Warning);
 
@@ -441,9 +442,9 @@ namespace People_Browser
                                                        person.Street, 
                                                        person.House.ToString(), 
                                                        GetCountry(person.CountryId) });
-
-                    dgvPersons.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
                 }
+                
+                dgvPersons.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
 
                 return true;
             }
@@ -521,6 +522,27 @@ namespace People_Browser
                 Audit(ex.Message, method, LINE(), AuditSeverity.Error);
 
                 return false;   
+            }
+        }
+
+        private bool GetPersonById(int id, out Person person, out string result)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+            result = string.Empty;
+
+            person = null;
+
+            try
+            {
+                person = persons.FirstOrDefault(currentPerson => currentPerson.Id == id);   
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+
+                return false;
             }
         }
 
@@ -625,9 +647,9 @@ namespace People_Browser
                 if (searchFilter.Id != Constants.NONE)
                 {
                     personsSearchResult = personsSearchResult.Where(person => person.Id.ToString().Contains(searchFilter.Id.ToString())).ToList();
-                    
+
                     parmeterName = nameof(searchFilter.Id);
-                    Audit($"Filter[{parmeterName} - {searchFilter.Id}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.Id}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -639,7 +661,7 @@ namespace People_Browser
                     personsSearchResult = personsSearchResult.Where(person => person.FatherId.ToString().Contains(searchFilter.FatherId.ToString())).ToList();
 
                     parmeterName = nameof(searchFilter.FatherId);
-                    Audit($"Filter[{parmeterName} - {searchFilter.FatherId}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.FatherId}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -651,7 +673,7 @@ namespace People_Browser
                     personsSearchResult = personsSearchResult.Where(person => person.MotherId.ToString().Contains(searchFilter.MotherId.ToString())).ToList();
 
                     parmeterName = nameof(searchFilter.MotherId);
-                    Audit($"Filter[{parmeterName} - {searchFilter.MotherId}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.MotherId}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -663,7 +685,7 @@ namespace People_Browser
                     personsSearchResult = personsSearchResult.Where(person => person.Name.Contains(searchFilter.Name)).ToList();
 
                     parmeterName = nameof(searchFilter.Name);
-                    Audit($"Filter[{parmeterName} - {searchFilter.Name}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.Name}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -675,7 +697,7 @@ namespace People_Browser
                     personsSearchResult = personsSearchResult.Where(person => person.FatherName.Contains(searchFilter.FatherName)).ToList();
 
                     parmeterName = nameof(searchFilter.FatherName);
-                    Audit($"Filter[{parmeterName} - {searchFilter.FatherName}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.FatherName}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -687,7 +709,7 @@ namespace People_Browser
                     personsSearchResult = personsSearchResult.Where(person => person.MotherName.Contains(searchFilter.MotherName)).ToList();
 
                     parmeterName = nameof(searchFilter.MotherName);
-                    Audit($"Filter[{parmeterName} - {searchFilter.MotherName}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.MotherName}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -699,7 +721,7 @@ namespace People_Browser
                     personsSearchResult = personsSearchResult.Where(person => person.Family.Contains(searchFilter.Family)).ToList();
 
                     parmeterName = nameof(searchFilter.Family);
-                    Audit($"Filter[{parmeterName} - {searchFilter.Family}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.Family}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -711,7 +733,7 @@ namespace People_Browser
                     personsSearchResult = personsSearchResult.Where(person => person.OldFamily.Contains(searchFilter.OldFamily)).ToList();
 
                     parmeterName = nameof(searchFilter.OldFamily);
-                    Audit($"Filter[{parmeterName} - {searchFilter.OldFamily}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.OldFamily}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -723,7 +745,14 @@ namespace People_Browser
                     personsSearchResult = personsSearchResult.Where(person => person.CityId == searchFilter.CityId).ToList();
 
                     parmeterName = nameof(searchFilter.CityId);
-                    Audit($"Filter[{parmeterName} - {searchFilter.CityId}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+
+                    string cityName = "<Unknown>";
+                    if (!cities.GetCityNameByCityId(searchFilter.CityId, out cityName, out result))
+                    {
+                        Audit(result, method, LINE(), AuditSeverity.Warning);
+                    }
+
+                    Audit($"Filter[{parmeterName} - '{cityName}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -735,7 +764,7 @@ namespace People_Browser
                     personsSearchResult = personsSearchResult.Where(person => person.Street.Contains(searchFilter.Street)).ToList();
 
                     parmeterName = nameof(searchFilter.Street);
-                    Audit($"Filter[{parmeterName} - {searchFilter.Street}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.Street}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -747,7 +776,7 @@ namespace People_Browser
                     personsSearchResult = personsSearchResult.Where(person => person.House == searchFilter.House).ToList();
 
                     parmeterName = nameof(searchFilter.House);
-                    Audit($"Filter[{parmeterName} - {searchFilter.House}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.House}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -759,7 +788,14 @@ namespace People_Browser
                     personsSearchResult = personsSearchResult.Where(person => person.CountryId == searchFilter.CountryId).ToList();
 
                     parmeterName = nameof(searchFilter.CountryId);
-                    Audit($"Filter[{parmeterName} - {searchFilter.CountryId}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+
+                    string countryName  = "<Unknown>";
+                    if (!countries.GetCountryNameByCountryId(searchFilter.CountryId, out countryName, out _, out result))
+                    {
+                        Audit(result, method, LINE(), AuditSeverity.Warning);
+                    }
+
+                    Audit($"Filter[{parmeterName} - '{countryName}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
@@ -771,7 +807,7 @@ namespace People_Browser
                     personsSearchResult = personsSearchResult.Where(person => person.Sex == searchFilter.Sex).ToList();
 
                     parmeterName = nameof(searchFilter.Sex);
-                    Audit($"Filter[{parmeterName} - {searchFilter.Sex}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.Sex}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion
