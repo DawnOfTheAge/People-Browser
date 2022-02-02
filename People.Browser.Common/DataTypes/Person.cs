@@ -88,6 +88,12 @@ namespace People.Browser.Common
             set;
         }
 
+        public string BirthDateYear { get; set; }
+
+        public string BirthDateMonth { get; set; }    
+        
+        public string BirthDateDay { get; set; }
+
         public int CityId
         {
             get;
@@ -130,6 +136,6 @@ namespace People.Browser.Common
             Descendant = new List<Person>();
         }
 
-        #endregion
+        #endregion 
     }
 }

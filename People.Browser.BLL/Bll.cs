@@ -251,7 +251,7 @@ namespace People.Browser.BLL
                     return false;
                 }
 
-                allPersons = new List<Person>();
+                allPersons = new List<Person>(numberOfPersons);
 
                 tmrIntervalTimer.Start();
 
@@ -294,6 +294,7 @@ namespace People.Browser.BLL
                         person.MotherName = oddrOleDbDataReader["MOTHER_NAME"].ToString();
 
                         person.BirthDate = oddrOleDbDataReader["B_YEAR"].ToString();
+
                         person.Street = oddrOleDbDataReader["STREET"].ToString();
 
                         int house = int.TryParse(oddrOleDbDataReader["HOUSE"].ToString(), out house) ? house : Constants.NONE; ;

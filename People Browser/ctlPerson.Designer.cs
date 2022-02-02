@@ -54,14 +54,14 @@
             this.cboMonth = new System.Windows.Forms.ComboBox();
             this.cboDay = new System.Windows.Forms.ComboBox();
             this.gbParents = new System.Windows.Forms.GroupBox();
-            this.lblFatherid = new System.Windows.Forms.Label();
-            this.txtFatherId = new System.Windows.Forms.TextBox();
-            this.lblFatherName = new System.Windows.Forms.Label();
-            this.txtFatherName = new System.Windows.Forms.TextBox();
             this.lblMotherId = new System.Windows.Forms.Label();
             this.txtMotherId = new System.Windows.Forms.TextBox();
             this.lblMotherName = new System.Windows.Forms.Label();
             this.txtMotherName = new System.Windows.Forms.TextBox();
+            this.lblFatherid = new System.Windows.Forms.Label();
+            this.txtFatherId = new System.Windows.Forms.TextBox();
+            this.lblFatherName = new System.Windows.Forms.Label();
+            this.txtFatherName = new System.Windows.Forms.TextBox();
             this.gbName.SuspendLayout();
             this.gbAddress.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHouse)).BeginInit();
@@ -276,7 +276,6 @@
             // 
             // cboYear
             // 
-            this.cboYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboYear.FormattingEnabled = true;
             this.cboYear.Items.AddRange(new object[] {
             "זכר",
@@ -289,7 +288,6 @@
             // 
             // cboMonth
             // 
-            this.cboMonth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMonth.FormattingEnabled = true;
             this.cboMonth.Items.AddRange(new object[] {
             "זכר",
@@ -302,7 +300,6 @@
             // 
             // cboDay
             // 
-            this.cboDay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDay.FormattingEnabled = true;
             this.cboDay.Items.AddRange(new object[] {
             "זכר",
@@ -330,38 +327,6 @@
             this.gbParents.TabIndex = 24;
             this.gbParents.TabStop = false;
             this.gbParents.Text = "הורים";
-            // 
-            // lblFatherid
-            // 
-            this.lblFatherid.AutoSize = true;
-            this.lblFatherid.Location = new System.Drawing.Point(207, 20);
-            this.lblFatherid.Name = "lblFatherid";
-            this.lblFatherid.Size = new System.Drawing.Size(49, 13);
-            this.lblFatherid.TabIndex = 18;
-            this.lblFatherid.Text = "זהות אב";
-            // 
-            // txtFatherId
-            // 
-            this.txtFatherId.Location = new System.Drawing.Point(19, 17);
-            this.txtFatherId.Name = "txtFatherId";
-            this.txtFatherId.Size = new System.Drawing.Size(147, 20);
-            this.txtFatherId.TabIndex = 17;
-            // 
-            // lblFatherName
-            // 
-            this.lblFatherName.AutoSize = true;
-            this.lblFatherName.Location = new System.Drawing.Point(215, 44);
-            this.lblFatherName.Name = "lblFatherName";
-            this.lblFatherName.Size = new System.Drawing.Size(41, 13);
-            this.lblFatherName.TabIndex = 15;
-            this.lblFatherName.Text = "שם אב";
-            // 
-            // txtFatherName
-            // 
-            this.txtFatherName.Location = new System.Drawing.Point(19, 41);
-            this.txtFatherName.Name = "txtFatherName";
-            this.txtFatherName.Size = new System.Drawing.Size(147, 20);
-            this.txtFatherName.TabIndex = 16;
             // 
             // lblMotherId
             // 
@@ -394,6 +359,38 @@
             this.txtMotherName.Name = "txtMotherName";
             this.txtMotherName.Size = new System.Drawing.Size(147, 20);
             this.txtMotherName.TabIndex = 20;
+            // 
+            // lblFatherid
+            // 
+            this.lblFatherid.AutoSize = true;
+            this.lblFatherid.Location = new System.Drawing.Point(207, 20);
+            this.lblFatherid.Name = "lblFatherid";
+            this.lblFatherid.Size = new System.Drawing.Size(49, 13);
+            this.lblFatherid.TabIndex = 18;
+            this.lblFatherid.Text = "זהות אב";
+            // 
+            // txtFatherId
+            // 
+            this.txtFatherId.Location = new System.Drawing.Point(19, 17);
+            this.txtFatherId.Name = "txtFatherId";
+            this.txtFatherId.Size = new System.Drawing.Size(147, 20);
+            this.txtFatherId.TabIndex = 17;
+            // 
+            // lblFatherName
+            // 
+            this.lblFatherName.AutoSize = true;
+            this.lblFatherName.Location = new System.Drawing.Point(215, 44);
+            this.lblFatherName.Name = "lblFatherName";
+            this.lblFatherName.Size = new System.Drawing.Size(41, 13);
+            this.lblFatherName.TabIndex = 15;
+            this.lblFatherName.Text = "שם אב";
+            // 
+            // txtFatherName
+            // 
+            this.txtFatherName.Location = new System.Drawing.Point(19, 41);
+            this.txtFatherName.Name = "txtFatherName";
+            this.txtFatherName.Size = new System.Drawing.Size(147, 20);
+            this.txtFatherName.TabIndex = 16;
             // 
             // ctlPerson
             // 

@@ -17,6 +17,7 @@ using System.IO;
 using System.Threading;
 using System.Globalization;
 using People.Browser.UI;
+using System.Runtime;
 
 namespace People_Browser
 {
@@ -231,6 +232,8 @@ namespace People_Browser
 
             try
             {
+                mnuConnect.Enabled = false;
+
                 OpenFileDialog openFile = new OpenFileDialog
                 {
                     Title = "Select Database File",
@@ -265,14 +268,29 @@ namespace People_Browser
                 bll.LoadAllProgress += Bll_LoadAllProgress;
                 bll.SetConnectionString(databaseConnectionString);
 
-                lblMessage.Text = "Loading Persons ...";
-                GetAllPersons();
+                lblMessage.Text = "Loading 'Persons' ...";
+                if (!GetAllPersons())
+                {
+                    Audit("Failed Loading 'Persons'", method, LINE(), AuditSeverity.Warning);
 
-                lblMessage.Text = "Loading Countries ...";
-                GetAllCountries();
+                    return;
+                }
 
-                lblMessage.Text = "Loading Cities ...";
-                GetAllCities();
+                lblMessage.Text = "Loading 'Countries' ...";
+                if (!GetAllCountries())
+                {
+                    Audit("Failed Loading 'Countries'", method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
+
+                lblMessage.Text = "Loading 'Cities' ...";
+                if (!GetAllCities())
+                {
+                    Audit("Failed Loading 'Cities'", method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
 
                 Thread.Sleep(1000);
 
@@ -808,6 +826,34 @@ namespace People_Browser
 
                     parmeterName = nameof(searchFilter.Sex);
                     Audit($"Filter[{parmeterName} - '{searchFilter.Sex}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                }
+
+                #endregion
+
+                #region Birth Date
+                
+                if (!string.IsNullOrEmpty(searchFilter.BirthDateYear))
+                {
+                    personsSearchResult = personsSearchResult.Where(person => person.BirthDate.Contains(searchFilter.BirthDateYear)).ToList();
+
+                    parmeterName = nameof(searchFilter.BirthDateYear);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.BirthDateYear}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                }
+
+                if (!string.IsNullOrEmpty(searchFilter.BirthDateMonth))
+                {
+                    personsSearchResult = personsSearchResult.Where(person => person.BirthDate.Contains(searchFilter.BirthDateMonth)).ToList();
+
+                    parmeterName = nameof(searchFilter.BirthDate);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.BirthDateMonth}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
+                }
+
+                if (!string.IsNullOrEmpty(searchFilter.BirthDateDay))
+                {
+                    personsSearchResult = personsSearchResult.Where(person => person.BirthDate.Contains(searchFilter.BirthDateDay)).ToList();
+
+                    parmeterName = nameof(searchFilter.BirthDate);
+                    Audit($"Filter[{parmeterName} - '{searchFilter.BirthDateDay}']  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
                 }
 
                 #endregion

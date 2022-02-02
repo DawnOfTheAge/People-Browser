@@ -104,14 +104,16 @@ namespace People.Browser.UI
                 cboMonth.Items.Add(string.Empty);
                 for (int month = 1; month < 13; month++)
                 {
-                    cboMonth.Items.Add(month.ToString());
+                    string monthString = (month > 9) ? month.ToString() : $"0{month}"; 
+                    cboMonth.Items.Add(monthString);
                 }
 
                 cboDay.Items.Clear();
                 cboDay.Items.Add(string.Empty);
                 for (int day = 1; day < 32; day++)
                 {
-                    cboDay.Items.Add(day.ToString());
+                    string dayString = (day > 9) ? day.ToString() : $"0{day}";
+                    cboDay.Items.Add(dayString);
                 }
 
                 #endregion
@@ -220,7 +222,9 @@ namespace People.Browser.UI
 
                     Sex = sex,
 
-                    BirthDate = GetBirthDatFromGui()
+                    BirthDateYear = cboYear.Text,
+                    BirthDateMonth = cboMonth.Text,
+                    BirthDateDay = cboDay.Text
                 };
 
                 OnSearchParameter(searchFilter);
@@ -329,19 +333,6 @@ namespace People.Browser.UI
             cboYear.Text = birthDate.Substring(0, 4);
             cboMonth.Text = birthDate.Substring(4, 2);
             cboDay.Text = birthDate.Substring(6, 2);
-        }
-
-        private string GetBirthDatFromGui()
-        {
-            string birthDate;
-
-            string year = string.IsNullOrEmpty(cboYear.Text) ? "0000" : cboYear.Text;
-            string month = string.IsNullOrEmpty(cboMonth.Text) ? "00" : cboMonth.Text;
-            string day = string.IsNullOrEmpty(cboDay.Text) ? "00" : cboDay.Text;
-
-            birthDate = $"{year, 4}{month, 2}{day, 2}";
-
-            return birthDate;
         }
 
         #endregion
