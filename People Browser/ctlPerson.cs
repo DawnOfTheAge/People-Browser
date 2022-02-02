@@ -195,8 +195,8 @@ namespace People.Browser.UI
                 #region IDs
 
                 int id = int.TryParse(txtId.Text, out id) ? id : Constants.NONE;
-                int fatherId = int.TryParse(txtFatherId.Text, out id) ? id : Constants.NONE;
-                int motherId = int.TryParse(txtMotherId.Text, out id) ? id : Constants.NONE;
+                int fatherId = int.TryParse(txtFatherId.Text, out fatherId) ? fatherId : Constants.NONE;
+                int motherId = int.TryParse(txtMotherId.Text, out motherId) ? motherId : Constants.NONE;
 
                 #endregion
 

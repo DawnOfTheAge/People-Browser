@@ -32,13 +32,7 @@ namespace People.Browser.Common
             set;
         }
 
-        public Person()
-        {
-            Parent = new List<Person>();
-            Sibling = new List<Person>();
-            Spouse = new List<Person>();
-            Descendant = new List<Person>();
-        }
+        #region Properties
 
         public int Id
         {
@@ -123,5 +117,19 @@ namespace People.Browser.Common
             get;
             set;
         }
+
+        #endregion
+
+        #region Constructor
+
+        public Person()
+        {
+            Parent = new List<Person>();
+            Sibling = new List<Person>();
+            Spouse = new List<Person>();
+            Descendant = new List<Person>();
+        }
+
+        #endregion
     }
 }

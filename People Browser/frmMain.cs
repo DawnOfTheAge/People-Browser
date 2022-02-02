@@ -139,6 +139,8 @@ namespace People_Browser
 
                 AuditOn = true;
 
+                mnuConnect.Enabled = true;
+                mnuSearch.Enabled = false;
 
                 #endregion
 
@@ -276,7 +278,10 @@ namespace People_Browser
 
                 pbPercentage.Visible = false;
                 lblPercentage.Visible = false;
-                lblMessage.Visible = false;                
+                lblMessage.Visible = false;
+
+                mnuConnect.Enabled = false;
+                mnuSearch.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -613,11 +618,13 @@ namespace People_Browser
                     return false;
                 }
 
+                personsSearchResult = persons;
+
                 #region Id
 
                 if (searchFilter.Id != Constants.NONE)
                 {
-                    personsSearchResult = persons.Where(person => person.Id.ToString().Contains(searchFilter.Id.ToString())).ToList();
+                    personsSearchResult = personsSearchResult.Where(person => person.Id.ToString().Contains(searchFilter.Id.ToString())).ToList();
                     
                     parmeterName = nameof(searchFilter.Id);
                     Audit($"Filter[{parmeterName} - {searchFilter.Id}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
@@ -629,7 +636,7 @@ namespace People_Browser
 
                 if (searchFilter.FatherId != Constants.NONE)
                 {
-                    personsSearchResult = persons.Where(person => person.FatherId.ToString().Contains(searchFilter.FatherId.ToString())).ToList();
+                    personsSearchResult = personsSearchResult.Where(person => person.FatherId.ToString().Contains(searchFilter.FatherId.ToString())).ToList();
 
                     parmeterName = nameof(searchFilter.FatherId);
                     Audit($"Filter[{parmeterName} - {searchFilter.FatherId}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
@@ -641,7 +648,7 @@ namespace People_Browser
 
                 if (searchFilter.MotherId != Constants.NONE)
                 {
-                    personsSearchResult = persons.Where(person => person.MotherId.ToString().Contains(searchFilter.MotherId.ToString())).ToList();
+                    personsSearchResult = personsSearchResult.Where(person => person.MotherId.ToString().Contains(searchFilter.MotherId.ToString())).ToList();
 
                     parmeterName = nameof(searchFilter.MotherId);
                     Audit($"Filter[{parmeterName} - {searchFilter.MotherId}]  Number Of Hits[{personsSearchResult.Count}]", method, LINE(), AuditSeverity.Information);
@@ -735,7 +742,7 @@ namespace People_Browser
 
                 #region House
 
-                if (searchFilter.House != Constants.NONE)
+                if (searchFilter.House != 0)
                 {
                     personsSearchResult = personsSearchResult.Where(person => person.House == searchFilter.House).ToList();
 
@@ -1040,7 +1047,7 @@ namespace People_Browser
 
         private void Audit(string message, string method, int line, AuditSeverity auditSeverity)
         {
-            Audit(message, method, "MOPS Config Tool", line, auditSeverity);
+            Audit(message, method, "People Browser GUI", line, auditSeverity);
         }
 
         public static int LINE([System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0)
