@@ -300,6 +300,11 @@ namespace People_Browser
 
                 mnuConnect.Enabled = false;
                 mnuSearch.Enabled = true;
+
+                if (!ctlCurrentPerson.SetForSearch(cities, countries, out result))
+                {
+                    Audit(result, method, LINE(), AuditSeverity.Warning);
+                }
             }
             catch (Exception ex)
             {
@@ -451,15 +456,20 @@ namespace People_Browser
                 dgvPersons.Rows.Clear();
                 foreach (Person person in personsList)
                 {
-                    dgvPersons.Rows.Add(new string[] { person.Id.ToString(), 
-                                                       person.Family, 
-                                                       person.OldFamily, 
-                                                       person.Name,
-                                                       GetBirthDate(person.BirthDate), 
-                                                       GetCity(person.CityId), 
-                                                       person.Street, 
-                                                       person.House.ToString(), 
-                                                       GetCountry(person.CountryId) });
+                    int newRowIndex = dgvPersons.Rows.Add(new string[] { person.Id.ToString(), 
+                                                                         person.Family, 
+                                                                         person.OldFamily, 
+                                                                         person.Name,
+                                                                         GetBirthDate(person.BirthDate), 
+                                                                         GetCity(person.CityId), 
+                                                                         person.Street, 
+                                                                         person.House.ToString(), 
+                                                                         GetCountry(person.CountryId),
+                                                                         person.FatherId.ToString(),
+                                                                         person.FatherName,
+                                                                         person.MotherId.ToString(),
+                                                                         person.MotherName });
+                    dgvPersons.Rows[newRowIndex].DefaultCellStyle.BackColor = SexColor(person.Sex);
                 }
                 
                 dgvPersons.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
@@ -477,6 +487,7 @@ namespace People_Browser
         private void dgvPersons_MouseDown(object sender, MouseEventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
+            string result;
 
             DataGridView.HitTestInfo hitTestInfo;
 
@@ -496,12 +507,105 @@ namespace People_Browser
                     {
                         personsContextMenu.Show(dgvPersons, new Point(e.X, e.Y));
                     }
+
+                    return;
+                }
+
+                if (e.Button == MouseButtons.Left)
+                {
+                    int rowIndex = dgvPersons.SelectedRows[0].Index;
+                    if (rowIndex == Constants.NONE)
+                    {
+                        return;
+                    }
+
+                    int id = int.TryParse(dgvPersons.Rows[rowIndex].Cells[0].Value.ToString(), out id) ? id : Constants.NONE;
+                    int fatherId = int.TryParse(dgvPersons.Rows[rowIndex].Cells[9].Value.ToString(), out fatherId) ? fatherId : Constants.NONE;
+                    int motherId = int.TryParse(dgvPersons.Rows[rowIndex].Cells[11].Value.ToString(), out motherId) ? motherId : Constants.NONE;
+                    string cityName = dgvPersons.Rows[rowIndex].Cells[5].Value.ToString();
+                    string countryName = dgvPersons.Rows[rowIndex].Cells[8].Value.ToString();
+                    int house = int.TryParse(dgvPersons.Rows[rowIndex].Cells[7].Value.ToString(), out house) ? house : Constants.NONE;
+
+                    int cityId = Constants.NONE;
+                    if (!string.IsNullOrEmpty(cityName))
+                    {
+                        if (!cities.GetCityIdByCityName(cityName, out cityId, out result))
+                        {
+                            Audit(result, method, LINE(), AuditSeverity.Warning);
+                        }
+                    }
+
+                    int countryId = Constants.NONE;
+                    if (!string.IsNullOrEmpty(countryName))
+                    {
+                        if (!countries.GetCountryIdByCountryName(countryName, out countryId, out result))
+                        {
+                            Audit(result, method, LINE(), AuditSeverity.Warning);
+                        }
+                    }
+
+                    PersonSex personSex = GetPersonSex(dgvPersons.Rows[rowIndex].DefaultCellStyle.BackColor);
+
+                    Person person = new Person()
+                    {
+                        Id = id,
+                        Family = dgvPersons.Rows[rowIndex].Cells[1].Value.ToString(),
+                        OldFamily = dgvPersons.Rows[rowIndex].Cells[2].Value.ToString(),
+                        Name = dgvPersons.Rows[rowIndex].Cells[3].Value.ToString(),
+                        BirthDate = dgvPersons.Rows[rowIndex].Cells[4].Value.ToString(),
+                        CityId = cityId,
+                        Street = dgvPersons.Rows[rowIndex].Cells[6].Value.ToString(),
+                        House = house,
+                        CountryId = countryId,
+                        FatherId = fatherId,
+                        MotherId = motherId,
+                        FatherName = dgvPersons.Rows[rowIndex].Cells[10].Value.ToString(),
+                        MotherName = dgvPersons.Rows[rowIndex].Cells[12].Value.ToString(),
+                        Sex = personSex
+                    };
+
+                    if (!ctlCurrentPerson.Fill(person, out result))
+                    {
+                        Audit(result, method, LINE(), AuditSeverity.Warning);
+                    }
+
+                    return;
                 }
             }
             catch (Exception ex)
             {
                 Audit(ex.Message, method, LINE(), AuditSeverity.Error);
             }
+        }
+
+        private Color SexColor(PersonSex personSex)
+        {
+            switch (personSex)
+            {
+                case PersonSex.Male:
+                    return Color.PaleTurquoise;
+
+                case PersonSex.Female:
+                    return Color.LightPink;
+
+                default:
+                    return Color.MintCream;
+            }
+        }
+
+        private PersonSex GetPersonSex(Color color)
+        {
+            if (color == Color.PaleTurquoise)
+            {
+                return PersonSex.Male;
+            }
+
+            if (color == Color.LightPink)
+            {
+                return PersonSex.Female;
+            }
+
+            return PersonSex.Unknown;
         }
 
         #endregion
@@ -1137,6 +1241,6 @@ namespace People_Browser
             return lineNumber;
         }
 
-        #endregion       
+        #endregion
     }
 }

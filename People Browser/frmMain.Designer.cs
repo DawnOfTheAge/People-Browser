@@ -35,15 +35,6 @@
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.personsSplitContainer = new System.Windows.Forms.SplitContainer();
             this.dgvPersons = new System.Windows.Forms.DataGridView();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFamily = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOldFamily = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBirthDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStreet = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHouse = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBirthCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctlCurrentPerson = new People.Browser.UI.ctlPerson();
             this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
             this.pbPercentage = new System.Windows.Forms.ToolStripProgressBar();
@@ -57,6 +48,19 @@
             this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFamily = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOldFamily = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBirthDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStreet = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHouse = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBirthCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFatherId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFatherName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMotherId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMotherName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -153,58 +157,17 @@
             this.colCity,
             this.colStreet,
             this.colHouse,
-            this.colBirthCountry});
+            this.colBirthCountry,
+            this.colFatherId,
+            this.colFatherName,
+            this.colMotherId,
+            this.colMotherName});
             this.dgvPersons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPersons.Location = new System.Drawing.Point(0, 0);
             this.dgvPersons.Name = "dgvPersons";
             this.dgvPersons.Size = new System.Drawing.Size(888, 476);
             this.dgvPersons.TabIndex = 0;
             this.dgvPersons.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvPersons_MouseDown);
-            // 
-            // colId
-            // 
-            this.colId.HeaderText = "מספר זהות";
-            this.colId.Name = "colId";
-            // 
-            // colFamily
-            // 
-            this.colFamily.HeaderText = "שם משפחה";
-            this.colFamily.Name = "colFamily";
-            // 
-            // colOldFamily
-            // 
-            this.colOldFamily.HeaderText = "שם משפחה ישן";
-            this.colOldFamily.Name = "colOldFamily";
-            // 
-            // colName
-            // 
-            this.colName.HeaderText = "שם פרטי";
-            this.colName.Name = "colName";
-            // 
-            // colBirthDate
-            // 
-            this.colBirthDate.HeaderText = "תאריך לידה";
-            this.colBirthDate.Name = "colBirthDate";
-            // 
-            // colCity
-            // 
-            this.colCity.HeaderText = "ישוב";
-            this.colCity.Name = "colCity";
-            // 
-            // colStreet
-            // 
-            this.colStreet.HeaderText = "רחוב";
-            this.colStreet.Name = "colStreet";
-            // 
-            // colHouse
-            // 
-            this.colHouse.HeaderText = "מספר";
-            this.colHouse.Name = "colHouse";
-            // 
-            // colBirthCountry
-            // 
-            this.colBirthCountry.HeaderText = "ארץ לידה";
-            this.colBirthCountry.Name = "colBirthCountry";
             // 
             // ctlCurrentPerson
             // 
@@ -296,6 +259,71 @@
             this.colMessage.HeaderText = "Message";
             this.colMessage.Name = "colMessage";
             // 
+            // colId
+            // 
+            this.colId.HeaderText = "מספר זהות";
+            this.colId.Name = "colId";
+            // 
+            // colFamily
+            // 
+            this.colFamily.HeaderText = "שם משפחה";
+            this.colFamily.Name = "colFamily";
+            // 
+            // colOldFamily
+            // 
+            this.colOldFamily.HeaderText = "שם משפחה ישן";
+            this.colOldFamily.Name = "colOldFamily";
+            // 
+            // colName
+            // 
+            this.colName.HeaderText = "שם פרטי";
+            this.colName.Name = "colName";
+            // 
+            // colBirthDate
+            // 
+            this.colBirthDate.HeaderText = "תאריך לידה";
+            this.colBirthDate.Name = "colBirthDate";
+            // 
+            // colCity
+            // 
+            this.colCity.HeaderText = "ישוב";
+            this.colCity.Name = "colCity";
+            // 
+            // colStreet
+            // 
+            this.colStreet.HeaderText = "רחוב";
+            this.colStreet.Name = "colStreet";
+            // 
+            // colHouse
+            // 
+            this.colHouse.HeaderText = "מספר";
+            this.colHouse.Name = "colHouse";
+            // 
+            // colBirthCountry
+            // 
+            this.colBirthCountry.HeaderText = "ארץ לידה";
+            this.colBirthCountry.Name = "colBirthCountry";
+            // 
+            // colFatherId
+            // 
+            this.colFatherId.HeaderText = "זהות אב";
+            this.colFatherId.Name = "colFatherId";
+            // 
+            // colFatherName
+            // 
+            this.colFatherName.HeaderText = "שם אב";
+            this.colFatherName.Name = "colFatherName";
+            // 
+            // colMotherId
+            // 
+            this.colMotherId.HeaderText = "זהות אם";
+            this.colMotherId.Name = "colMotherId";
+            // 
+            // colMotherName
+            // 
+            this.colMotherName.HeaderText = "שם אם";
+            this.colMotherName.Name = "colMotherName";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -346,6 +374,9 @@
         private System.Windows.Forms.ToolStripStatusLabel lblMessage;
         private System.Windows.Forms.SplitContainer personsSplitContainer;
         private System.Windows.Forms.DataGridView dgvPersons;
+        private People.Browser.UI.ctlPerson ctlCurrentPerson;
+        private System.Windows.Forms.ToolStripMenuItem mnuSearch;
+        private System.Windows.Forms.ToolStripStatusLabel lblNumberOfHits;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFamily;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOldFamily;
@@ -355,9 +386,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colStreet;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHouse;
         private System.Windows.Forms.DataGridViewTextBoxColumn colBirthCountry;
-        private People.Browser.UI.ctlPerson ctlCurrentPerson;
-        private System.Windows.Forms.ToolStripMenuItem mnuSearch;
-        private System.Windows.Forms.ToolStripStatusLabel lblNumberOfHits;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFatherId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFatherName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMotherId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMotherName;
     }
 }
 

@@ -303,11 +303,11 @@ namespace People.Browser.UI
                     switch (person.Sex)
                     {
                         case PersonSex.Male:
-                            cboSex.Text = cboSex.Items[0].ToString();
+                            cboSex.Text = cboSex.Items[1].ToString();
                             break;
 
                         case PersonSex.Female:
-                            cboSex.Text = cboSex.Items[1].ToString();
+                            cboSex.Text = cboSex.Items[2].ToString();
                             break;
 
                         default:
@@ -330,9 +330,9 @@ namespace People.Browser.UI
 
         private void FillBirthDate(string birthDate)
         {
-            cboYear.Text = birthDate.Substring(0, 4);
-            cboMonth.Text = birthDate.Substring(4, 2);
-            cboDay.Text = birthDate.Substring(6, 2);
+            cboYear.Text = birthDate.Substring(6, 4);
+            cboMonth.Text = birthDate.Substring(3, 2);
+            cboDay.Text = birthDate.Substring(0, 2);
         }
 
         #endregion
