@@ -47,6 +47,9 @@ namespace People.Browser.UI
             try
             {
                 btn.Visible = false;
+                btnParents.Visible = false;
+                btnSiblings.Visible = false;
+                btnChildren.Visible = false;
             }
             catch (Exception ex)
             {
@@ -373,6 +376,10 @@ namespace People.Browser.UI
                     }
 
                     #endregion
+
+                    btnParents.Visible = true;
+                    btnSiblings.Visible = true;
+                    btnChildren.Visible = true;
                 }
 
                 return true;

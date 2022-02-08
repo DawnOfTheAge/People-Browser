@@ -62,6 +62,9 @@
             this.txtFatherId = new System.Windows.Forms.TextBox();
             this.lblFatherName = new System.Windows.Forms.Label();
             this.txtFatherName = new System.Windows.Forms.TextBox();
+            this.btnParents = new System.Windows.Forms.Button();
+            this.btnChildren = new System.Windows.Forms.Button();
+            this.btnSiblings = new System.Windows.Forms.Button();
             this.gbName.SuspendLayout();
             this.gbAddress.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudHouse)).BeginInit();
@@ -392,10 +395,43 @@
             this.txtFatherName.Size = new System.Drawing.Size(147, 20);
             this.txtFatherName.TabIndex = 16;
             // 
+            // btnParents
+            // 
+            this.btnParents.Location = new System.Drawing.Point(125, 445);
+            this.btnParents.Name = "btnParents";
+            this.btnParents.Size = new System.Drawing.Size(53, 32);
+            this.btnParents.TabIndex = 25;
+            this.btnParents.Text = "הורים";
+            this.btnParents.UseVisualStyleBackColor = true;
+            this.btnParents.Visible = false;
+            // 
+            // btnChildren
+            // 
+            this.btnChildren.Location = new System.Drawing.Point(13, 445);
+            this.btnChildren.Name = "btnChildren";
+            this.btnChildren.Size = new System.Drawing.Size(53, 32);
+            this.btnChildren.TabIndex = 26;
+            this.btnChildren.Text = "ילדים";
+            this.btnChildren.UseVisualStyleBackColor = true;
+            this.btnChildren.Visible = false;
+            // 
+            // btnSiblings
+            // 
+            this.btnSiblings.Location = new System.Drawing.Point(69, 445);
+            this.btnSiblings.Name = "btnSiblings";
+            this.btnSiblings.Size = new System.Drawing.Size(53, 32);
+            this.btnSiblings.TabIndex = 27;
+            this.btnSiblings.Text = "אחים";
+            this.btnSiblings.UseVisualStyleBackColor = true;
+            this.btnSiblings.Visible = false;
+            // 
             // ctlPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnSiblings);
+            this.Controls.Add(this.btnChildren);
+            this.Controls.Add(this.btnParents);
             this.Controls.Add(this.gbParents);
             this.Controls.Add(this.cboDay);
             this.Controls.Add(this.cboMonth);
@@ -459,5 +495,8 @@
         private System.Windows.Forms.TextBox txtFatherId;
         private System.Windows.Forms.Label lblFatherName;
         private System.Windows.Forms.TextBox txtFatherName;
+        private System.Windows.Forms.Button btnParents;
+        private System.Windows.Forms.Button btnChildren;
+        private System.Windows.Forms.Button btnSiblings;
     }
 }
