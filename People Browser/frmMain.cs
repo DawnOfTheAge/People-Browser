@@ -336,6 +336,13 @@ namespace People_Browser
 
             try
             {
+                if (!ctlCurrentPerson.Clear(out result))
+                {
+                    Audit(result, method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
+
                 if (!SearchByFilter(persons, searchFilter, out List<Person> personsSearchResult, out result))
                 {
                     Audit(result, method, LINE(), AuditSeverity.Warning);

@@ -235,6 +235,63 @@ namespace People.Browser.UI
             }
         }
 
+        public bool Clear(out string result)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            result = string.Empty;
+
+            try
+            {
+                txtId.Text = string.Empty;
+                txtFatherId.Text = string.Empty;
+                txtMotherId.Text = string.Empty;
+
+                txtFamily.Text = string.Empty;
+                txtOldFamily.Text = string.Empty;
+                txtName.Text = string.Empty;
+                txtFatherName.Text = string.Empty;
+                txtMotherName.Text = string.Empty;
+
+                #region Birth Date
+
+                cboYear.Text = string.Empty;
+                cboMonth.Text = string.Empty;
+                cboDay.Text = string.Empty;
+
+                #endregion
+
+                #region Address
+
+                cboCity.Text = string.Empty;
+
+                txtStreet.Text = string.Empty;
+                nudHouse.Value = 0;
+                
+                #endregion
+
+                #region Country
+
+                cboCountry.Text = string.Empty;
+
+                #endregion
+
+                #region Sex
+
+                cboSex.Text = string.Empty;
+
+                #endregion
+                
+            return true;
+            }
+            catch (Exception e)
+            {
+                Audit(e.Message, method, LINE(), AuditSeverity.Error);
+
+                return false;
+            }
+        }
+
         public bool Fill(Person person, out string result)
         {
             string method = MethodBase.GetCurrentMethod().Name;
