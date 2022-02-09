@@ -8,29 +8,29 @@ namespace People.Browser.Common
 {
     public class Person
     {
-        public List<Person> Parent
-        {
-            get;
-            set;
-        }
+        //public List<Person> Parent
+        //{
+        //    get;
+        //    set;
+        //}
 
-        public List<Person> Sibling
-        {
-            get;
-            set;
-        }
+        //public List<Person> Sibling
+        //{
+        //    get;
+        //    set;
+        //}
 
-        public List<Person> Spouse
-        {
-            get;
-            set;
-        }
+        //public List<Person> Spouse
+        //{
+        //    get;
+        //    set;
+        //}
 
-        public List<Person> Descendant
-        {
-            get;
-            set;
-        }
+        //public List<Person> Descendant
+        //{
+        //    get;
+        //    set;
+        //}
 
         #region Properties
 
@@ -130,12 +130,30 @@ namespace People.Browser.Common
 
         public Person()
         {
-            Parent = new List<Person>();
-            Sibling = new List<Person>();
-            Spouse = new List<Person>();
-            Descendant = new List<Person>();
+            Id = Constants.NONE;
+            FatherId = Constants.NONE;
+            MotherId = Constants.NONE;
+
+            Name = string.Empty;
+            FatherName = string.Empty;
+            MotherName = string.Empty;
+
+            CityId = Constants.NONE;
+            Street = string.Empty;
+            House = Constants.NONE;
+
+            CountryId = Constants.NONE;
+
+            BirthDate = string.Empty;
+
+            Sex = PersonSex.Unknown;
         }
 
-        #endregion 
+        #endregion
+
+        #region Public Methods
+
+
+        #endregion
     }
 }

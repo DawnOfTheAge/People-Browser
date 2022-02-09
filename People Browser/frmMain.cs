@@ -903,7 +903,7 @@ namespace People_Browser
 
                 #region House
 
-                if (searchFilter.House != 0)
+                if ((searchFilter.House != 0) && (searchFilter.House != Constants.NONE))
                 {
                     personsSearchResult = personsSearchResult.Where(person => person.House == searchFilter.House).ToList();
 
@@ -1181,12 +1181,58 @@ namespace People_Browser
                 switch (filter)
                 {
                     case SpecialSearchFilter.Parents:
+                        List<Person> parents = new List<Person>();
+
+                        if (!GetPersonById(searchFilter.FatherId, out var father, out result))
+                        {
+                            Audit(result, method, LINE(), AuditSeverity.Warning);
+                        }
+
+                        if (father != null)
+                        {
+                            parents.Add(father);
+                        }
+
+                        if (!GetPersonById(searchFilter.MotherId, out var mother, out result))
+                        {
+                            Audit(result, method, LINE(), AuditSeverity.Warning);
+                        }
+
+                        if (mother != null)
+                        {
+                            parents.Add(mother);
+                        }
+
+                        if (!FillPersons(parents, out result))
+                        {
+                            Audit(result, method, LINE(), AuditSeverity.Warning);
+
+                            return;
+                        }
                         break;
 
                     case SpecialSearchFilter.Siblings:
+                        Search_SearchParameters(searchFilter, filter);
                         break;
 
                     case SpecialSearchFilter.Childern:
+                        Person childrenSearchFilter = new Person();
+                        switch (searchFilter.Sex)
+                        {
+                            case PersonSex.Male:
+                                childrenSearchFilter.FatherId = searchFilter.Id;
+                                break;
+
+                            case PersonSex.Female:
+                                childrenSearchFilter.MotherId = searchFilter.Id;
+                                break;
+
+                            default:
+                                Audit($"No Sex Defined. Can't Find Children", method, LINE(), AuditSeverity.Warning);
+                                return;
+                        }
+
+                        Search_SearchParameters(childrenSearchFilter, filter);
                         break;
 
                     default:

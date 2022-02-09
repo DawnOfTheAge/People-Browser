@@ -294,9 +294,30 @@ namespace People.Browser.UI
 
                 #endregion
 
+                #region Sex
+
+                PersonSex sex = new PersonSex();
+                switch (cboSex.Text)
+                {
+                    case "זכר":
+                        sex = PersonSex.Male;
+                        break;
+
+                    case "נקבה":
+                        sex = PersonSex.Female;
+                        break;
+
+                    default:
+                        sex = PersonSex.Unknown;
+                        break;
+                }
+
+                #endregion
+
                 Person searchFilter = new Person()
                 {
-                    Id = id
+                    Id = id,
+                    Sex = sex
                 };
 
                 OnSearchParameter(searchFilter, SpecialSearchFilter.Childern);

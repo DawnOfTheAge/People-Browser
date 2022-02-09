@@ -58,32 +58,32 @@ namespace People.Browser.BLL
                 return "";
             }
 
-            if (pPerson.Parent == null)
-            {
-                result = "Person Parents Information Is Null";
+            //if (pPerson.Parent == null)
+            //{
+            //    result = "Person Parents Information Is Null";
 
-                return "";
-            }
+            //    return "";
+            //}
 
-            if ((pPerson.Parent[0].Id <= 0) && (pPerson.Parent[1].Id <= 0))
-            {
-                result = "Person Has No Parents Information";
+            //if ((pPerson.Parent[0].Id <= 0) && (pPerson.Parent[1].Id <= 0))
+            //{
+            //    result = "Person Has No Parents Information";
 
-                return "";
-            }
+            //    return "";
+            //}
 
-            if (pPerson.Parent[0].Id <= 0)
-            {
-                return "SELECT * FROM M WHERE ID_FATHER=" + pPerson.Parent[1].Id + " AND ID<>" + pPerson.Id;
-            }
+            //if (pPerson.Parent[0].Id <= 0)
+            //{
+            //    return "SELECT * FROM M WHERE ID_FATHER=" + pPerson.Parent[1].Id + " AND ID<>" + pPerson.Id;
+            //}
 
-            if (pPerson.Parent[1].Id <= 0)
-            {
-                return "SELECT * FROM M WHERE ID_MOTHER=" + pPerson.Parent[0].Id + " AND ID<>" + pPerson.Id;
-            }
+            //if (pPerson.Parent[1].Id <= 0)
+            //{
+            //    return "SELECT * FROM M WHERE ID_MOTHER=" + pPerson.Parent[0].Id + " AND ID<>" + pPerson.Id;
+            //}
 
-            return "SELECT * FROM M WHERE ID_FATHER=" + pPerson.Parent[1].Id +
-                   " AND ID_MOTHER=" + pPerson.Parent[0].Id +
+            return "SELECT * FROM M WHERE ID_FATHER=" +// pPerson.Parent[1].Id +
+                   //" AND ID_MOTHER=" + pPerson.Parent[0].Id +
                    " AND ID<>" + pPerson.Id + " ";
         }
 
@@ -143,29 +143,29 @@ namespace People.Browser.BLL
             GetSiblings(ref pPerson);
             GetDescendants(ref pPerson);
 
-            for (int i = 0; i < pPerson.Parent.Count; i++)
-            {
-                int iCurrentId = pPerson.Parent[i].Id;
-                Person currentPerson = new Person();
-                GetPerson(iCurrentId, ref currentPerson);
-                pPerson.Parent[i] = currentPerson;
-            }
+            //for (int i = 0; i < pPerson.Parent.Count; i++)
+            //{
+            //    int iCurrentId = pPerson.Parent[i].Id;
+            //    Person currentPerson = new Person();
+            //    GetPerson(iCurrentId, ref currentPerson);
+            //    pPerson.Parent[i] = currentPerson;
+            //}
 
-            for (int i = 0; i < pPerson.Sibling.Count; i++)
-            {
-                int iCurrentId = pPerson.Sibling[i].Id;
-                Person currentPerson = new Person();
-                GetPerson(iCurrentId, ref currentPerson);
-                pPerson.Sibling[i] = currentPerson;
-            }
+            //for (int i = 0; i < pPerson.Sibling.Count; i++)
+            //{
+            //    int iCurrentId = pPerson.Sibling[i].Id;
+            //    Person currentPerson = new Person();
+            //    GetPerson(iCurrentId, ref currentPerson);
+            //    pPerson.Sibling[i] = currentPerson;
+            //}
 
-            for (int i = 0; i < pPerson.Descendant.Count; i++)
-            {
-                int iCurrentId = pPerson.Descendant[i].Id;
-                Person currentPerson = new Person();
-                GetPerson(iCurrentId, ref currentPerson);
-                pPerson.Descendant[i] = currentPerson;
-            }
+            //for (int i = 0; i < pPerson.Descendant.Count; i++)
+            //{
+            //    int iCurrentId = pPerson.Descendant[i].Id;
+            //    Person currentPerson = new Person();
+            //    GetPerson(iCurrentId, ref currentPerson);
+            //    pPerson.Descendant[i] = currentPerson;
+            //}
 
             return true;
         }
@@ -353,12 +353,12 @@ namespace People.Browser.BLL
                 {
                     Person _person = new Person();
 
-                    _person.Id = int.TryParse(oddrOleDbDataReader["ID_MOTHER"].ToString(), out iValue) ? iValue : Constants.NONE;
-                    pPerson.Parent.Add(_person);
+                    //_person.Id = int.TryParse(oddrOleDbDataReader["ID_MOTHER"].ToString(), out iValue) ? iValue : Constants.NONE;
+                    //pPerson.Parent.Add(_person);
 
-                    _person = new Person();
-                    _person.Id = int.TryParse(oddrOleDbDataReader["ID_FATHER"].ToString(), out iValue) ? iValue : Constants.NONE;
-                    pPerson.Parent.Add(_person);
+                    //_person = new Person();
+                    //_person.Id = int.TryParse(oddrOleDbDataReader["ID_FATHER"].ToString(), out iValue) ? iValue : Constants.NONE;
+                    //pPerson.Parent.Add(_person);
 
                     return true;
                 }
@@ -405,7 +405,7 @@ namespace People.Browser.BLL
                     Person _person = new Person();
 
                     _person.Id = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out iValue) ? iValue : Constants.NONE;
-                    pPerson.Sibling.Add(_person);
+                    //pPerson.Sibling.Add(_person);
                 }
 
                 return true;
@@ -448,7 +448,7 @@ namespace People.Browser.BLL
                     Person _person = new Person();
 
                     _person.Id = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out iValue) ? iValue : Constants.NONE;
-                    pPerson.Descendant.Add(_person);
+                    //pPerson.Descendant.Add(_person);
                 }
 
                 return true;
