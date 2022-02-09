@@ -97,16 +97,16 @@ namespace People.Browser.UI
 
         #region Events Handlers
         
-        private void CtlSearchFilter_SearchParameters(Person searchFilter)
+        private void CtlSearchFilter_SearchParameters(Person searchFilter, SpecialSearchFilter filter)
         {
-            OnSearchParameter(searchFilter);
+            OnSearchParameter(searchFilter, filter);
 
             Close();
         }
 
-        public void OnSearchParameter(Person searchFilter)
+        public void OnSearchParameter(Person searchFilter, SpecialSearchFilter filter)
         {
-            SearchParameters?.Invoke(searchFilter);
+            SearchParameters?.Invoke(searchFilter, filter);
         }
 
         public void OnMessage(string message, string method, string module, int line, AuditSeverity auditSeverity)

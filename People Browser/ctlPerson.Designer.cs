@@ -404,6 +404,7 @@
             this.btnParents.Text = "הורים";
             this.btnParents.UseVisualStyleBackColor = true;
             this.btnParents.Visible = false;
+            this.btnParents.Click += new System.EventHandler(this.btnParentsAndSiblings_Click);
             // 
             // btnChildren
             // 
@@ -414,6 +415,7 @@
             this.btnChildren.Text = "ילדים";
             this.btnChildren.UseVisualStyleBackColor = true;
             this.btnChildren.Visible = false;
+            this.btnChildren.Click += new System.EventHandler(this.btnChildren_Click);
             // 
             // btnSiblings
             // 
@@ -424,6 +426,7 @@
             this.btnSiblings.Text = "אחים";
             this.btnSiblings.UseVisualStyleBackColor = true;
             this.btnSiblings.Visible = false;
+            this.btnSiblings.Click += new System.EventHandler(this.btnParentsAndSiblings_Click);
             // 
             // ctlPerson
             // 

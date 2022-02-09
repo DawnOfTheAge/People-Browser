@@ -230,7 +230,34 @@ namespace People.Browser.UI
                     BirthDateDay = cboDay.Text
                 };
 
-                OnSearchParameter(searchFilter);
+                OnSearchParameter(searchFilter, SpecialSearchFilter.None);
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
+        }
+        
+        private void btnParentsAndSiblings_Click(object sender, EventArgs e)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            try
+            {
+                #region IDs
+
+                int fatherId = int.TryParse(txtFatherId.Text, out fatherId) ? fatherId : Constants.NONE;
+                int motherId = int.TryParse(txtMotherId.Text, out motherId) ? motherId : Constants.NONE;
+
+                #endregion
+
+                Person searchFilter = new Person()
+                {
+                    FatherId = fatherId,
+                    MotherId = motherId
+                };
+
+                OnSearchParameter(searchFilter, SpecialSearchFilter.None);
             }
             catch (Exception ex)
             {
@@ -238,6 +265,31 @@ namespace People.Browser.UI
             }
         }
 
+        private void btnChildren_Click(object sender, EventArgs e)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            try
+            {
+                #region IDs
+
+                int id = int.TryParse(txtId.Text, out id) ? id : Constants.NONE;
+
+                #endregion
+
+                Person searchFilter = new Person()
+                {
+                    Id = id
+                };
+
+                OnSearchParameter(searchFilter, SpecialSearchFilter.Childern);
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
+        }
+        
         public bool Clear(out string result)
         {
             string method = MethodBase.GetCurrentMethod().Name;
@@ -403,9 +455,9 @@ namespace People.Browser.UI
 
         #region Events Handlers
 
-        public void OnSearchParameter(Person searchFilter)
+        public void OnSearchParameter(Person searchFilter, SpecialSearchFilter filter)
         {
-            SearchParameters?.Invoke(searchFilter);
+            SearchParameters?.Invoke(searchFilter, filter);
         }
 
         public void OnMessage(string message, string method, string module, int line, AuditSeverity auditSeverity)

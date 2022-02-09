@@ -305,13 +305,16 @@ namespace People_Browser
                 {
                     Audit(result, method, LINE(), AuditSeverity.Warning);
                 }
+
+                ctlCurrentPerson.Message += CtlCurrentPerson_Message;
+                ctlCurrentPerson.SearchParameters += CtlCurrentPerson_SearchParameters;
             }
             catch (Exception ex)
             {
                 Audit(ex.Message, method, LINE(), AuditSeverity.Error);
             }
         }
-        
+
         private void mnuSearch_Click(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
@@ -329,7 +332,7 @@ namespace People_Browser
             }
         }
 
-        private void Search_SearchParameters(Person searchFilter)
+        private void Search_SearchParameters(Person searchFilter, SpecialSearchFilter filter)
         {
             string method = MethodBase.GetCurrentMethod().Name;
             string result;
@@ -1162,7 +1165,30 @@ namespace People_Browser
         #endregion        
 
         #region Events Handlers
+        
+        private void CtlCurrentPerson_SearchParameters(Person searchFilter, SpecialSearchFilter filter)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+            string result = string.Empty;
+            
+            try
+            {
+                if (searchFilter != null)
+                {
+                    Audit("Search Filter Is Null", method, LINE(), AuditSeverity.Warning);
+                }
+            }
+            catch (Exception e)
+            {
+                Audit(e.Message, method, LINE(), AuditSeverity.Error);
+            }
+        }
 
+        private void CtlCurrentPerson_Message(string message, string method, string module, int line, AuditSeverity auditSeverity)
+        {
+            Audit(message, method, module, line, auditSeverity);
+        }
+        
         private void Bll_Message(string message, string method, string module, int line, AuditSeverity auditSeverity)
         {
             Audit(message, method, module, line, auditSeverity);
