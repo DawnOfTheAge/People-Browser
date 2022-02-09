@@ -1173,9 +1173,25 @@ namespace People_Browser
             
             try
             {
-                if (searchFilter != null)
+                if (searchFilter == null)
                 {
                     Audit("Search Filter Is Null", method, LINE(), AuditSeverity.Warning);
+                }
+
+                switch (filter)
+                {
+                    case SpecialSearchFilter.Parents:
+                        break;
+
+                    case SpecialSearchFilter.Siblings:
+                        break;
+
+                    case SpecialSearchFilter.Childern:
+                        break;
+
+                    default:
+                        Audit($"Wrong Filter[{filter}]", method, LINE(), AuditSeverity.Warning);
+                        return;
                 }
             }
             catch (Exception e)

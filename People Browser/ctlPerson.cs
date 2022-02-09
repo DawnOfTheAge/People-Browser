@@ -257,7 +257,24 @@ namespace People.Browser.UI
                     MotherId = motherId
                 };
 
-                OnSearchParameter(searchFilter, SpecialSearchFilter.None);
+                SpecialSearchFilter filter = SpecialSearchFilter.None;
+                string senderName = ((Button)sender).Name;
+                switch (senderName)
+                {
+                    case "btnParents":
+                        filter = SpecialSearchFilter.Parents;
+                        break;
+
+                    case "btnSiblings":
+                        filter = SpecialSearchFilter.Siblings;
+                        break;
+
+                    default:
+                        Audit($"Wrong Sender [{senderName}]", method, LINE(), AuditSeverity.Warning);
+                        return;
+                }
+
+                OnSearchParameter(searchFilter, filter);
             }
             catch (Exception ex)
             {
