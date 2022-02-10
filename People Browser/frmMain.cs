@@ -21,7 +21,7 @@ using System.Runtime;
 
 namespace People_Browser
 {
-    public partial class frmMain : Form
+    public partial class FrmMain : Form
     {
         #region Constants
 
@@ -50,7 +50,7 @@ namespace People_Browser
 
         #region Constructor
 
-        public frmMain()
+        public FrmMain()
         {
             InitializeComponent();
         }
@@ -59,7 +59,7 @@ namespace People_Browser
 
         #region Startup
 
-        private void frmMain_Load(object sender, EventArgs e)
+        private void FrmMain_Load(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
 
@@ -225,7 +225,7 @@ namespace People_Browser
         
         #region Main Menu
 
-        private void mnuConnect_Click(object sender, EventArgs e)
+        private void MnuConnect_Click(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
             string result = string.Empty;
@@ -314,14 +314,14 @@ namespace People_Browser
             }
         }
 
-        private void mnuSearch_Click(object sender, EventArgs e)
+        private void MnuSearch_Click(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
             string result = string.Empty;
 
             try
             {
-                frmSearch search = new frmSearch(cities, countries);
+                FrmSearch search = new FrmSearch(cities, countries);
                 search.SearchParameters += Search_SearchParameters;
                 search.ShowDialog();
             }
@@ -334,11 +334,10 @@ namespace People_Browser
         private void Search_SearchParameters(Person searchFilter)
         {
             string method = MethodBase.GetCurrentMethod().Name;
-            string result;
 
             try
             {
-                if (!ctlCurrentPerson.Clear(out result))
+                if (!ctlCurrentPerson.Clear(out string result))
                 {
                     Audit(result, method, LINE(), AuditSeverity.Warning);
 
@@ -380,7 +379,7 @@ namespace People_Browser
             }
         }
 
-        private void mnuExit_Click(object sender, EventArgs e)
+        private void MnuExit_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
         }
@@ -420,7 +419,6 @@ namespace People_Browser
         private void FindChildrenEvent(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
-            string result = string.Empty;
 
             try
             {
@@ -467,7 +465,6 @@ namespace People_Browser
         private void FindSiblingsEvent(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
-            string result = string.Empty;
 
             try
             {
@@ -496,9 +493,11 @@ namespace People_Browser
                     return;
                 }
 
-                Person siblingsSearchFilter = new Person();
-                siblingsSearchFilter.FatherId = fatherId;
-                siblingsSearchFilter.MotherId = motherId;
+                Person siblingsSearchFilter = new Person
+                {
+                    FatherId = fatherId,
+                    MotherId = motherId
+                };
 
                 Search_SearchParameters(siblingsSearchFilter);
             }
@@ -511,7 +510,6 @@ namespace People_Browser
         private void FindParentsEvent(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
-            string result = string.Empty;
 
             try
             {
@@ -542,7 +540,7 @@ namespace People_Browser
 
                 List<Person> parents = new List<Person>();
 
-                if (!GetPersonById(fatherId, out var father, out result))
+                if (!GetPersonById(fatherId, out var father, out string result))
                 {
                     Audit(result, method, LINE(), AuditSeverity.Warning);
                 }
@@ -653,7 +651,7 @@ namespace People_Browser
             }
         }
         
-        private void dgvPersons_MouseDown(object sender, MouseEventArgs e)
+        private void DgvPersons_MouseDown(object sender, MouseEventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
             string result;
@@ -1037,8 +1035,7 @@ namespace People_Browser
 
                     parmeterName = nameof(searchFilter.CityId);
 
-                    string cityName = "<Unknown>";
-                    if (!cities.GetCityNameByCityId(searchFilter.CityId, out cityName, out result))
+                    if (!cities.GetCityNameByCityId(searchFilter.CityId, out string cityName, out result))
                     {
                         Audit(result, method, LINE(), AuditSeverity.Warning);
                     }
@@ -1080,8 +1077,7 @@ namespace People_Browser
 
                     parmeterName = nameof(searchFilter.CountryId);
 
-                    string countryName  = "<Unknown>";
-                    if (!countries.GetCountryNameByCountryId(searchFilter.CountryId, out countryName, out _, out result))
+                    if (!countries.GetCountryNameByCountryId(searchFilter.CountryId, out string countryName, out _, out result))
                     {
                         Audit(result, method, LINE(), AuditSeverity.Warning);
                     }
@@ -1254,16 +1250,6 @@ namespace People_Browser
         #endregion
 
         #region Utils
-
-        private bool LegalId(int iId)
-        {
-            if ((iId == Constants.NONE) || (iId == 0))
-            {
-                return false;
-            }
-
-            return true;
-        }
 
         private string GetBirthDate(string birthDate)
         {

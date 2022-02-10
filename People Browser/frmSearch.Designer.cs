@@ -1,6 +1,6 @@
 ﻿namespace People.Browser.UI
 {
-    partial class frmSearch
+    partial class FrmSearch
     {
         /// <summary>
         /// Required designer variable.
@@ -50,7 +50,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "frmSearch";
             this.Text = "Search";
-            this.Load += new System.EventHandler(this.frmSearch_Load);
+            this.Load += new System.EventHandler(this.FrmSearch_Load);
             this.ResumeLayout(false);
 
         }

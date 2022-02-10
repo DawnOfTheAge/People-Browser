@@ -20,7 +20,7 @@ namespace People.Browser.BLL
 
         #region Data Members
 
-        private Dal dal;
+        private readonly Dal dal;
 
         private System.Timers.Timer tmrIntervalTimer;
 
@@ -172,7 +172,6 @@ namespace People.Browser.BLL
 
         public bool GetPerson(int iId, ref Person pPerson)
         {
-            OleDbDataReader oddrOleDbDataReader;
 
             string method = MethodBase.GetCurrentMethod().Name;
 
@@ -181,7 +180,7 @@ namespace People.Browser.BLL
 
             try
             {
-                if (!dal.ExecuteReaderQuery("SELECT * FROM M WHERE ID=" + iId, out oddrOleDbDataReader))
+                if (!dal.ExecuteReaderQuery("SELECT * FROM M WHERE ID=" + iId, out OleDbDataReader oddrOleDbDataReader))
                 {
                     return false;
                 }
@@ -220,18 +219,17 @@ namespace People.Browser.BLL
             int count = 0;
             int personId = 0;
 
-            OleDbDataReader oddrOleDbDataReader;
-
-
             result = string.Empty;
 
             allPersons = null;
 
             try
             {
-                tmrIntervalTimer = new System.Timers.Timer();
-                tmrIntervalTimer.Interval = 2000;
-                tmrIntervalTimer.Elapsed += new ElapsedEventHandler(tmrIntervalTimer_Elapsed);
+                tmrIntervalTimer = new System.Timers.Timer
+                {
+                    Interval = 2000
+                };
+                tmrIntervalTimer.Elapsed += new ElapsedEventHandler(TmrIntervalTimer_Elapsed);
 
                 sql = "SELECT COUNT(*) FROM M";
                 if (!dal.ExecuteScalarQuery(sql, out int numberOfPersons))
@@ -244,7 +242,7 @@ namespace People.Browser.BLL
                 Audit($"{numberOfPersons} Persons In Total", method, LINE(), AuditSeverity.Information);
 
                 sql = "SELECT * FROM M";
-                if (!dal.ExecuteReaderQuery(sql, out oddrOleDbDataReader))
+                if (!dal.ExecuteReaderQuery(sql, out OleDbDataReader oddrOleDbDataReader))
                 {
                     result = $"Failed Preforming SQL[{sql}]";
 
@@ -336,15 +334,11 @@ namespace People.Browser.BLL
 
         public bool GetParents(ref Person pPerson)
         {
-            OleDbDataReader oddrOleDbDataReader;
-
-            int iValue;
-
             string method = MethodBase.GetCurrentMethod().Name;
 
             try
             {
-                if (!dal.ExecuteReaderQuery("SELECT * FROM M WHERE ID=" + pPerson.Id, out oddrOleDbDataReader))
+                if (!dal.ExecuteReaderQuery("SELECT * FROM M WHERE ID=" + pPerson.Id, out OleDbDataReader oddrOleDbDataReader))
                 {
                     return false;
                 }
@@ -377,17 +371,12 @@ namespace People.Browser.BLL
 
         public bool GetSiblings(ref Person pPerson)
         {
-            OleDbDataReader oddrOleDbDataReader;
-
-            int iValue;
-
             string method = MethodBase.GetCurrentMethod().Name;
             string sSql;
-            string result;
 
             try
             {
-                sSql = CreateSiblingsSql(pPerson, out result);
+                sSql = CreateSiblingsSql(pPerson, out string result);
                 if (string.IsNullOrEmpty(sSql))
                 {
                     Audit(result, method, LINE(), AuditSeverity.Warning);
@@ -395,16 +384,17 @@ namespace People.Browser.BLL
                     return false;
                 }
 
-                if (!dal.ExecuteReaderQuery(sSql, out oddrOleDbDataReader))
+                if (!dal.ExecuteReaderQuery(sSql, out OleDbDataReader oddrOleDbDataReader))
                 {
                     return false;
                 }
 
                 while (oddrOleDbDataReader.Read())
                 {
-                    Person _person = new Person();
-
-                    _person.Id = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out iValue) ? iValue : Constants.NONE;
+                    Person _person = new Person
+                    {
+                        Id = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out int iValue) ? iValue : Constants.NONE
+                    };
                     //pPerson.Sibling.Add(_person);
                 }
 
@@ -420,17 +410,12 @@ namespace People.Browser.BLL
 
         public bool GetDescendants(ref Person pPerson)
         {
-            OleDbDataReader oddrOleDbDataReader;
-
-            int iValue;
-
             string method = MethodBase.GetCurrentMethod().Name;
             string sSql;
-            string result;
 
             try
             {
-                sSql = CreateDescendantsSql(pPerson, out result);
+                sSql = CreateDescendantsSql(pPerson, out string result);
                 if (string.IsNullOrEmpty(sSql))
                 {
                     Audit(result, method, LINE(), AuditSeverity.Warning);
@@ -438,16 +423,17 @@ namespace People.Browser.BLL
                     return false;
                 }
 
-                if (!dal.ExecuteReaderQuery(sSql, out oddrOleDbDataReader))
+                if (!dal.ExecuteReaderQuery(sSql, out OleDbDataReader oddrOleDbDataReader))
                 {
                     return false;
                 }
 
                 while (oddrOleDbDataReader.Read())
                 {
-                    Person _person = new Person();
-
-                    _person.Id = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out iValue) ? iValue : Constants.NONE;
+                    Person _person = new Person
+                    {
+                        Id = int.TryParse(oddrOleDbDataReader["ID"].ToString(), out int iValue) ? iValue : Constants.NONE
+                    };
                     //pPerson.Descendant.Add(_person);
                 }
 
@@ -469,18 +455,17 @@ namespace People.Browser.BLL
             int count = 0;
             int countryId = 0;
 
-            OleDbDataReader oddrOleDbDataReader;
-
-
             result = string.Empty;
 
             allCountries = null;
 
             try
             {
-                tmrIntervalTimer = new System.Timers.Timer();
-                tmrIntervalTimer.Interval = 2000;
-                tmrIntervalTimer.Elapsed += new ElapsedEventHandler(tmrIntervalTimer_Elapsed);
+                tmrIntervalTimer = new System.Timers.Timer
+                {
+                    Interval = 2000
+                };
+                tmrIntervalTimer.Elapsed += new ElapsedEventHandler(TmrIntervalTimer_Elapsed);
 
                 sql = "SELECT COUNT(*) FROM COUNTRY";
                 if (!dal.ExecuteScalarQuery(sql, out int numberOfCountries))
@@ -493,7 +478,7 @@ namespace People.Browser.BLL
                 Audit($"{numberOfCountries} Countries In Total", method, LINE(), AuditSeverity.Information);
 
                 sql = "SELECT * FROM COUNTRY";
-                if (!dal.ExecuteReaderQuery(sql, out oddrOleDbDataReader))
+                if (!dal.ExecuteReaderQuery(sql, out OleDbDataReader oddrOleDbDataReader))
                 {
                     result = $"Failed Preforming SQL[{sql}]";
 
@@ -558,18 +543,17 @@ namespace People.Browser.BLL
             int count = 0;
             int cityId = 0;
 
-            OleDbDataReader oddrOleDbDataReader;
-
-
             result = string.Empty;
 
             allCities = null;
 
             try
             {
-                tmrIntervalTimer = new System.Timers.Timer();
-                tmrIntervalTimer.Interval = 2000;
-                tmrIntervalTimer.Elapsed += new ElapsedEventHandler(tmrIntervalTimer_Elapsed);
+                tmrIntervalTimer = new System.Timers.Timer
+                {
+                    Interval = 2000
+                };
+                tmrIntervalTimer.Elapsed += new ElapsedEventHandler(TmrIntervalTimer_Elapsed);
 
                 sql = "SELECT COUNT(*) FROM CITY";
                 if (!dal.ExecuteScalarQuery(sql, out int numberOfCities))
@@ -582,7 +566,7 @@ namespace People.Browser.BLL
                 Audit($"{numberOfCities} Cities In Total", method, LINE(), AuditSeverity.Information);
 
                 sql = "SELECT * FROM CITY";
-                if (!dal.ExecuteReaderQuery(sql, out oddrOleDbDataReader))
+                if (!dal.ExecuteReaderQuery(sql, out OleDbDataReader oddrOleDbDataReader))
                 //if (!Dal.ExecuteReaderQuery($"SELECT * FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
                 {
                     result = $"Failed Preforming SQL[{sql}]";
@@ -645,7 +629,7 @@ namespace People.Browser.BLL
 
         #region Timers
 
-        void tmrIntervalTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void TmrIntervalTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             tmrIntervalTimer.Stop();
 

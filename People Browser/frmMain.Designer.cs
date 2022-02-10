@@ -1,6 +1,6 @@
 ﻿namespace People_Browser
 {
-    partial class frmMain
+    partial class FrmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.mnuConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSearch = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,21 +93,21 @@
             this.mnuConnect.Name = "mnuConnect";
             this.mnuConnect.Size = new System.Drawing.Size(64, 20);
             this.mnuConnect.Text = "Connect";
-            this.mnuConnect.Click += new System.EventHandler(this.mnuConnect_Click);
+            this.mnuConnect.Click += new System.EventHandler(this.MnuConnect_Click);
             // 
             // mnuSearch
             // 
             this.mnuSearch.Name = "mnuSearch";
             this.mnuSearch.Size = new System.Drawing.Size(54, 20);
             this.mnuSearch.Text = "Search";
-            this.mnuSearch.Click += new System.EventHandler(this.mnuSearch_Click);
+            this.mnuSearch.Click += new System.EventHandler(this.MnuSearch_Click);
             // 
             // mnuExit
             // 
             this.mnuExit.Name = "mnuExit";
             this.mnuExit.Size = new System.Drawing.Size(38, 20);
             this.mnuExit.Text = "Exit";
-            this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
+            this.mnuExit.Click += new System.EventHandler(this.MnuExit_Click);
             // 
             // splitContainer
             // 
@@ -168,7 +168,7 @@
             this.dgvPersons.Name = "dgvPersons";
             this.dgvPersons.Size = new System.Drawing.Size(888, 476);
             this.dgvPersons.TabIndex = 0;
-            this.dgvPersons.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvPersons_MouseDown);
+            this.dgvPersons.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DgvPersons_MouseDown);
             // 
             // colId
             // 
@@ -337,7 +337,7 @@
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.Text = "People Browswer";
-            this.Load += new System.EventHandler(this.frmMain_Load);
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             this.mnuMain.ResumeLayout(false);
             this.mnuMain.PerformLayout();
             this.splitContainer.Panel1.ResumeLayout(false);

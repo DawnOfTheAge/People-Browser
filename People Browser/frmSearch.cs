@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace People.Browser.UI
 {
-    public partial class frmSearch : Form
+    public partial class FrmSearch : Form
     {
         #region Events
 
@@ -31,7 +31,7 @@ namespace People.Browser.UI
 
         #region Constructor
 
-        public frmSearch(Cities inCities, Countries inCountries)
+        public FrmSearch(Cities inCities, Countries inCountries)
         {
             InitializeComponent();
 
@@ -43,7 +43,7 @@ namespace People.Browser.UI
 
         #region Startup
 
-        private void frmSearch_Load(object sender, EventArgs e)
+        private void FrmSearch_Load(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
 
