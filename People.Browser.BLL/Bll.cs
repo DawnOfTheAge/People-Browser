@@ -6,6 +6,7 @@ using System.Reflection;
 using People.Browser.DAL;
 using System.Timers;
 using System.Threading;
+using General.Database.Common;
 
 namespace People.Browser.BLL
 {
@@ -21,6 +22,7 @@ namespace People.Browser.BLL
         #region Data Members
 
         private readonly MsAccessDal msAccessDal;
+        private readonly MongoDbDal mongoDbDal;
 
         private System.Timers.Timer tmrIntervalTimer;
 
@@ -33,12 +35,16 @@ namespace People.Browser.BLL
         public Bll()
         {
             msAccessDal = new MsAccessDal();
-            msAccessDal.Message += Dal_Message; ;
+            msAccessDal.Message += Dal_Message;
+
+            mongoDbDal = new MongoDbDal();
+            mongoDbDal.Message += Dal_Message;
         }
 
         ~Bll()
         {
             msAccessDal.Message -= Dal_Message;
+            mongoDbDal.Message -= Dal_Message;
         }
 
         #endregion
@@ -130,6 +136,26 @@ namespace People.Browser.BLL
         public void SetConnectionString(string sConnectionString)
         {
             msAccessDal.SetConnectionString(sConnectionString);
+        }
+
+        public bool OpenMongoDb(OpenDatabaseParameters openDatabaseParameters, out string result)
+        {
+            return mongoDbDal.OpenDb(openDatabaseParameters, out result);
+        }
+
+        public bool InsertCity(Dictionary<string, string> citiesDictionary, out string newId, out string result)
+        {
+            return mongoDbDal.Insert("Cities", citiesDictionary, out newId, out result);
+        }
+
+        public bool InsertCountry(Dictionary<string, string> countiresDictionary, out string newId, out string result)
+        {
+            return mongoDbDal.Insert("Countries", countiresDictionary, out newId, out result);
+        }
+
+        public bool InsertPersons(Dictionary<string, string> personsDictionary, out string newId, out string result)
+        {
+            return mongoDbDal.Insert("Persons", personsDictionary, out newId, out result);
         }
 
         #endregion

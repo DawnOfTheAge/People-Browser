@@ -18,6 +18,7 @@ using System.Threading;
 using System.Globalization;
 using People.Browser.UI;
 using System.Runtime;
+using General.Database.Common;
 
 namespace People_Browser
 {
@@ -264,10 +265,24 @@ namespace People_Browser
 
                 databaseConnectionString = $@"{CONNECTION_STRING_PREFIX}Data Source={databaseFilePath}";
 
+                OpenDatabaseParameters openDatabaseParameters = new OpenDatabaseParameters()
+                {
+                    DatabaseName = "PersonsDb",
+                    DatabaseIpAddress = "127.0.0.1",
+                    DatabaseIpPort = "27017",
+                    DatabaseTables = "Persons:Cities:Countries"
+                };
+
                 bll = new Bll();
                 bll.Message += Bll_Message;
                 bll.LoadAllProgress += Bll_LoadAllProgress;
                 bll.SetConnectionString(databaseConnectionString);
+                if (!bll.OpenMongoDb(openDatabaseParameters, out result))
+                {
+                    Audit($"Failed Connecting Mongo DB. {result}", method, LINE(), AuditSeverity.Warning);
+                }
+
+
 
                 lblMessage.Text = "Loading 'Persons' ...";
                 if (!GetAllPersons())
@@ -299,7 +314,8 @@ namespace People_Browser
                 lblPercentage.Visible = false;
                 lblMessage.Visible = false;
 
-                mnuConnect.Enabled = false;
+                MnuConnectAccess.Enabled = false;
+                MnuConnectMongoDB.Enabled = false;
                 mnuSearch.Enabled = true;
 
                 if (!ctlCurrentPerson.SetForSearch(cities, countries, out result))
@@ -335,7 +351,59 @@ namespace People_Browser
 
             try
             {
+                foreach (City city in cities.CitiesList())
+                {
+                    Dictionary<string, string> citiesDictionary = new Dictionary<string, string>();
 
+                    citiesDictionary.Add("Id", city.Id.ToString());
+                    citiesDictionary.Add("Name", city.Name);
+
+                    if (!bll.InsertCity(citiesDictionary, out string newId, out string result))
+                    {
+                        Audit(result, method, LINE(), AuditSeverity.Warning);
+                    }
+                }
+
+                foreach (Country country in countries.CountriesList())
+                {
+                    Dictionary<string, string> countriesDictionary = new Dictionary<string, string>();
+
+                    countriesDictionary.Add("Id", country.Id.ToString());
+                    countriesDictionary.Add("Name", country.Name);
+                    countriesDictionary.Add("NameInEnglish", country.NameInEnglish);
+
+                    if (!bll.InsertCountry(countriesDictionary, out string newId, out string result))
+                    {
+                        Audit(result, method, LINE(), AuditSeverity.Warning);
+                    }
+                }
+
+                foreach (Person person in persons)
+                {
+                    Dictionary<string, string> personsDictionary = new Dictionary<string, string>();
+
+                    personsDictionary.Add("Id", person.Id.ToString());
+                    personsDictionary.Add("FatherId", person.FatherId.ToString());
+                    personsDictionary.Add("MotherId", person.MotherId.ToString());
+
+                    personsDictionary.Add("Family", person.Family);
+                    personsDictionary.Add("OldFamily", person.OldFamily);
+                    personsDictionary.Add("Name", person.Name);
+                    personsDictionary.Add("FatherName", person.FatherName);
+                    personsDictionary.Add("MotherName", person.MotherName);
+
+                    personsDictionary.Add("CountryId", person.CountryId.ToString());
+                    personsDictionary.Add("Sex", person.Sex.ToString());
+
+                    personsDictionary.Add("CityId", person.CityId.ToString());
+                    personsDictionary.Add("Street", person.Street);
+                    personsDictionary.Add("House", person.House.ToString());
+
+                    if (!bll.InsertPersons(personsDictionary, out string newId, out string result))
+                    {
+                        Audit(result, method, LINE(), AuditSeverity.Warning);
+                    }
+                }
             }
             catch (Exception ex)
             {
