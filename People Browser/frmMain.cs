@@ -401,7 +401,9 @@ namespace People_Browser
                 #region Persons Context Menu
 
                 personsContextMenu = new ContextMenu();
-                //personsContextMenu.MenuItems.Add("Set Device Instance ID To Config File", new EventHandler(SetDevicesIdsEvent));
+                personsContextMenu.MenuItems.Add("הורים", new EventHandler(FindParentsEvent));
+                personsContextMenu.MenuItems.Add("אחים", new EventHandler(FindSiblingsEvent));
+                personsContextMenu.MenuItems.Add("ילדים", new EventHandler(FindChildrenEvent));
                 //personsContextMenu.MenuItems.Add("-");
 
                 #endregion
@@ -414,6 +416,63 @@ namespace People_Browser
 
                 return false;
             }
+        }
+
+        private void FindChildrenEvent(object sender, EventArgs e)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+            string result = string.Empty;
+
+            try
+            {
+                int rowIndex = dgvPersons.SelectedRows[0].Index;
+                if (rowIndex == Constants.NONE)
+                {
+                    return;
+                }
+
+                PersonSex personSex = GetPersonSex(dgvPersons.Rows[rowIndex].DefaultCellStyle.BackColor);
+                
+                int id = int.TryParse(dgvPersons.Rows[rowIndex].Cells[0].Value.ToString(), out id) ? id : Constants.NONE;
+                if (id == Constants.NONE)
+                {
+                    Audit("No Id", method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
+
+                Person childrenSearchFilter = new Person();
+                switch (personSex)
+                {
+                    case PersonSex.Male:
+                        childrenSearchFilter.FatherId = id;
+                        break;
+
+                    case PersonSex.Female:
+                        childrenSearchFilter.MotherId = id;
+                        break;
+
+                    default:
+                        Audit($"No Sex Defined. Can't Find Children", method, LINE(), AuditSeverity.Warning);
+                        return;
+                }
+
+                Search_SearchParameters(childrenSearchFilter, SpecialSearchFilter.Childern);
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
+        }
+
+        private void FindSiblingsEvent(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void FindParentsEvent(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

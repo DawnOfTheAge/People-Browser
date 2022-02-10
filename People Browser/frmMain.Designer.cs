@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.mnuConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSearch = new System.Windows.Forms.ToolStripMenuItem();
@@ -35,19 +36,6 @@
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.personsSplitContainer = new System.Windows.Forms.SplitContainer();
             this.dgvPersons = new System.Windows.Forms.DataGridView();
-            this.ctlCurrentPerson = new People.Browser.UI.ctlPerson();
-            this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
-            this.pbPercentage = new System.Windows.Forms.ToolStripProgressBar();
-            this.lblPercentage = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblMessage = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblNumberOfHits = new System.Windows.Forms.ToolStripStatusLabel();
-            this.dgvAudit = new System.Windows.Forms.DataGridView();
-            this.colDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSeverity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colModule = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFamily = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOldFamily = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -61,6 +49,19 @@
             this.colFatherName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMotherId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMotherName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ctlCurrentPerson = new People.Browser.UI.ctlPerson();
+            this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.pbPercentage = new System.Windows.Forms.ToolStripProgressBar();
+            this.lblPercentage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblMessage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblNumberOfHits = new System.Windows.Forms.ToolStripStatusLabel();
+            this.dgvAudit = new System.Windows.Forms.DataGridView();
+            this.colDateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSeverity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colModule = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -169,6 +170,71 @@
             this.dgvPersons.TabIndex = 0;
             this.dgvPersons.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvPersons_MouseDown);
             // 
+            // colId
+            // 
+            this.colId.HeaderText = "מספר זהות";
+            this.colId.Name = "colId";
+            // 
+            // colFamily
+            // 
+            this.colFamily.HeaderText = "שם משפחה";
+            this.colFamily.Name = "colFamily";
+            // 
+            // colOldFamily
+            // 
+            this.colOldFamily.HeaderText = "שם משפחה ישן";
+            this.colOldFamily.Name = "colOldFamily";
+            // 
+            // colName
+            // 
+            this.colName.HeaderText = "שם פרטי";
+            this.colName.Name = "colName";
+            // 
+            // colBirthDate
+            // 
+            this.colBirthDate.HeaderText = "תאריך לידה";
+            this.colBirthDate.Name = "colBirthDate";
+            // 
+            // colCity
+            // 
+            this.colCity.HeaderText = "ישוב";
+            this.colCity.Name = "colCity";
+            // 
+            // colStreet
+            // 
+            this.colStreet.HeaderText = "רחוב";
+            this.colStreet.Name = "colStreet";
+            // 
+            // colHouse
+            // 
+            this.colHouse.HeaderText = "מספר";
+            this.colHouse.Name = "colHouse";
+            // 
+            // colBirthCountry
+            // 
+            this.colBirthCountry.HeaderText = "ארץ לידה";
+            this.colBirthCountry.Name = "colBirthCountry";
+            // 
+            // colFatherId
+            // 
+            this.colFatherId.HeaderText = "זהות אב";
+            this.colFatherId.Name = "colFatherId";
+            // 
+            // colFatherName
+            // 
+            this.colFatherName.HeaderText = "שם אב";
+            this.colFatherName.Name = "colFatherName";
+            // 
+            // colMotherId
+            // 
+            this.colMotherId.HeaderText = "זהות אם";
+            this.colMotherId.Name = "colMotherId";
+            // 
+            // colMotherName
+            // 
+            this.colMotherName.HeaderText = "שם אם";
+            this.colMotherName.Name = "colMotherName";
+            // 
             // ctlCurrentPerson
             // 
             this.ctlCurrentPerson.cities = null;
@@ -259,71 +325,6 @@
             this.colMessage.HeaderText = "Message";
             this.colMessage.Name = "colMessage";
             // 
-            // colId
-            // 
-            this.colId.HeaderText = "מספר זהות";
-            this.colId.Name = "colId";
-            // 
-            // colFamily
-            // 
-            this.colFamily.HeaderText = "שם משפחה";
-            this.colFamily.Name = "colFamily";
-            // 
-            // colOldFamily
-            // 
-            this.colOldFamily.HeaderText = "שם משפחה ישן";
-            this.colOldFamily.Name = "colOldFamily";
-            // 
-            // colName
-            // 
-            this.colName.HeaderText = "שם פרטי";
-            this.colName.Name = "colName";
-            // 
-            // colBirthDate
-            // 
-            this.colBirthDate.HeaderText = "תאריך לידה";
-            this.colBirthDate.Name = "colBirthDate";
-            // 
-            // colCity
-            // 
-            this.colCity.HeaderText = "ישוב";
-            this.colCity.Name = "colCity";
-            // 
-            // colStreet
-            // 
-            this.colStreet.HeaderText = "רחוב";
-            this.colStreet.Name = "colStreet";
-            // 
-            // colHouse
-            // 
-            this.colHouse.HeaderText = "מספר";
-            this.colHouse.Name = "colHouse";
-            // 
-            // colBirthCountry
-            // 
-            this.colBirthCountry.HeaderText = "ארץ לידה";
-            this.colBirthCountry.Name = "colBirthCountry";
-            // 
-            // colFatherId
-            // 
-            this.colFatherId.HeaderText = "זהות אב";
-            this.colFatherId.Name = "colFatherId";
-            // 
-            // colFatherName
-            // 
-            this.colFatherName.HeaderText = "שם אב";
-            this.colFatherName.Name = "colFatherName";
-            // 
-            // colMotherId
-            // 
-            this.colMotherId.HeaderText = "זהות אם";
-            this.colMotherId.Name = "colMotherId";
-            // 
-            // colMotherName
-            // 
-            this.colMotherName.HeaderText = "שם אם";
-            this.colMotherName.Name = "colMotherName";
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -331,6 +332,7 @@
             this.ClientSize = new System.Drawing.Size(1212, 823);
             this.Controls.Add(this.splitContainer);
             this.Controls.Add(this.mnuMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnuMain;
             this.MaximizeBox = false;
             this.Name = "frmMain";
