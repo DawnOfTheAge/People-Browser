@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ctlSearchFilter = new People.Browser.UI.ctlPerson();
+            this.ctlSearchFilter = new People.Browser.UI.CtlPerson();
             this.SuspendLayout();
             // 
             // ctlSearchFilter
@@ -57,6 +57,6 @@
 
         #endregion
 
-        private ctlPerson ctlSearchFilter;
+        private CtlPerson ctlSearchFilter;
     }
 }

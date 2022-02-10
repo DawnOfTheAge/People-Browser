@@ -1,6 +1,6 @@
 ﻿namespace People.Browser.UI
 {
-    partial class ctlPerson
+    partial class CtlPerson
     {
         /// <summary> 
         /// Required designer variable.
@@ -252,7 +252,7 @@
             this.btn.TabIndex = 18;
             this.btn.UseVisualStyleBackColor = true;
             this.btn.Visible = false;
-            this.btn.Click += new System.EventHandler(this.btn_Click);
+            this.btn.Click += new System.EventHandler(this.Btn_Click);
             // 
             // cboSex
             // 
@@ -410,7 +410,7 @@
             this.Controls.Add(this.lblBirthDate);
             this.Name = "ctlPerson";
             this.Size = new System.Drawing.Size(314, 483);
-            this.Load += new System.EventHandler(this.ctlPerson_Load);
+            this.Load += new System.EventHandler(this.CtlPerson_Load);
             this.gbName.ResumeLayout(false);
             this.gbName.PerformLayout();
             this.gbAddress.ResumeLayout(false);

@@ -31,6 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.mnuConnect = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuConnectAccess = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuConnectMongoDB = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuSaveToMongoDB = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSearch = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
@@ -49,7 +52,7 @@
             this.colFatherName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMotherId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMotherName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ctlCurrentPerson = new People.Browser.UI.ctlPerson();
+            this.ctlCurrentPerson = new People.Browser.UI.CtlPerson();
             this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
             this.pbPercentage = new System.Windows.Forms.ToolStripProgressBar();
             this.lblPercentage = new System.Windows.Forms.ToolStripStatusLabel();
@@ -90,10 +93,34 @@
             // 
             // mnuConnect
             // 
+            this.mnuConnect.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MnuConnectAccess,
+            this.MnuConnectMongoDB,
+            this.MnuSaveToMongoDB});
             this.mnuConnect.Name = "mnuConnect";
             this.mnuConnect.Size = new System.Drawing.Size(64, 20);
             this.mnuConnect.Text = "Connect";
-            this.mnuConnect.Click += new System.EventHandler(this.MnuConnect_Click);
+            // 
+            // MnuConnectAccess
+            // 
+            this.MnuConnectAccess.Name = "MnuConnectAccess";
+            this.MnuConnectAccess.Size = new System.Drawing.Size(180, 22);
+            this.MnuConnectAccess.Text = "Connect Access";
+            this.MnuConnectAccess.Click += new System.EventHandler(this.MnuConnectAccess_Click);
+            // 
+            // MnuConnectMongoDB
+            // 
+            this.MnuConnectMongoDB.Name = "MnuConnectMongoDB";
+            this.MnuConnectMongoDB.Size = new System.Drawing.Size(180, 22);
+            this.MnuConnectMongoDB.Text = "Connect Mongo DB";
+            this.MnuConnectMongoDB.Click += new System.EventHandler(this.MnuConnectMongoDB_Click);
+            // 
+            // MnuSaveToMongoDB
+            // 
+            this.MnuSaveToMongoDB.Name = "MnuSaveToMongoDB";
+            this.MnuSaveToMongoDB.Size = new System.Drawing.Size(180, 22);
+            this.MnuSaveToMongoDB.Text = "Save To MongoDB";
+            this.MnuSaveToMongoDB.Click += new System.EventHandler(this.MnuSaveToMongoDB_Click);
             // 
             // mnuSearch
             // 
@@ -325,7 +352,7 @@
             this.colMessage.HeaderText = "Message";
             this.colMessage.Name = "colMessage";
             // 
-            // frmMain
+            // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -335,7 +362,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnuMain;
             this.MaximizeBox = false;
-            this.Name = "frmMain";
+            this.Name = "FrmMain";
             this.Text = "People Browswer";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.mnuMain.ResumeLayout(false);
@@ -376,7 +403,7 @@
         private System.Windows.Forms.ToolStripStatusLabel lblMessage;
         private System.Windows.Forms.SplitContainer personsSplitContainer;
         private System.Windows.Forms.DataGridView dgvPersons;
-        private People.Browser.UI.ctlPerson ctlCurrentPerson;
+        private People.Browser.UI.CtlPerson ctlCurrentPerson;
         private System.Windows.Forms.ToolStripMenuItem mnuSearch;
         private System.Windows.Forms.ToolStripStatusLabel lblNumberOfHits;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
@@ -392,6 +419,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colFatherName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMotherId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMotherName;
+        private System.Windows.Forms.ToolStripMenuItem MnuConnectAccess;
+        private System.Windows.Forms.ToolStripMenuItem MnuConnectMongoDB;
+        private System.Windows.Forms.ToolStripMenuItem MnuSaveToMongoDB;
     }
 }
 

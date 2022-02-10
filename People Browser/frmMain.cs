@@ -225,14 +225,15 @@ namespace People_Browser
         
         #region Main Menu
 
-        private void MnuConnect_Click(object sender, EventArgs e)
+        private void MnuConnectAccess_Click(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
             string result = string.Empty;
 
             try
             {
-                mnuConnect.Enabled = false;
+                MnuConnectAccess.Enabled = false;
+                MnuConnectMongoDB.Enabled = false;
 
                 OpenFileDialog openFile = new OpenFileDialog
                 {
@@ -307,6 +308,34 @@ namespace People_Browser
                 }
 
                 ctlCurrentPerson.Message += CtlCurrentPerson_Message;
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
+        }
+        
+        private void MnuConnectMongoDB_Click(object sender, EventArgs e)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            try
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
+        }
+
+        private void MnuSaveToMongoDB_Click(object sender, EventArgs e)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            try
+            {
+
             }
             catch (Exception ex)
             {

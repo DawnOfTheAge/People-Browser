@@ -20,7 +20,7 @@ namespace People.Browser.BLL
 
         #region Data Members
 
-        private readonly Dal dal;
+        private readonly MsAccessDal msAccessDal;
 
         private System.Timers.Timer tmrIntervalTimer;
 
@@ -32,13 +32,13 @@ namespace People.Browser.BLL
 
         public Bll()
         {
-            dal = new Dal();
-            dal.Message += Dal_Message; ;
+            msAccessDal = new MsAccessDal();
+            msAccessDal.Message += Dal_Message; ;
         }
 
         ~Bll()
         {
-            dal.Message -= Dal_Message;
+            msAccessDal.Message -= Dal_Message;
         }
 
         #endregion
@@ -49,27 +49,27 @@ namespace People.Browser.BLL
 
         private string CreateSiblingsSql(Person pPerson, out string result)
         {
-            result = "";
+            result = string.Empty;
 
             if (pPerson == null)
             {
                 result = "Person Object Is Null";
 
-                return "";
+                return string.Empty;
             }
 
             //if (pPerson.Parent == null)
             //{
             //    result = "Person Parents Information Is Null";
 
-            //    return "";
+            //    return string.Empty;
             //}
 
             //if ((pPerson.Parent[0].Id <= 0) && (pPerson.Parent[1].Id <= 0))
             //{
             //    result = "Person Has No Parents Information";
 
-            //    return "";
+            //    return string.Empty;
             //}
 
             //if (pPerson.Parent[0].Id <= 0)
@@ -95,14 +95,14 @@ namespace People.Browser.BLL
             {
                 result = "Person Object Is Null";
 
-                return "";
+                return string.Empty;
             }
 
             if (pPerson.Id <= 0) 
             {
                 result = "Person Has No Valid ID";
 
-                return "";
+                return string.Empty;
             }
 
             string sParent;
@@ -129,7 +129,7 @@ namespace People.Browser.BLL
 
         public void SetConnectionString(string sConnectionString)
         {
-            dal.SetConnectionString(sConnectionString);
+            msAccessDal.SetConnectionString(sConnectionString);
         }
 
         #endregion
@@ -180,7 +180,7 @@ namespace People.Browser.BLL
 
             try
             {
-                if (!dal.ExecuteReaderQuery("SELECT * FROM M WHERE ID=" + iId, out OleDbDataReader oddrOleDbDataReader))
+                if (!msAccessDal.ExecuteReaderQuery("SELECT * FROM M WHERE ID=" + iId, out OleDbDataReader oddrOleDbDataReader))
                 {
                     return false;
                 }
@@ -232,7 +232,7 @@ namespace People.Browser.BLL
                 tmrIntervalTimer.Elapsed += new ElapsedEventHandler(TmrIntervalTimer_Elapsed);
 
                 sql = "SELECT COUNT(*) FROM M";
-                if (!dal.ExecuteScalarQuery(sql, out int numberOfPersons))
+                if (!msAccessDal.ExecuteScalarQuery(sql, out int numberOfPersons))
                 {
                     result = $"Failed Preforming SQL[{sql}]";
 
@@ -242,7 +242,7 @@ namespace People.Browser.BLL
                 Audit($"{numberOfPersons} Persons In Total", method, LINE(), AuditSeverity.Information);
 
                 sql = "SELECT * FROM M";
-                if (!dal.ExecuteReaderQuery(sql, out OleDbDataReader oddrOleDbDataReader))
+                if (!msAccessDal.ExecuteReaderQuery(sql, out OleDbDataReader oddrOleDbDataReader))
                 {
                     result = $"Failed Preforming SQL[{sql}]";
 
@@ -338,7 +338,7 @@ namespace People.Browser.BLL
 
             try
             {
-                if (!dal.ExecuteReaderQuery("SELECT * FROM M WHERE ID=" + pPerson.Id, out OleDbDataReader oddrOleDbDataReader))
+                if (!msAccessDal.ExecuteReaderQuery("SELECT * FROM M WHERE ID=" + pPerson.Id, out OleDbDataReader oddrOleDbDataReader))
                 {
                     return false;
                 }
@@ -384,7 +384,7 @@ namespace People.Browser.BLL
                     return false;
                 }
 
-                if (!dal.ExecuteReaderQuery(sSql, out OleDbDataReader oddrOleDbDataReader))
+                if (!msAccessDal.ExecuteReaderQuery(sSql, out OleDbDataReader oddrOleDbDataReader))
                 {
                     return false;
                 }
@@ -423,7 +423,7 @@ namespace People.Browser.BLL
                     return false;
                 }
 
-                if (!dal.ExecuteReaderQuery(sSql, out OleDbDataReader oddrOleDbDataReader))
+                if (!msAccessDal.ExecuteReaderQuery(sSql, out OleDbDataReader oddrOleDbDataReader))
                 {
                     return false;
                 }
@@ -468,7 +468,7 @@ namespace People.Browser.BLL
                 tmrIntervalTimer.Elapsed += new ElapsedEventHandler(TmrIntervalTimer_Elapsed);
 
                 sql = "SELECT COUNT(*) FROM COUNTRY";
-                if (!dal.ExecuteScalarQuery(sql, out int numberOfCountries))
+                if (!msAccessDal.ExecuteScalarQuery(sql, out int numberOfCountries))
                 {
                     result = $"Failed Preforming SQL[{sql}]";
 
@@ -478,7 +478,7 @@ namespace People.Browser.BLL
                 Audit($"{numberOfCountries} Countries In Total", method, LINE(), AuditSeverity.Information);
 
                 sql = "SELECT * FROM COUNTRY";
-                if (!dal.ExecuteReaderQuery(sql, out OleDbDataReader oddrOleDbDataReader))
+                if (!msAccessDal.ExecuteReaderQuery(sql, out OleDbDataReader oddrOleDbDataReader))
                 {
                     result = $"Failed Preforming SQL[{sql}]";
 
@@ -556,7 +556,7 @@ namespace People.Browser.BLL
                 tmrIntervalTimer.Elapsed += new ElapsedEventHandler(TmrIntervalTimer_Elapsed);
 
                 sql = "SELECT COUNT(*) FROM CITY";
-                if (!dal.ExecuteScalarQuery(sql, out int numberOfCities))
+                if (!msAccessDal.ExecuteScalarQuery(sql, out int numberOfCities))
                 {
                     result = $"Failed Preforming SQL[{sql}]";
 
@@ -566,7 +566,7 @@ namespace People.Browser.BLL
                 Audit($"{numberOfCities} Cities In Total", method, LINE(), AuditSeverity.Information);
 
                 sql = "SELECT * FROM CITY";
-                if (!dal.ExecuteReaderQuery(sql, out OleDbDataReader oddrOleDbDataReader))
+                if (!msAccessDal.ExecuteReaderQuery(sql, out OleDbDataReader oddrOleDbDataReader))
                 //if (!Dal.ExecuteReaderQuery($"SELECT * FROM M WHERE F_NAME = '{name}'", out oddrOleDbDataReader))
                 {
                     result = $"Failed Preforming SQL[{sql}]";

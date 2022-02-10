@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace People.Browser.UI
 {
-    public partial class ctlPerson : UserControl
+    public partial class CtlPerson : UserControl
     {
         #region Events
 
@@ -31,7 +31,7 @@ namespace People.Browser.UI
 
         #region Constructor
 
-        public ctlPerson()
+        public CtlPerson()
         {
             InitializeComponent();
         }
@@ -40,7 +40,7 @@ namespace People.Browser.UI
 
         #region Startup
 
-        private void ctlPerson_Load(object sender, EventArgs e)
+        private void CtlPerson_Load(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
 
@@ -123,7 +123,7 @@ namespace People.Browser.UI
                 cboSex.Items.Clear();
                 cboSex.Items.Add("זכר");
                 cboSex.Items.Add("נקבה");
-                cboSex.Items.Add("");
+                cboSex.Items.Add(string.Empty);
 
                 #endregion
 
@@ -141,7 +141,7 @@ namespace People.Browser.UI
 
         #region Gui
         
-        private void btn_Click(object sender, EventArgs e)
+        private void Btn_Click(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
             string result;
