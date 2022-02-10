@@ -307,7 +307,6 @@ namespace People_Browser
                 }
 
                 ctlCurrentPerson.Message += CtlCurrentPerson_Message;
-                ctlCurrentPerson.SearchParameters += CtlCurrentPerson_SearchParameters;
             }
             catch (Exception ex)
             {
@@ -332,7 +331,7 @@ namespace People_Browser
             }
         }
 
-        private void Search_SearchParameters(Person searchFilter, SpecialSearchFilter filter)
+        private void Search_SearchParameters(Person searchFilter)
         {
             string method = MethodBase.GetCurrentMethod().Name;
             string result;
@@ -457,7 +456,7 @@ namespace People_Browser
                         return;
                 }
 
-                Search_SearchParameters(childrenSearchFilter, SpecialSearchFilter.Childern);
+                Search_SearchParameters(childrenSearchFilter);
             }
             catch (Exception ex)
             {
@@ -501,7 +500,7 @@ namespace People_Browser
                 siblingsSearchFilter.FatherId = fatherId;
                 siblingsSearchFilter.MotherId = motherId;
 
-                Search_SearchParameters(siblingsSearchFilter, SpecialSearchFilter.Siblings);
+                Search_SearchParameters(siblingsSearchFilter);
             }
             catch (Exception ex)
             {
@@ -1330,86 +1329,6 @@ namespace People_Browser
         #endregion        
 
         #region Events Handlers
-        
-        private void CtlCurrentPerson_SearchParameters(Person searchFilter, SpecialSearchFilter filter)
-        {
-            string method = MethodBase.GetCurrentMethod().Name;
-            string result = string.Empty;
-            
-            try
-            {
-                if (searchFilter == null)
-                {
-                    Audit("Search Filter Is Null", method, LINE(), AuditSeverity.Warning);
-                }
-
-                switch (filter)
-                {
-                    case SpecialSearchFilter.Parents:
-                        List<Person> parents = new List<Person>();
-
-                        if (!GetPersonById(searchFilter.FatherId, out var father, out result))
-                        {
-                            Audit(result, method, LINE(), AuditSeverity.Warning);
-                        }
-
-                        if (father != null)
-                        {
-                            parents.Add(father);
-                        }
-
-                        if (!GetPersonById(searchFilter.MotherId, out var mother, out result))
-                        {
-                            Audit(result, method, LINE(), AuditSeverity.Warning);
-                        }
-
-                        if (mother != null)
-                        {
-                            parents.Add(mother);
-                        }
-
-                        if (!FillPersons(parents, out result))
-                        {
-                            Audit(result, method, LINE(), AuditSeverity.Warning);
-
-                            return;
-                        }
-                        break;
-
-                    case SpecialSearchFilter.Siblings:
-                        Search_SearchParameters(searchFilter, filter);
-                        break;
-
-                    case SpecialSearchFilter.Childern:
-                        Person childrenSearchFilter = new Person();
-                        switch (searchFilter.Sex)
-                        {
-                            case PersonSex.Male:
-                                childrenSearchFilter.FatherId = searchFilter.Id;
-                                break;
-
-                            case PersonSex.Female:
-                                childrenSearchFilter.MotherId = searchFilter.Id;
-                                break;
-
-                            default:
-                                Audit($"No Sex Defined. Can't Find Children", method, LINE(), AuditSeverity.Warning);
-                                return;
-                        }
-
-                        Search_SearchParameters(childrenSearchFilter, filter);
-                        break;
-
-                    default:
-                        Audit($"Wrong Filter[{filter}]", method, LINE(), AuditSeverity.Warning);
-                        return;
-                }
-            }
-            catch (Exception e)
-            {
-                Audit(e.Message, method, LINE(), AuditSeverity.Error);
-            }
-        }
 
         private void CtlCurrentPerson_Message(string message, string method, string module, int line, AuditSeverity auditSeverity)
         {

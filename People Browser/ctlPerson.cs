@@ -227,7 +227,7 @@ namespace People.Browser.UI
                     BirthDateDay = cboDay.Text
                 };
 
-                OnSearchParameter(searchFilter, SpecialSearchFilter.None);
+                OnSearchParameter(searchFilter);
             }
             catch (Exception ex)
             {
@@ -396,9 +396,9 @@ namespace People.Browser.UI
 
         #region Events Handlers
 
-        public void OnSearchParameter(Person searchFilter, SpecialSearchFilter filter)
+        public void OnSearchParameter(Person searchFilter)
         {
-            SearchParameters?.Invoke(searchFilter, filter);
+            SearchParameters?.Invoke(searchFilter);
         }
 
         public void OnMessage(string message, string method, string module, int line, AuditSeverity auditSeverity)
