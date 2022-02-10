@@ -47,9 +47,6 @@ namespace People.Browser.UI
             try
             {
                 btn.Visible = false;
-                btnParents.Visible = false;
-                btnSiblings.Visible = false;
-                btnChildren.Visible = false;
             }
             catch (Exception ex)
             {
@@ -238,96 +235,6 @@ namespace People.Browser.UI
             }
         }
         
-        private void btnParentsAndSiblings_Click(object sender, EventArgs e)
-        {
-            string method = MethodBase.GetCurrentMethod().Name;
-
-            try
-            {
-                #region IDs
-
-                int fatherId = int.TryParse(txtFatherId.Text, out fatherId) ? fatherId : Constants.NONE;
-                int motherId = int.TryParse(txtMotherId.Text, out motherId) ? motherId : Constants.NONE;
-
-                #endregion
-
-                Person searchFilter = new Person()
-                {
-                    FatherId = fatherId,
-                    MotherId = motherId
-                };
-
-                SpecialSearchFilter filter = SpecialSearchFilter.None;
-                string senderName = ((Button)sender).Name;
-                switch (senderName)
-                {
-                    case "btnParents":
-                        filter = SpecialSearchFilter.Parents;
-                        break;
-
-                    case "btnSiblings":
-                        filter = SpecialSearchFilter.Siblings;
-                        break;
-
-                    default:
-                        Audit($"Wrong Sender [{senderName}]", method, LINE(), AuditSeverity.Warning);
-                        return;
-                }
-
-                OnSearchParameter(searchFilter, filter);
-            }
-            catch (Exception ex)
-            {
-                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
-            }
-        }
-
-        private void btnChildren_Click(object sender, EventArgs e)
-        {
-            string method = MethodBase.GetCurrentMethod().Name;
-
-            try
-            {
-                #region IDs
-
-                int id = int.TryParse(txtId.Text, out id) ? id : Constants.NONE;
-
-                #endregion
-
-                #region Sex
-
-                PersonSex sex = new PersonSex();
-                switch (cboSex.Text)
-                {
-                    case "זכר":
-                        sex = PersonSex.Male;
-                        break;
-
-                    case "נקבה":
-                        sex = PersonSex.Female;
-                        break;
-
-                    default:
-                        sex = PersonSex.Unknown;
-                        break;
-                }
-
-                #endregion
-
-                Person searchFilter = new Person()
-                {
-                    Id = id,
-                    Sex = sex
-                };
-
-                OnSearchParameter(searchFilter, SpecialSearchFilter.Childern);
-            }
-            catch (Exception ex)
-            {
-                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
-            }
-        }
-        
         public bool Clear(out string result)
         {
             string method = MethodBase.GetCurrentMethod().Name;
@@ -466,10 +373,6 @@ namespace People.Browser.UI
                     }
 
                     #endregion
-
-                    btnParents.Visible = true;
-                    btnSiblings.Visible = true;
-                    btnChildren.Visible = true;
                 }
 
                 return true;

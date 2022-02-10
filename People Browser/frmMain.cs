@@ -434,7 +434,7 @@ namespace People_Browser
                 PersonSex personSex = GetPersonSex(dgvPersons.Rows[rowIndex].DefaultCellStyle.BackColor);
                 
                 int id = int.TryParse(dgvPersons.Rows[rowIndex].Cells[0].Value.ToString(), out id) ? id : Constants.NONE;
-                if (id == Constants.NONE)
+                if (!IsIdValid(id))
                 {
                     Audit("No Id", method, LINE(), AuditSeverity.Warning);
 
@@ -467,12 +467,113 @@ namespace People_Browser
 
         private void FindSiblingsEvent(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            string method = MethodBase.GetCurrentMethod().Name;
+            string result = string.Empty;
+
+            try
+            {
+                int rowIndex = dgvPersons.SelectedRows[0].Index;
+                if (rowIndex == Constants.NONE)
+                {
+                    return;
+                }
+
+                int fatherId = int.TryParse(dgvPersons.Rows[rowIndex].Cells[9].Value.ToString(), out fatherId) ? fatherId : Constants.NONE;
+                if (!IsIdValid(fatherId))
+                {
+                    Audit("No Father Id", method, LINE(), AuditSeverity.Warning);
+                }
+
+                int motherId = int.TryParse(dgvPersons.Rows[rowIndex].Cells[11].Value.ToString(), out motherId) ? motherId : Constants.NONE;
+                if (!IsIdValid(motherId))
+                {
+                    Audit("No Mother Id", method, LINE(), AuditSeverity.Warning);
+                }
+
+                if (!IsIdValid(fatherId) && !IsIdValid(motherId))
+                {
+                    Audit("No Mother&Father Ids", method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
+
+                Person siblingsSearchFilter = new Person();
+                siblingsSearchFilter.FatherId = fatherId;
+                siblingsSearchFilter.MotherId = motherId;
+
+                Search_SearchParameters(siblingsSearchFilter, SpecialSearchFilter.Siblings);
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
         }
 
         private void FindParentsEvent(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            string method = MethodBase.GetCurrentMethod().Name;
+            string result = string.Empty;
+
+            try
+            {
+                int rowIndex = dgvPersons.SelectedRows[0].Index;
+                if (rowIndex == Constants.NONE)
+                {
+                    return;
+                }
+
+                int fatherId = int.TryParse(dgvPersons.Rows[rowIndex].Cells[9].Value.ToString(), out fatherId) ? fatherId : Constants.NONE;
+                if (!IsIdValid(fatherId))
+                {
+                    Audit("No Father Id", method, LINE(), AuditSeverity.Warning);
+                }
+
+                int motherId = int.TryParse(dgvPersons.Rows[rowIndex].Cells[11].Value.ToString(), out motherId) ? motherId : Constants.NONE;
+                if (!IsIdValid(motherId))
+                {
+                    Audit("No Mother Id", method, LINE(), AuditSeverity.Warning);
+                }
+
+                if (!IsIdValid(fatherId) && !IsIdValid(motherId))
+                {
+                    Audit("No Mother&Father Ids", method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
+
+                List<Person> parents = new List<Person>();
+
+                if (!GetPersonById(fatherId, out var father, out result))
+                {
+                    Audit(result, method, LINE(), AuditSeverity.Warning);
+                }
+
+                if (father != null)
+                {
+                    parents.Add(father);
+                }
+
+                if (!GetPersonById(motherId, out var mother, out result))
+                {
+                    Audit(result, method, LINE(), AuditSeverity.Warning);
+                }
+
+                if (mother != null)
+                {
+                    parents.Add(mother);
+                }
+
+                if (!FillPersons(parents, out result))
+                {
+                    Audit(result, method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
+            }
         }
 
         #endregion
@@ -1219,6 +1320,11 @@ namespace People_Browser
             }
 
             return countryName;
+        }
+
+        private bool IsIdValid(int id)
+        {
+            return ((id != 0) && (id != Constants.NONE));
         }
 
         #endregion        
