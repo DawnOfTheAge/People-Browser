@@ -52,7 +52,6 @@
             this.colFatherName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMotherId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMotherName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ctlCurrentPerson = new People.Browser.UI.CtlPerson();
             this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
             this.pbPercentage = new System.Windows.Forms.ToolStripProgressBar();
             this.lblPercentage = new System.Windows.Forms.ToolStripStatusLabel();
@@ -65,6 +64,7 @@
             this.colMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ctlCurrentPerson = new People.Browser.UI.CtlPerson();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -120,7 +120,7 @@
             this.MnuSaveToMongoDB.Name = "MnuSaveToMongoDB";
             this.MnuSaveToMongoDB.Size = new System.Drawing.Size(180, 22);
             this.MnuSaveToMongoDB.Text = "Save To MongoDB";
-            this.MnuSaveToMongoDB.Click += new System.EventHandler(this.MnuSaveToMongoDB_Click);
+            this.MnuSaveToMongoDB.Visible = false;
             // 
             // mnuSearch
             // 
@@ -262,16 +262,6 @@
             this.colMotherName.HeaderText = "שם אם";
             this.colMotherName.Name = "colMotherName";
             // 
-            // ctlCurrentPerson
-            // 
-            this.ctlCurrentPerson.cities = null;
-            this.ctlCurrentPerson.countries = null;
-            this.ctlCurrentPerson.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ctlCurrentPerson.Location = new System.Drawing.Point(0, 0);
-            this.ctlCurrentPerson.Name = "ctlCurrentPerson";
-            this.ctlCurrentPerson.Size = new System.Drawing.Size(320, 476);
-            this.ctlCurrentPerson.TabIndex = 0;
-            // 
             // mainStatusStrip
             // 
             this.mainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -351,6 +341,16 @@
             // 
             this.colMessage.HeaderText = "Message";
             this.colMessage.Name = "colMessage";
+            // 
+            // ctlCurrentPerson
+            // 
+            this.ctlCurrentPerson.cities = null;
+            this.ctlCurrentPerson.countries = null;
+            this.ctlCurrentPerson.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ctlCurrentPerson.Location = new System.Drawing.Point(0, 0);
+            this.ctlCurrentPerson.Name = "ctlCurrentPerson";
+            this.ctlCurrentPerson.Size = new System.Drawing.Size(320, 476);
+            this.ctlCurrentPerson.TabIndex = 0;
             // 
             // FrmMain
             // 

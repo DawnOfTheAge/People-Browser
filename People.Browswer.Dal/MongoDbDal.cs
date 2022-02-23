@@ -435,7 +435,8 @@ namespace People.Browser.DAL
 
             try
             {
-                if (!TryGetAllDocuments(collection, filter, out records, out result))
+                if (!GetAllDocuments(collection, out records, out result))
+                //if (!TryGetAllDocuments(collection, filter, out records, out result))
                 {
                     return false;
                 }
@@ -1069,7 +1070,7 @@ namespace People.Browser.DAL
         {
             bool matchFlag;
 
-            string method = "[" + MethodBase.GetCurrentMethod().Name + "]: ";
+            string method = MethodBase.GetCurrentMethod().Name;
 
             var collection = _database.GetCollection<Dictionary<string, object>>(collectionName);
 
@@ -1133,6 +1134,48 @@ namespace People.Browser.DAL
                 Audit($"Failed To Retrieve Documents From Collection In [{collectionName}] Collection. {e.Message}", 
                       method, 
                       LINE(), 
+                      AuditSeverity.Error);
+            }
+
+            documents = default;
+
+            return false;
+        }
+
+        private bool GetAllDocuments(string collectionName, out List<List<string>> documents, out string result)
+        {
+            string method = MethodBase.GetCurrentMethod().Name;
+
+            var collection = _database.GetCollection<Dictionary<string, object>>(collectionName);
+
+            result = string.Empty;
+
+            if (collection == null)
+            {
+                result = "A collection with the name:[" + collectionName + "] doesn't exist.";
+
+                Audit(result, method, LINE(), AuditSeverity.Warning);
+                documents = default;
+
+                return false;
+            }
+
+            documents = new List<List<string>>();
+
+            try
+            {
+                //var query = collection.AsQueryable();
+                var documentsResult = collection.Find(_ => true).ToListAsync();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                Audit($"Failed To Retrieve Documents From Collection In [{collectionName}] Collection. {e.Message}",
+                      method,
+                      LINE(),
                       AuditSeverity.Error);
             }
 

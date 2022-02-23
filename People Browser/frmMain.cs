@@ -19,6 +19,7 @@ using System.Globalization;
 using People.Browser.UI;
 using System.Runtime;
 using General.Database.Common;
+using System.ServiceProcess;
 
 namespace People_Browser
 {
@@ -32,8 +33,10 @@ namespace People_Browser
 
         #region Data Members
 
-        private Bll bll;
-        
+        private MsAccessBll msAccessBll;
+
+        private MongoDbBll mongoDbBll;
+
         private List<Person> persons;
 
         private Countries countries;
@@ -265,24 +268,22 @@ namespace People_Browser
 
                 databaseConnectionString = $@"{CONNECTION_STRING_PREFIX}Data Source={databaseFilePath}";
 
-                OpenDatabaseParameters openDatabaseParameters = new OpenDatabaseParameters()
-                {
-                    DatabaseName = "PersonsDb",
-                    DatabaseIpAddress = "127.0.0.1",
-                    DatabaseIpPort = "27017",
-                    DatabaseTables = "Persons:Cities:Countries"
-                };
+                //OpenDatabaseParameters openDatabaseParameters = new OpenDatabaseParameters()
+                //{
+                //    DatabaseName = "PersonsDb",
+                //    DatabaseIpAddress = "127.0.0.1",
+                //    DatabaseIpPort = "27017",
+                //    DatabaseTables = "Persons:Cities:Countries"
+                //};
 
-                bll = new Bll();
-                bll.Message += Bll_Message;
-                bll.LoadAllProgress += Bll_LoadAllProgress;
-                bll.SetConnectionString(databaseConnectionString);
-                if (!bll.OpenMongoDb(openDatabaseParameters, out result))
-                {
-                    Audit($"Failed Connecting Mongo DB. {result}", method, LINE(), AuditSeverity.Warning);
-                }
-
-
+                msAccessBll = new MsAccessBll();
+                msAccessBll.Message += Bll_Message;
+                msAccessBll.LoadAllProgress += Bll_LoadAllProgress;
+                msAccessBll.SetConnectionString(databaseConnectionString);
+                //if (!bll.OpenMongoDb(openDatabaseParameters, out result))
+                //{
+                //    Audit($"Failed Connecting Mongo DB. {result}", method, LINE(), AuditSeverity.Warning);
+                //}
 
                 lblMessage.Text = "Loading 'Persons' ...";
                 if (!GetAllPersons())
@@ -314,6 +315,7 @@ namespace People_Browser
                 lblPercentage.Visible = false;
                 lblMessage.Visible = false;
 
+                mnuConnect.Enabled = false;
                 MnuConnectAccess.Enabled = false;
                 MnuConnectMongoDB.Enabled = false;
                 mnuSearch.Enabled = true;
@@ -334,76 +336,94 @@ namespace People_Browser
         private void MnuConnectMongoDB_Click(object sender, EventArgs e)
         {
             string method = MethodBase.GetCurrentMethod().Name;
+            string result = string.Empty;
 
             try
             {
-                
-            }
-            catch (Exception ex)
-            {
-                Audit(ex.Message, method, LINE(), AuditSeverity.Error);
-            }
-        }
-
-        private void MnuSaveToMongoDB_Click(object sender, EventArgs e)
-        {
-            string method = MethodBase.GetCurrentMethod().Name;
-
-            try
-            {
-                foreach (City city in cities.CitiesList())
+                if (!IsMongoDbServiceRunning(out result))
                 {
-                    Dictionary<string, string> citiesDictionary = new Dictionary<string, string>();
-
-                    citiesDictionary.Add("Id", city.Id.ToString());
-                    citiesDictionary.Add("Name", city.Name);
-
-                    if (!bll.InsertCity(citiesDictionary, out string newId, out string result))
+                    Audit($"Mongo DB Service Is Not Running. Status[{result}]", method, LINE(), AuditSeverity.Warning);
+                    DialogResult dialogResult = MessageBox.Show("Start Mongo DB Service?",
+                                                                $"Mongo DB Service Is Not Running. Status[{result}]",
+                                                                MessageBoxButtons.YesNo,
+                                                                MessageBoxIcon.Question);
+                    if (dialogResult == DialogResult.Yes)
                     {
-                        Audit(result, method, LINE(), AuditSeverity.Warning);
+                        if (!StartMongoDbService(out result))
+                        {
+                            Audit($"Failed Starting Mongo DB Service. {result}", method, LINE(), AuditSeverity.Warning);
+
+                            return;
+                        }
+
+                        Audit("<<< Mongo DB Service Started >>>", method, LINE(), AuditSeverity.Information);
+                    }
+                    else
+                    {
+                        return;
                     }
                 }
 
-                foreach (Country country in countries.CountriesList())
+                MnuConnectAccess.Enabled = false;
+                MnuConnectMongoDB.Enabled = false;
+
+                OpenDatabaseParameters openDatabaseParameters = new OpenDatabaseParameters()
                 {
-                    Dictionary<string, string> countriesDictionary = new Dictionary<string, string>();
+                    DatabaseName = "PersonsDb",
+                    DatabaseIpAddress = "127.0.0.1",
+                    DatabaseIpPort = "27017",
+                    DatabaseTables = "Persons:Cities:Countries"
+                };
 
-                    countriesDictionary.Add("Id", country.Id.ToString());
-                    countriesDictionary.Add("Name", country.Name);
-                    countriesDictionary.Add("NameInEnglish", country.NameInEnglish);
+                mongoDbBll = new MongoDbBll();
+                mongoDbBll.Message += Bll_Message;
 
-                    if (!bll.InsertCountry(countriesDictionary, out string newId, out string result))
-                    {
-                        Audit(result, method, LINE(), AuditSeverity.Warning);
-                    }
+                if (!mongoDbBll.OpenMongoDb(openDatabaseParameters, out result))
+                {
+                    Audit($"Failed Connecting Mongo DB. {result}", method, LINE(), AuditSeverity.Warning);
                 }
 
-                foreach (Person person in persons)
+                lblMessage.Text = "Loading 'Persons' ...";
+                if (!GetAllPersons())
                 {
-                    Dictionary<string, string> personsDictionary = new Dictionary<string, string>();
+                    Audit("Failed Loading 'Persons'", method, LINE(), AuditSeverity.Warning);
 
-                    personsDictionary.Add("Id", person.Id.ToString());
-                    personsDictionary.Add("FatherId", person.FatherId.ToString());
-                    personsDictionary.Add("MotherId", person.MotherId.ToString());
-
-                    personsDictionary.Add("Family", person.Family);
-                    personsDictionary.Add("OldFamily", person.OldFamily);
-                    personsDictionary.Add("Name", person.Name);
-                    personsDictionary.Add("FatherName", person.FatherName);
-                    personsDictionary.Add("MotherName", person.MotherName);
-
-                    personsDictionary.Add("CountryId", person.CountryId.ToString());
-                    personsDictionary.Add("Sex", person.Sex.ToString());
-
-                    personsDictionary.Add("CityId", person.CityId.ToString());
-                    personsDictionary.Add("Street", person.Street);
-                    personsDictionary.Add("House", person.House.ToString());
-
-                    if (!bll.InsertPersons(personsDictionary, out string newId, out string result))
-                    {
-                        Audit(result, method, LINE(), AuditSeverity.Warning);
-                    }
+                    return;
                 }
+
+                lblMessage.Text = "Loading 'Countries' ...";
+                if (!GetAllCountries())
+                {
+                    Audit("Failed Loading 'Countries'", method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
+
+                lblMessage.Text = "Loading 'Cities' ...";
+                if (!GetAllCities())
+                {
+                    Audit("Failed Loading 'Cities'", method, LINE(), AuditSeverity.Warning);
+
+                    return;
+                }
+
+                Thread.Sleep(1000);
+
+                pbPercentage.Visible = false;
+                lblPercentage.Visible = false;
+                lblMessage.Visible = false;
+
+                mnuConnect.Enabled = false;
+                MnuConnectAccess.Enabled = false;
+                MnuConnectMongoDB.Enabled = false;
+                mnuSearch.Enabled = true;
+
+                if (!ctlCurrentPerson.SetForSearch(cities, countries, out result))
+                {
+                    Audit(result, method, LINE(), AuditSeverity.Warning);
+                }
+
+                ctlCurrentPerson.Message += CtlCurrentPerson_Message;
             }
             catch (Exception ex)
             {
@@ -885,7 +905,22 @@ namespace People_Browser
 
             try
             {
-                IAsyncResult asyncResult = Task.Run(() => bll.GetAllPersons(out persons, out result));
+
+                IAsyncResult asyncResult;
+
+                switch (GetRunningDatabase())
+                {
+                    case RunningDatabase.MsAccess:
+                        asyncResult = Task.Run(() => msAccessBll.GetAllPersons(out persons, out result));
+                        break;
+
+                    case RunningDatabase.MongoDB:
+                        asyncResult = Task.Run(() => mongoDbBll.GetAllPersons(out persons, out result));
+                        break;
+
+                    default:
+                        return false;
+                }
 
                 while (!asyncResult.IsCompleted)
                 {
@@ -939,7 +974,21 @@ namespace People_Browser
 
             try
             {
-                IAsyncResult asyncResult = Task.Run(() => bll.GetAllCountries(out countries, out result));
+                IAsyncResult asyncResult;
+
+                switch (GetRunningDatabase())
+                {
+                    case RunningDatabase.MsAccess:
+                        asyncResult = Task.Run(() => msAccessBll.GetAllCountries(out countries, out result));
+                        break;
+
+                    case RunningDatabase.MongoDB:
+                        asyncResult = Task.Run(() => mongoDbBll.GetAllCountries(out countries, out result));
+                        break;
+
+                    default:
+                        return false;
+                }
 
                 while (!asyncResult.IsCompleted)
                 {
@@ -972,7 +1021,21 @@ namespace People_Browser
 
             try
             {
-                IAsyncResult asyncResult = Task.Run(() => bll.GetAllCities(out cities, out result));
+                IAsyncResult asyncResult;
+
+                switch (GetRunningDatabase())
+                {
+                    case RunningDatabase.MsAccess:
+                        asyncResult = Task.Run(() => msAccessBll.GetAllCities(out cities, out result));
+                        break;
+
+                    case RunningDatabase.MongoDB:
+                        asyncResult = Task.Run(() => mongoDbBll.GetAllCities(out cities, out result));
+                        break;
+
+                    default:
+                        return false;
+                }                
 
                 while (!asyncResult.IsCompleted)
                 {
@@ -1407,6 +1470,72 @@ namespace People_Browser
         private bool IsIdValid(int id)
         {
             return ((id != 0) && (id != Constants.NONE));
+        }
+
+        private bool IsMongoDbServiceRunning(out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                ServiceController sc = new ServiceController("mongodb");
+
+                switch (sc.Status)
+                {
+                    case ServiceControllerStatus.Running:
+                        return true;
+
+                    default:
+                        result = sc.Status.ToString();
+                        return false;
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        private bool StartMongoDbService(out string result)
+        {
+            result = string.Empty;
+
+            try
+            {
+                ServiceController sc = new ServiceController("mongodb");
+
+                if (sc.Status.Equals(ServiceControllerStatus.Stopped) ||
+                    sc.Status.Equals(ServiceControllerStatus.StopPending))
+                {
+                    sc.Start();
+                }
+                else
+                {
+                    sc.Stop();
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+
+                return false;
+            }
+        }
+
+        private RunningDatabase GetRunningDatabase()
+        {
+            if (msAccessBll == null)
+            {
+                return (mongoDbBll == null) ? RunningDatabase.Unknown : RunningDatabase.MongoDB;
+            }
+
+            return RunningDatabase.MsAccess;
         }
 
         #endregion        
